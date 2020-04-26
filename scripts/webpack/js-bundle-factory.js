@@ -13,15 +13,7 @@ class JsBundleFactory {
     return {
       name: 'js-bundle',
       entry: [
-        absPath('/components/about-bar/about-bar.ts'),
-        absPath('/components/alerts-table/alerts-table.ts'),
-        absPath('/components/forms/about/about.ts'),
-        absPath('/components/forms/output-action-list/output-action-list.ts'),
-        absPath('/components/forms/submit-button/submit-button.ts'),
-        absPath('/components/forms/unix/unix.ts'),
-        absPath('/components/io-status/io-status.ts'),
-        absPath('/components/linq-outputs-table/linq-outputs-table.ts'),
-        absPath('/components/status-view/status-view.ts'),
+        absPath('/components/top-bar/top-bar.ts'),
         absPath('/components/material/material-circular-progress.ts'),
         absPath('/components/material/material-icon-button-toggle.ts'),
         absPath('/components/material/material-icon-button.ts'),
