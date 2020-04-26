@@ -1,6 +1,3 @@
-//
-//
-//
 const autoprefixer = require('autoprefixer');
 
 class JsBundleFactory {
@@ -12,20 +9,7 @@ class JsBundleFactory {
     const absPath = (...args) => this.pathResolver_.getAbsolutePath(...args);
     return {
       name: 'js-bundle',
-      entry: [
-        absPath('/components/top-bar/top-bar.ts'),
-        absPath('/components/material/material-circular-progress.ts'),
-        absPath('/components/material/material-icon-button-toggle.ts'),
-        absPath('/components/material/material-icon-button.ts'),
-        absPath('/components/material/material-icon.ts'),
-        absPath('/components/material/material-menu-surface.ts'),
-        absPath('/components/material/material-menu.ts'),
-        absPath('/components/material/material-list.ts'),
-        absPath('/components/material/material-list-item.ts'),
-        absPath('/components/material/material-button.ts'),
-        absPath('/components/material/material-textfield.ts'),
-        absPath('/components/material/material-top-app-bar.ts')
-      ],
+      entry: [absPath('/components/bulma/input/input.ts')],
       output: { filename: 'bundle.js' },
       resolve: { extensions: ['.js', '.scss', '.ts'] },
       module: {

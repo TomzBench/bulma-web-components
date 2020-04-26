@@ -1,19 +1,18 @@
 {
-  "name": "atx-web-components",
+  "name": "linq-developer-portal",
   "version": "0.0.1",
-  "description": "Altronix Framework Agnostic Web Components",
+  "description": "linq-developer-portal ui",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "storybook:start": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
-    "mwc:build": "cd ./material-components-web-components && npm install && npm run build",
-    "preinstall": "npm run mwc:build"
+    "storybook:build": "build-storybook"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bulma": "^0.8.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "sass": "^1.25.0",

@@ -1,4 +1,5 @@
+import { bulma } from './bulma';
 import { unsafeCSS } from 'lit-element';
 
-export const styles = (style: string) => [/*material(),*/ unsafeCSS(style)];
+export const styles = (style: string) => [bulma(), unsafeCSS(style)];
 export default styles;
