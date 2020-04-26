@@ -7,11 +7,14 @@ class BulmaInput extends LitElement {
   static styles = styles(styles.toString());
   @property({ type: Boolean }) horizontal: boolean = false;
   @property({ type: String }) label: string = '';
+  @property({ type: String }) size: string = '';
 
   renderInput(input: HTMLInputElement, label: string | undefined = undefined) {
     // Add input bulma class
-    let c = document.createAttribute('class');
-    c.value = 'input';
+    let c =
+      input.attributes.getNamedItem('class') ||
+      document.createAttribute('class');
+    c.value += ' input';
     input.attributes.setNamedItem(c);
     // Add label
     label = (() => {
