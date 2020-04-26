@@ -1,0 +1,42 @@
+@import './variables';
+
+@mixin theme-default {
+  --mdc-theme-primary: #{$primary-color};
+}
+
+@mixin theme-default-data-table {
+  @include theme-default;
+  @include mdc-data-table-fill-color(#f4f8fb);
+  @include mdc-data-table-header-row-fill-color($primary-color);
+  @include mdc-data-table-header-row-text-color(lighten($primary-color, 80));
+}
+
+@mixin theme-solarized {
+  --mdc-theme-primary: #{$solarized-secondary-color};
+}
+
+@mixin theme-solarized-text-field {
+  @include theme-solarized;
+  --mdc-text-field-fill-color: #{$solarized-primary-color};
+  --mdc-text-field-ink-color: #{$solarized-secondary-color};
+  --mdc-text-field-label-ink-color: lighten(#{$solarized-secondary-color}, 25%);
+}
+
+@mixin theme-solarized-data-table {
+  @include mdc-data-table-fill-color($solarized-primary-color);
+  @include mdc-data-table-header-row-fill-color(
+    darken($solarized-primary-color, 5)
+  );
+  @include mdc-data-table-header-row-text-color($solarized-secondary-color);
+  @include mdc-data-table-row-text-color($solarized-secondary-color);
+}
+
+@mixin theme-monochrome {
+  --mdc-theme-primary: #{$monochrome-primary-color};
+  --mdc-theme-secondary: #{$monochrome-secondary-color};
+}
+
+@mixin theme-monochrome-app-bar {
+  @include theme-monochrome;
+  @include mdc-top-app-bar-ink-color($monochrome-on-primary-color);
+}

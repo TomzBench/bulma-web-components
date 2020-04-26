@@ -1,0 +1,8 @@
+@use "@material/circular-progress/mdc-circular-progress";
+@import './material-scss';
+
+.default {
+  &.mdc-circular-progress {
+    @include theme-default;
+  }
+}

@@ -1,0 +1,8 @@
+@use '@material/menu-surface/mdc-menu-surface';
+@import './material-scss';
+
+.default {
+  &.mdc-menu-surface {
+    @include theme-default;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "lib": ["es2017", "dom"],
+    "strict": true,
+    "typeRoots": ["node_modules/@types"],
+    "outDir": "./",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "exclude": [],
+  "include": [
+    "./components/declarations.d.ts",
+    "./components"
+  ]
+}

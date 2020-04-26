@@ -1,0 +1,23 @@
+@import './material-scss';
+
+@mixin top-app-bar-base {
+  position: unset;
+  .mdc-top-app-bar__section--align-end {
+    /* correction */
+    margin-right: 20px;
+  }
+}
+
+.default {
+  &.mdc-top-app-bar {
+    @include theme-default;
+    @include top-app-bar-base;
+  }
+}
+
+.monochrome {
+  &.mdc-top-app-bar {
+    @include theme-monochrome-app-bar;
+    @include top-app-bar-base;
+  }
+}
