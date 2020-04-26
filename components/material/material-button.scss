@@ -1,7 +1,0 @@
-@import './material-scss';
-
-.default {
-  &.mdc-button {
-    @include theme-default;
-  }
-}

@@ -1,12 +1,8 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
+import { styles } from '../bulma/styles';
 import { classMap } from 'lit-html/directives/class-map';
-import { Menu } from '@material/mwc-menu';
 
-import { styles } from '../material';
 import * as style from './top-bar.scss';
-
-import '../material/material-top-app-bar';
-import '../material/material-menu';
 
 @customElement('ldp-top-bar')
 export class TopBar extends LitElement {

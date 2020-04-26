@@ -1,9 +1,0 @@
-@import '@material/textfield/mdc-text-field';
-@import './material-scss';
-
-.default {
-  &.mdc-text-field {
-    @include theme-default;
-    @include mdc-text-field-density(-4);
-  }
-}

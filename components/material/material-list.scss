@@ -1,8 +1,0 @@
-@use '@material/list/mdc-list';
-@import './material-scss';
-
-.default {
-  &.mdc-list {
-    @include theme-default;
-  }
-}
