@@ -21,10 +21,32 @@ export const inputBasicLoadingHidesRightIcon = () => {
 
 export const inputHasAddon = () => {
   return html`
-    <bulma-field label="hi" color="success" size="small">
+    <bulma-field color="success" size="small" addons>
       <input icon="mail" iconRight="face" help="Please wait" loading />
       <p class="control">
-        <a class="button is-info">Search</a>
+        <a class="button is-info is-small">Search</a>
+      </p>
+    </bulma-field>
+  `.getHTML();
+};
+
+export const inputExpandedHasAddon = () => {
+  return html`
+    <bulma-field color="success" size="small" addons>
+      <input icon="mail" iconRight="face" help="Please wait" loading expanded />
+      <p class="control">
+        <a class="button is-info is-small">Search</a>
+      </p>
+    </bulma-field>
+  `.getHTML();
+};
+
+export const inputGrouped = () => {
+  return html`
+    <bulma-field color="success" size="small" grouped>
+      <input icon="mail" iconRight="face" help="Please wait" loading />
+      <p class="control">
+        <a class="button is-info is-small">Search</a>
       </p>
     </bulma-field>
   `.getHTML();

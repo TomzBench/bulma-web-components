@@ -60,6 +60,7 @@ export const input = (input: HTMLInputElement) => {
   const size = readAttribute<Sizes>(input, 'size');
   const color = readAttribute<Colors>(input, 'color');
   const theme = readAttribute(input, 'theme');
+  const expanded = readAttribute<boolean>(input, 'expanded');
   const loading = readAttribute<boolean>(input, 'loading');
   const help = readAttribute(input, 'help');
   input.classList.add('input');
@@ -67,6 +68,7 @@ export const input = (input: HTMLInputElement) => {
   if (color) input.classList.add(`is-${color}`);
   const classes = {
     control: true,
+    ['is-expanded']: !!expanded,
     [`is-${size}`]: !!size,
     'has-icons-left': !!iconLeft,
     'has-icons-right': !!iconRight && !loading,
