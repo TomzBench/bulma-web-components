@@ -24,15 +24,6 @@ class BulmaInput extends LitElement {
   @property({ type: String }) size: Size | undefined = undefined;
   @property({ type: String }) color: Color | undefined = undefined;
 
-  // Append the bulma class to callers input element
-  appendClass(input: HTMLInputElement, cl: string) {
-    let attr =
-      input.attributes.getNamedItem('class') ||
-      document.createAttribute('class');
-    attr.value += ' ' + cl;
-    input.attributes.setNamedItem(attr);
-  }
-
   // Read callers <input /> attributes relevant to our component
   readAttribute<T extends string | boolean = string>(
     input: HTMLInputElement,
@@ -99,9 +90,9 @@ class BulmaInput extends LitElement {
       'is-loading': !!loading
     };
 
-    this.appendClass(input, 'input');
-    if (size) this.appendClass(input, `is-${size}`);
-    if (color) this.appendClass(input, `is-${color}`);
+    input.classList.add('input');
+    if (size) input.classList.add(`is-${size}`);
+    if (color) input.classList.add(`is-${color}`);
 
     // Read iconRight
     return html`
