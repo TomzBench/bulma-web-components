@@ -51,3 +51,50 @@ export const inputGrouped = () => {
     </bulma-field>
   `.getHTML();
 };
+
+export const horizontalBasic = () => {
+  return html`
+    <bulma-field label="Horizontal" size="small" color="success" horizontal>
+      <input icon="mail" help="Help me please!" loading />
+    </bulma-field>
+  `.getHTML();
+};
+
+export const horizontalMulti = () => {
+  return html`
+    <bulma-field label="Horizontal" size="small" color="success" horizontal>
+      <input icon="mail" help="Help me please!" loading />
+      <input icon="user" help="Help me please!" loading />
+      <input icon="mr" help="Help me please!" loading />
+    </bulma-field>
+  `.getHTML();
+};
+
+export const horizontalMultiLarge = () => {
+  return html`
+    <bulma-field label="Horizontal" size="large" color="success" horizontal>
+      <input icon="mail" help="Help me please!" loading />
+      <input icon="user" help="Help me please!" loading />
+      <input icon="mr" help="Help me please!" loading />
+    </bulma-field>
+  `.getHTML();
+};
+
+export const horizontalAddons = () => {
+  return html`
+    <bulma-field label="Horizontal" size="small" color="success" horizontal>
+      <bulma-field size="small" color="success" addons>
+        <input icon="mail" help="Help me please!" loading expanded />
+        <p class="control">
+          <a class="button is-info is-small">Search</a>
+        </p>
+      </bulma-field>
+      <bulma-field size="small" color="success" addons>
+        <input icon="mail" help="Help me please!" loading expanded />
+        <p class="control">
+          <a class="button is-static is-small">Search</a>
+        </p>
+      </bulma-field>
+    </bulma-field>
+  `.getHTML();
+};
