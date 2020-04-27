@@ -2,8 +2,8 @@ import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../styles';
 
-type Size = 'small' | 'medium' | 'large';
-// type Class = 'input' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'file';
+type Size = 'small' | 'medium' | 'large' | 'normal';
+type Color = 'primary' | 'info' | 'succes' | 'warning' | 'danger';
 interface Attributes {
   label: string;
   icon: string; // iconLeft alias
@@ -21,7 +21,8 @@ class BulmaInput extends LitElement {
   static styles = styles(styles.toString());
   @property({ type: Boolean }) horizontal: boolean = false;
   @property({ type: String }) label: string = '';
-  @property({ type: String }) size: string = '';
+  @property({ type: String }) size: Size | undefined = undefined;
+  @property({ type: String }) color: Color | undefined = undefined;
 
   // Append the bulma class to callers input element
   appendClass(input: HTMLInputElement, cl: string) {
@@ -38,7 +39,7 @@ class BulmaInput extends LitElement {
     key: keyof Attributes
   ): T | undefined {
     let attr = input.attributes.getNamedItem(key);
-    return attr ? (attr.value as T) : undefined;
+    return attr ? (attr.value ? (attr.value as T) : (true as T)) : undefined;
   }
 
   // Render an icon on left or right of the input
@@ -49,11 +50,8 @@ class BulmaInput extends LitElement {
   ) {
     const classes = {
       icon: true,
-      'is-left': where === 'left',
-      'is-right': where === 'right',
-      'is-small': size === 'small',
-      'is-medium': size === 'medium',
-      'is-large': size === 'large'
+      [`is-${where}`]: true,
+      [`is-${size}`]: !!size
     };
 
     return html`
@@ -74,7 +72,12 @@ class BulmaInput extends LitElement {
   }
 
   // Render help text
-  renderHelp() {}
+  renderHelp(help: string, color?: Color) {
+    const classes = { help: true, [`is-${color}`]: !!color };
+    return html`
+      <p class="${classMap(classes)}">${help}</p>
+    `;
+  }
 
   // Render the input element surround with <field><control> classes
   renderInput(input: HTMLInputElement, l: string | undefined = undefined) {
@@ -83,19 +86,22 @@ class BulmaInput extends LitElement {
       this.readAttribute(input, 'iconLeft') ||
       this.readAttribute(input, 'icon');
     const iconRight = this.readAttribute(input, 'iconRight');
-    const size = this.readAttribute<Size>(input, 'size');
-    const color = this.readAttribute(input, 'color');
+    const size = this.readAttribute<Size>(input, 'size') || this.size;
+    const color = this.readAttribute<Color>(input, 'color');
     const theme = this.readAttribute(input, 'theme');
     const loading = this.readAttribute<boolean>(input, 'loading');
     const help = this.readAttribute(input, 'help');
     const classes = {
       control: true,
+      [`is-${size}`]: !!size,
       'has-icons-left': !!iconLeft,
-      'has-icons-right': !!iconRight
+      'has-icons-right': !!iconRight,
+      'is-loading': !!loading
     };
 
     this.appendClass(input, 'input');
     if (size) this.appendClass(input, `is-${size}`);
+    if (color) this.appendClass(input, `is-${color}`);
 
     // Read iconRight
     return html`
@@ -105,17 +111,19 @@ class BulmaInput extends LitElement {
           ${input} ${iconLeft ? this.renderIcon(iconLeft, size, 'left') : ''}
           ${iconRight ? this.renderIcon(iconRight, size, 'right') : ''}
         </div>
+        ${help ? this.renderHelp(help, color) : ''}
       </div>
     `;
   }
 
   // Render the callers inputs per horizontal structure layout
   renderHorizontal() {
+    let size = this.size ? `is-${this.size}` : 'is-medium';
     let inputs: HTMLInputElement[] = [];
     this.querySelectorAll('input').forEach(i => inputs.push(i));
     return html`
       <div class="field is-horizontal">
-        <div class="field-label is-normal">
+        <div class="field-label ${size}">
           <label class="label">${this.label}</label>
         </div>
         <div class="field-body">
