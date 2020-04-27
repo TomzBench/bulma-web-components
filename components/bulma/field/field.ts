@@ -23,9 +23,33 @@ interface Attributes {
 //
 // TODO
 // Seperate bulma-field and bulma-field-horizontal components
+// (Horizontal inputs can optionally be wrapped in field. Caller must wrap in
+// field if they want addons.
+//
+// <!-- No addons -->
+// <bulma-field>
+//   <input />
+// </bulma-field>
+//
+// <bulma-field>
+//   <input />
+//   <div class="control">
+//     <button />
+//   <div>
+// </bulma-field>
+//
+// <!-- horizontal No addons -->
+// <bulma-field-horizontal>
+//   <input />
+// </bulma-field-horizontal>
+//
+// <!-- horizontal With addons -->
 // <bulma-field-horizontal>
 //   <bulma-field>
 //     <input />
+//     <div class="control">
+//       <button />
+//     </div>
 //   </bulma-field>
 // </bulma-field-horizontal>
 @customElement('bulma-field')
