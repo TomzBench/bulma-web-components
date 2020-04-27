@@ -16,6 +16,18 @@ interface Attributes {
   help: string;
 }
 
+// TODO
+// renderInput() should not wrap input element with a field tag. And should
+// only wrap input element with a control tag. Sibling nodes are assumed addons
+// and also receive control tag.
+//
+// TODO
+// Seperate bulma-field and bulma-field-horizontal components
+// <bulma-field-horizontal>
+//   <bulma-field>
+//     <input />
+//   </bulma-field>
+// </bulma-field-horizontal>
 @customElement('bulma-field')
 class BulmaInput extends LitElement {
   static styles = styles(styles.toString());
