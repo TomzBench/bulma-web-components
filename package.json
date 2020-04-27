@@ -4,7 +4,7 @@
   "description": "linq-developer-portal ui",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node ./scripts/test.js",
     "build": "webpack",
     "storybook:start": "start-storybook -p 6006",
     "storybook:build": "build-storybook"
@@ -15,6 +15,7 @@
     "bulma": "^0.8.2",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
+    "reflect-metadata": "^0.1.13",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2"
   },
@@ -25,6 +26,7 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@storybook/html": "^5.3.17",
+    "@types/jest": "^25.2.1",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -36,8 +38,10 @@
     "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.3",
+    "jest": "^25.4.0",
     "node-sass-import": "^2.0.1",
     "postcss-loader": "^3.0.0",
+    "ts-jest": "^25.4.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",
     "webpack": "^4.41.6",
