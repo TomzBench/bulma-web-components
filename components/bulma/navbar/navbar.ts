@@ -4,6 +4,8 @@ import { styles } from '../styles';
 
 import { readAttribute } from '../../shared/attributes';
 
+// Note that bulma-navbar is unforgiving if you have a <component> element
+// wrapping a navbar-item... Therefore it is difficult to wrap navbar-items
 @customElement('bulma-navbar')
 class BulmaNavbar extends LitElement {
   static styles = styles('');
@@ -19,9 +21,15 @@ class BulmaNavbar extends LitElement {
 
   renderNavs() {
     Array.from(this.children).forEach(e => {
+      if (readAttribute(e, 'dropdown')) {
+        e.classList.add('has-dropdown');
+        e.classList.add('is-hoverable');
+      }
       if (readAttribute(e, 'start')) {
+        e.classList.add('navbar-item');
         this.start.appendChild(e);
       } else if (readAttribute(e, 'end')) {
+        e.classList.add('navbar-item');
         this.end.appendChild(e);
       } else if (readAttribute(e, 'logo')) {
         this.logo.appendChild(e);

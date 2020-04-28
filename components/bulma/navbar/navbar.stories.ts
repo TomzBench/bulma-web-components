@@ -14,10 +14,10 @@ export const navbarBasic = () => {
         width="112"
         height="28"
       />
-      <a start class="navbar-item">From Menu</a>
-      <a start class="navbar-item">From Menu</a>
-      <a start class="navbar-item">From Menu</a>
-      <div start class="navbar-item has-dropdown is-hoverable">
+      <a start>From Menu</a>
+      <a start>From Menu</a>
+      <a start>From Menu</a>
+      <div start dropdown>
         <a class="navbar-link">Dropdown</a>
         <div>
           <div class="navbar-dropdown">
@@ -28,9 +28,9 @@ export const navbarBasic = () => {
           </div>
         </div>
       </div>
-      <a end class="navbar-item">From Menu</a>
-      <a end class="navbar-item">From Menu</a>
-      <a end class="navbar-item">From Menu</a>
+      <a end>From Menu</a>
+      <a end>From Menu</a>
+      <a end>From Menu</a>
     </bulma-navbar>
   `.getHTML();
 };
