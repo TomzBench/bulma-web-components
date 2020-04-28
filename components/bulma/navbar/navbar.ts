@@ -22,6 +22,15 @@ class BulmaNavbar extends LitElement {
   renderNavs() {
     Array.from(this.children).forEach(e => {
       if (readAttribute(e, 'dropdown')) {
+        // We are a dropdown element, add dropdown classes, and prepend a label
+        // for caller if they have a label attribute
+        let label = readAttribute(e, 'label');
+        if (label) {
+          let a = document.createElement('a');
+          a.classList.add('navbar-link');
+          a.innerText = label;
+          e.appendChild(a);
+        }
         e.classList.add('has-dropdown');
         e.classList.add('is-hoverable');
       }

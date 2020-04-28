@@ -17,9 +17,8 @@ export const navbarBasic = () => {
       <a start>From Menu</a>
       <a start>From Menu</a>
       <a start>From Menu</a>
-      <div start dropdown>
-        <a class="navbar-link">Dropdown</a>
-        <div>
+      <div start dropdown label="Foo">
+        <div class="COMPONENT SAFE TEST">
           <div class="navbar-dropdown">
             <a class="navbar-item">Link1</a>
             <a class="navbar-item">Link2</a>
