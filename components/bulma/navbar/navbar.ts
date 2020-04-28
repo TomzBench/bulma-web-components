@@ -11,7 +11,7 @@ import { readAttribute } from '../../shared/attributes';
 // (IE: if hover, dropdown.display=true)
 //
 // UI framework libraries and web components don't play nice together therefore
-// these bulma components are going to be very thin and probably will not be 
+// these bulma components are going to be very thin and probably will not be
 // very useful
 @customElement('bulma-navbar')
 class BulmaNavbar extends LitElement {
