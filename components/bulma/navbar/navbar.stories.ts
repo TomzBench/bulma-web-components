@@ -28,6 +28,15 @@ export const navbarBasic = () => {
         </div>
       </div>
       <a end>From Menu</a>
+      <div end dropdown label="With Component">
+        <bulma-navbar-dropdown>
+          <a>Test A</a>
+          <a>Test B</a>
+          <a>Test C</a>
+          <hr divider></hr>
+          <a>Test D</a>
+        </bulma-navbar-dropdown>
+      </div>
       <a end>From Menu</a>
       <a end>From Menu</a>
     </bulma-navbar>

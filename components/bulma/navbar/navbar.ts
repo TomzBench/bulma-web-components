@@ -4,6 +4,33 @@ import { styles } from '../styles';
 
 import { readAttribute } from '../../shared/attributes';
 
+@customElement('bulma-navbar-dropdown')
+class BulmaNavbarDropdown extends LitElement {
+  static styles = styles('');
+  @query('.navbar-dropdown') dropdown!: HTMLElement;
+
+  createRenderRoot() {
+    return this;
+  }
+
+  firstUpdated() {
+    Array.from(this.children).forEach(e => {
+      if (readAttribute(e, 'divider')) {
+        e.classList.add('navbar-divider');
+      } else {
+        e.classList.add('navbar-item');
+      }
+      this.dropdown.appendChild(e);
+    });
+  }
+
+  render() {
+    return html`
+      <div class="navbar-dropdown"></div>
+    `;
+  }
+}
+
 // Note that bulma-navbar is unforgiving if you have a <component> element
 // wrapping a navbar-item... Therefore it is difficult to wrap navbar-items
 @customElement('bulma-navbar')
