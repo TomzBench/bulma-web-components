@@ -58,7 +58,7 @@ class BulmaNavbar extends LitElement {
     return html`
       <div class="navbar ${classMap(classes)}" role="navigation">
         <div class="navbar-brand">
-          <a class="navbar-item logo" href=""><slot name="logo"></slot></a>
+          <a class="navbar-item logo" href=""></a>
           <a
             class="navbar-burger burger"
             role="button"
