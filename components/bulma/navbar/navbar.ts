@@ -4,35 +4,15 @@ import { styles } from '../styles';
 
 import { readAttribute } from '../../shared/attributes';
 
-@customElement('bulma-navbar-dropdown')
-class BulmaNavbarDropdown extends LitElement {
-  static styles = styles('');
-  @query('.navbar-dropdown') dropdown!: HTMLElement;
-
-  createRenderRoot() {
-    return this;
-  }
-
-  firstUpdated() {
-    Array.from(this.children).forEach(e => {
-      if (readAttribute(e, 'divider')) {
-        e.classList.add('navbar-divider');
-      } else {
-        e.classList.add('navbar-item');
-      }
-      this.dropdown.appendChild(e);
-    });
-  }
-
-  render() {
-    return html`
-      <div class="navbar-dropdown"></div>
-    `;
-  }
-}
-
 // Note that bulma-navbar is unforgiving if you have a <component> element
-// wrapping a navbar-item... Therefore it is difficult to wrap navbar-items
+// wrapping a navbar-item... Therefore it is difficult to wrap navbar-items.
+// It is ok to wrap the navbar-dropdown in a component, but shadow dom blocks
+// hover expandable behavior and we would have to bridge this in our component
+// (IE: if hover, dropdown.display=true)
+//
+// UI framework libraries and web components don't play nice together therefore
+// these bulma components are going to be very thin and probably will not be 
+// very useful
 @customElement('bulma-navbar')
 class BulmaNavbar extends LitElement {
   static styles = styles('');

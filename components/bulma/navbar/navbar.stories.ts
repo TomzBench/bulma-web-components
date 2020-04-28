@@ -18,25 +18,14 @@ export const navbarBasic = () => {
       <a start>From Menu</a>
       <a start>From Menu</a>
       <div start dropdown label="Foo">
-        <div class="COMPONENT SAFE TEST">
-          <div class="navbar-dropdown">
-            <a class="navbar-item">Link1</a>
-            <a class="navbar-item">Link2</a>
-            <hr class="navbar-divider" />
-            <a class="navbar-item">Link3</a>
-          </div>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">Link1</a>
+          <a class="navbar-item">Link2</a>
+          <hr class="navbar-divider" />
+          <a class="navbar-item">Link3</a>
         </div>
       </div>
       <a end>From Menu</a>
-      <div end dropdown label="With Component">
-        <bulma-navbar-dropdown>
-          <a>Test A</a>
-          <a>Test B</a>
-          <a>Test C</a>
-          <hr divider></hr>
-          <a>Test D</a>
-        </bulma-navbar-dropdown>
-      </div>
       <a end>From Menu</a>
       <a end>From Menu</a>
     </bulma-navbar>
