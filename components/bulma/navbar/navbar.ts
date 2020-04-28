@@ -6,10 +6,11 @@ import { readAttribute } from '../../shared/attributes';
 
 @customElement('bulma-navbar')
 class BulmaNavbar extends LitElement {
-  static styles = styles(styles.toString());
+  elementChildren: Array<Element> = [];
   @property({ type: String }) color: string | undefined = undefined;
   @query('.navbar-start') start!: HTMLElement;
   @query('.navbar-end') end!: HTMLElement;
+  @query('.navbar-menu') menu!: HTMLElement;
   @query('.logo') logo!: HTMLElement;
 
   // createRenderRoot() {
@@ -17,8 +18,6 @@ class BulmaNavbar extends LitElement {
   // }
 
   firstUpdated() {
-    console.log(BulmaNavbar.styles);
-    super.connectedCallback();
     this.renderNavs();
   }
 
@@ -39,7 +38,7 @@ class BulmaNavbar extends LitElement {
     return html`
       <div class="navbar ${classMap(classes)}" role="navigation">
         <div class="navbar-brand">
-          <a class="navbar-item logo" href=""></a>
+          <a class="navbar-item logo" href=""><slot name="logo"></slot></a>
           <a
             class="navbar-burger burger"
             role="button"
@@ -57,6 +56,9 @@ class BulmaNavbar extends LitElement {
           <div class="navbar-end"></div>
         </div>
       </div>
+      <style>
+        ${styles('')}
+      </style>
     `;
   }
 }

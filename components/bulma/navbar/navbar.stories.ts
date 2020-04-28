@@ -15,23 +15,23 @@ export const navbarBasic = () => {
         width="112"
         height="28"
       />
-      <a start class="navbar-item">Test</a>
+      <a start class="navbar-item">From Menu</a>
+      <a start class="navbar-item">From Menu</a>
+      <a start class="navbar-item">From Menu</a>
       <div start class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">DropDown</a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item">Selection</a>
-          <a class="navbar-item">Selection</a>
-          <hr class="navbar-divider" />
-          <a class="navbar-item">Selection</a>
+        <a class="navbar-link">Dropdown</a>
+        <div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item">Link1</a>
+            <a class="navbar-item">Link2</a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item">Link3</a>
+          </div>
         </div>
       </div>
-      <a class="navbar-item" end>Test</a>
-      <bulma-navbar-item start label="First"></bulma-navbar-item>
-      <bulma-navbar-item start label="Dropdown" dropdown>
-        <bulma-navbar-item label="Selection A"></bulma-navbar-item>
-        <bulma-navbar-item label="Selection B"></bulma-navbar-item>
-        <bulma-navbar-item label="Selection C"></bulma-navbar-item>
-      </bulma-navbar-item>
+      <a end class="navbar-item">From Menu</a>
+      <a end class="navbar-item">From Menu</a>
+      <a end class="navbar-item">From Menu</a>
     </bulma-navbar>
   `.getHTML();
 };
