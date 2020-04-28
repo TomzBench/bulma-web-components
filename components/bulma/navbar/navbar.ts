@@ -11,6 +11,11 @@ class BulmaNavbar extends LitElement {
   @property({ type: String }) color: string | undefined = undefined;
   @query('.navbar-start') start!: HTMLElement;
   @query('.navbar-end') end!: HTMLElement;
+  @query('.logo') logo!: HTMLElement;
+
+  createRenderRoot() {
+    return this;
+  }
 
   firstUpdated() {
     this.renderNavs();
@@ -22,7 +27,9 @@ class BulmaNavbar extends LitElement {
       if (readAttribute(e, 'start')) {
         this.start.appendChild(e);
       } else if (readAttribute(e, 'end')) {
-        this.start.appendChild(e);
+        this.end.appendChild(e);
+      } else if (readAttribute(e, 'logo')) {
+        this.logo.appendChild(e);
       }
     });
   }
@@ -32,7 +39,7 @@ class BulmaNavbar extends LitElement {
     return html`
       <div class="navbar ${classMap(classes)}" role="navigation">
         <div class="navbar-brand">
-          <a class="navbar-item" href=""><slot name="logo"></slot></a>
+          <a class="navbar-item logo" href=""></a>
           <a
             class="navbar-burger burger"
             role="button"
