@@ -6,16 +6,12 @@ import { readAttribute } from '../../shared/attributes';
 
 @customElement('bulma-navbar')
 class BulmaNavbar extends LitElement {
-  elementChildren: Array<Element> = [];
+  static styles = styles('');
   @property({ type: String }) color: string | undefined = undefined;
   @query('.navbar-start') start!: HTMLElement;
   @query('.navbar-end') end!: HTMLElement;
   @query('.navbar-menu') menu!: HTMLElement;
   @query('.logo') logo!: HTMLElement;
-
-  // createRenderRoot() {
-  //   return this;
-  // }
 
   firstUpdated() {
     this.renderNavs();
@@ -56,9 +52,6 @@ class BulmaNavbar extends LitElement {
           <div class="navbar-end"></div>
         </div>
       </div>
-      <style>
-        ${styles('')}
-      </style>
     `;
   }
 }

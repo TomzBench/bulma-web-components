@@ -9,7 +9,7 @@ import { setAttribute, makeAttribute } from '../../shared/attributes';
 
 @customElement('bulma-field')
 class BulmaField extends LitElement {
-  static styles = styles(styles.toString());
+  static styles = styles('');
   @property({ type: Boolean }) horizontal: boolean = false;
   @property({ type: Boolean }) grouped: boolean = false;
   @property({ type: Boolean }) addons: boolean = false;

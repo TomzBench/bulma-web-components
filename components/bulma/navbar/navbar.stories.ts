@@ -1,7 +1,6 @@
 import { LitElement, customElement, html } from 'lit-element';
 import { styles } from '../styles';
 import './navbar';
-import './navbar-item';
 import '../field/field';
 
 export default { title: 'bulma-navbar' };
