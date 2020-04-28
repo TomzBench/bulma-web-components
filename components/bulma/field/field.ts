@@ -4,9 +4,8 @@ import { Sizes, Colors } from './types';
 import { styles } from '../styles';
 
 import { input } from '../input/input';
+import { select } from '../select/select';
 import { setAttribute, makeAttribute } from '../../shared/attributes';
-
-const render = (horiz: boolean) => (horiz ? html`` : html``);
 
 @customElement('bulma-field')
 class BulmaField extends LitElement {
@@ -24,6 +23,10 @@ class BulmaField extends LitElement {
         if (this.size) setAttribute(e, makeAttribute('size', this.size));
         if (this.color) setAttribute(e, makeAttribute('color', this.color));
         return input(e);
+      } else if (e instanceof HTMLSelectElement) {
+        if (this.size) setAttribute(e, makeAttribute('size', this.size));
+        if (this.color) setAttribute(e, makeAttribute('color', this.color));
+        return select(e);
       } else if (e instanceof BulmaField) {
         return e;
       } else {

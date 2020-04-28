@@ -1,4 +1,5 @@
-import { html } from 'lit-element';
+import { LitElement, customElement, html } from 'lit-element';
+import { styles } from '../styles';
 import './input';
 
 export default { title: 'bulma-input' };
@@ -54,8 +55,8 @@ export const inputGrouped = () => {
 
 export const horizontalBasic = () => {
   return html`
-    <bulma-field label="Horizontal" size="small" color="success" horizontal>
-      <input icon="mail" help="Help me please!" loading />
+    <bulma-field label="Horizontal" horizontal>
+      <input help="Your name is spelled wrong" placeholder="basic" />
     </bulma-field>
   `.getHTML();
 };
@@ -96,5 +97,30 @@ export const horizontalAddons = () => {
         </p>
       </bulma-field>
     </bulma-field>
+  `.getHTML();
+};
+
+@customElement('bulma-raw')
+class BulmaRaw extends LitElement {
+  static styles = styles(styles.toString());
+  render() {
+    return html`
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Label</label>
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <input class="input" />
+            <p class="help">Your name is spelled wrong</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+export const raw = () => {
+  return html`
+    <bulma-raw></bulma-raw>
   `.getHTML();
 };

@@ -74,9 +74,6 @@ export const input = (input: HTMLInputElement) => {
     'has-icons-right': !!iconRight && !loading,
     'is-loading': !!loading
   };
-  console.log(color);
-  console.log(size);
-  console.log(classes);
   return html`
     <div class="${classMap(classes)}">
       <!-- INPUT -->
