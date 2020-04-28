@@ -5,7 +5,7 @@ import { styles } from '../styles';
 
 @customElement('bulma-navbar-item')
 class BulmaNavbarItem extends LitElement {
-  static styles = styles(styles.toString());
+  // static styles = styles(styles.toString());
   @property({ type: Boolean }) dropdown: boolean = false;
   @property({ type: String }) icon: string | undefined = undefined;
   @property({ type: String }) label: string = '';
@@ -24,7 +24,6 @@ class BulmaNavbarItem extends LitElement {
   }
 
   render() {
-    console.log(this.label);
     return this.dropdown
       ? html`
           <div class="navbar-item has-dropdown is-hoverable">

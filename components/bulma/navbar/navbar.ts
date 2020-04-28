@@ -1,7 +1,6 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../styles';
-import '../bulma-base';
 
 import { readAttribute } from '../../shared/attributes';
 
@@ -13,17 +12,18 @@ class BulmaNavbar extends LitElement {
   @query('.navbar-end') end!: HTMLElement;
   @query('.logo') logo!: HTMLElement;
 
-  createRenderRoot() {
-    return this;
-  }
+  // createRenderRoot() {
+  //   return this;
+  // }
 
   firstUpdated() {
+    console.log(BulmaNavbar.styles);
+    super.connectedCallback();
     this.renderNavs();
   }
 
   renderNavs() {
     Array.from(this.children).forEach(e => {
-      console.log(e);
       if (readAttribute(e, 'start')) {
         this.start.appendChild(e);
       } else if (readAttribute(e, 'end')) {
