@@ -1,5 +1,4 @@
-import { LitElement, customElement, html } from 'lit-element';
-import { styles } from '../styles';
+import { html } from 'lit-element';
 import './navbar';
 import '../field/field';
 
