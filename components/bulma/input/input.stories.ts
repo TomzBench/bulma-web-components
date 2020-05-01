@@ -23,6 +23,20 @@ export const withIcons = () => {
   `.getHTML();
 };
 
+export const withHelp = () => {
+  return html`
+    <b-field>
+      <b-input
+        placeholder="foo"
+        help="Your name is spelled wrong"
+        color="danger"
+      >
+        <b-icon where="left">account_circle</b-icon>
+      </b-input>
+    </b-field>
+  `.getHTML();
+};
+
 /*
 export const withGrouped = () => {
   return html`

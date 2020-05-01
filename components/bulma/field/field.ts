@@ -11,12 +11,6 @@ import { styles } from '../styles';
 import { readAttribute } from '../../shared/attributes';
 import { Sizes, Colors } from '../bulma-types';
 
-/*
- * <b-field horizontal>
- *   <input slot="input"/>
- * </b-field>
- */
-
 @customElement('b-field')
 class BField extends LitElement {
   static styles = styles(styles.toString());

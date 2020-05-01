@@ -13,6 +13,11 @@ import { Sizes, Colors, TextFieldType } from '../bulma-types';
 
 import { styles } from '../styles';
 
+interface HelpArgs {
+  color?: Colors;
+  help?: string;
+}
+
 @customElement('b-input')
 export class BInput extends LitElement {
   static styles = styles(styles.toString());
@@ -42,10 +47,21 @@ export class BInput extends LitElement {
     this.icons = Array.from(this.querySelectorAll('b-icon'));
   }
 
+  renderHelp({ help, color }: HelpArgs) {
+    const classes = { [`is-${color}`]: !!color };
+    return help
+      ? html`
+          <p class="help ${classMap(classes)}">${help}</p>
+        `
+      : ``;
+  }
+
   render() {
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
     let iconsLeft = false;
     let iconsRight = false;
+    const color = this.color;
+    const help = this.help;
     this.icons.forEach(i => {
       if (i.classList.contains('is-left')) {
         iconsLeft = true;
@@ -54,15 +70,22 @@ export class BInput extends LitElement {
       }
     });
     const classes = {
-      ['is-expanded']: this.expanded,
-      [`is-${this.size}`]: !!this.size,
-      ['has-icons-left']: iconsLeft,
-      ['has-icons-right']: iconsRight
+      control: {
+        control: true,
+        ['is-expanded']: this.expanded,
+        [`is-${this.size}`]: !!this.size,
+        ['has-icons-left']: iconsLeft,
+        ['has-icons-right']: iconsRight
+      },
+      input: {
+        input: true,
+        [`is-${this.color}`]: !!this.color
+      }
     };
     return html`
-      <div class="control ${classMap(classes)}">
+      <div class="${classMap(classes.control)}">
         <input
-          class="input"
+          class="${classMap(classes.input)}"
           aria-labelledby="label"
           type="${this.type}"
           .value="${this.value}"
@@ -80,6 +103,8 @@ export class BInput extends LitElement {
         />
         <!-- ICONS HERE -->
         ${this.icons}
+        <!-- HELP -->
+        ${this.renderHelp({ help, color })}
       </div>
       <!-- ADDONS HERE -->
     `;
