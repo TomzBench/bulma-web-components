@@ -9,8 +9,15 @@ class JsBundleFactory {
     const absPath = (...args) => this.pathResolver_.getAbsolutePath(...args);
     return {
       name: 'js-bundle',
-      entry: [absPath('/components/bulma/field/field.ts')],
-      entry: [absPath('/components/topnav/topnav.ts')],
+      entry: [
+        absPath('/components/bulma/navbar/navbar.ts'),
+        absPath('/components/bulma/addon/addon.ts'),
+        absPath('/components/bulma/field/field.ts'),
+        absPath('/components/bulma/icon/icon.ts'),
+        absPath('/components/bulma/input/input.ts'),
+        absPath('/components/bulma/select/select.ts'),
+        absPath('/components/topnav/topnav.ts')
+      ],
       output: { filename: 'bundle.js' },
       resolve: { extensions: ['.js', '.scss', '.ts'] },
       module: {
