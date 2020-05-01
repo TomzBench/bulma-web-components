@@ -1,31 +1,27 @@
-import {
-  LitElement,
-  customElement,
-  html,
-  property,
-  query,
-  queryAll
-} from 'lit-element';
+import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { styles } from '../styles';
 import { writeAttribute, readAttribute } from '../../shared/attributes';
 import { Sizes, Colors } from '../bulma-types';
 
+import { styles } from '../styles';
+
 @customElement('b-field')
-class BField extends LitElement {
+export class BField extends LitElement {
   static styles = styles(styles.toString());
-  @property({ type: Boolean }) horizontal: boolean = false;
   @property({ type: String }) label?: string;
+  @property({ type: String }) horizontal: boolean = false;
   @property({ type: String }) size?: Sizes;
   @property({ type: String }) color?: Colors;
   @property({ type: Boolean }) grouped: boolean = false;
   addons: HTMLElement[] = [];
   inputs: HTMLElement[] = [];
+  fields: HTMLElement[] = [];
 
   connectedCallback() {
     super.connectedCallback();
     this.addons = Array.from(this.querySelectorAll('b-addon'));
     this.inputs = Array.from(this.querySelectorAll('b-input'));
+    this.fields = Array.from(this.querySelectorAll('b-field'));
     Array.from(this.children).forEach(i => {
       if (this.size) writeAttribute(i, 'size', this.size);
       if (this.color && !readAttribute(i, 'color')) {
@@ -34,35 +30,58 @@ class BField extends LitElement {
     });
   }
 
-  render() {
+  makeClasses() {
     const hasAddons = this.addons.length && !this.grouped;
-    const grouped = this.addons.length || this.inputs.length >= 2;
+    const grouped =
+      this.addons.length || this.inputs.length >= 2 || this.fields.length;
     const isGrouped = this.grouped && grouped;
+    const showLabel =
+      (this.label && !(hasAddons || isGrouped)) ||
+      (this.label && readAttribute(this, 'horizontal'));
     const classes = {
       field: {
         field: true,
-        'is-horizontal': this.horizontal,
         'has-addons': hasAddons,
         'is-grouped': isGrouped
       },
-      'field-label': {
-        [`is-${this.size}`]: !!this.size,
-        'is-normal': true //!this.size
+      ['field-label']: {
+        'field-label': true,
+        'is-normal': !this.size,
+        [`is-${this.size}`]: !!this.size
       },
       label: {
         label: true,
+        [`is-hidden`]: !showLabel,
         [`is-${this.size}`]: !!this.size
       }
     };
-    return html`
-      <div class="field ${classMap(classes.field)}">
-        ${this.label && !(hasAddons || isGrouped)
-          ? html`
+    return classes;
+  }
+
+  render() {
+    const classes = this.makeClasses();
+    return readAttribute(this, 'horizontal')
+      ? html`
+          <div class="field is-horizontal ${classMap(classes.field)}">
+            <div class="field-label ${classMap(classes['field-label'])}">
               <label class="${classMap(classes.label)}">${this.label}</label>
-            `
-          : ``}
-        ${Array.from(this.children)}
-      </div>
-    `;
+            </div>
+            <div class="field-body">
+              ${Array.from(this.children).map(c =>
+                c.classList.contains('field')
+                  ? c
+                  : html`
+                      <div class="field">${c}</div>
+                    `
+              )}
+            </div>
+          </div>
+        `
+      : html`
+          <div class="field ${classMap(classes.field)}">
+            <label class="${classMap(classes.label)}">${this.label}</label>
+            ${Array.from(this.children)}
+          </div>
+        `;
   }
 }
