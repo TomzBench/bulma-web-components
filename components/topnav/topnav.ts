@@ -5,14 +5,52 @@ import * as scss from './topnav.scss';
 import * as logo from '../../assets/altronix_logo.png';
 
 import '../bulma/field/field';
+import '../bulma/navbar/navbar';
+import '../bulma/navbar/navbar-label';
+import '../bulma/navbar/navbar-item';
+import '../bulma/navbar/navbar-dropdown';
 
 @customElement('atx-topnav')
 class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
   render() {
     return html`
+      <b-navbar color="primary">
+        <b-navbar-item where="brand">
+          <img src="${logo}" height="32" />
+        </b-navbar-item>
+        <b-navbar-item>
+          <b-navbar-label>
+            <b-icon>settings</b-icon>
+            Settings
+          </b-navbar-label>
+          <b-navbar-dropdown>
+            <b-navbar-item><b-icon>account_circle</b-icon>Users</b-navbar-item>
+            <b-navbar-item><b-icon>device_hub</b-icon>Devices</b-navbar-item>
+          </b-navbar-dropdown>
+        </b-navbar-item>
+        <b-navbar-item>
+          <b-navbar-label>
+            <b-icon>description</b-icon>
+            Docs
+          </b-navbar-label>
+          <b-navbar-dropdown>
+            <b-navbar-item>API</b-navbar-item>
+            <b-navbar-item>DashboardV12</b-navbar-item>
+            <b-navbar-item>LinQM5</b-navbar-item>
+            <b-navbar-item>SDK</b-navbar-item>
+            <b-navbar-item>C++</b-navbar-item>
+            <b-navbar-item>NodeJS</b-navbar-item>
+            <b-navbar-item>Rust</b-navbar-item>
+          </b-navbar-dropdown>
+        </b-navbar-item>
+        <b-navbar-item where="right">
+          Sign In
+          <b-icon>account_circle</b-icon>
+        </b-navbar-item>
+      </b-navbar>
+      <!--
       <div class="navbar is-primary">
-        <!-- NAVBAR-BRAND -->
         <div class="navbar-brand">
           <a class="navbar-item">
             <img src="${logo}" height="32" />
@@ -29,9 +67,7 @@ class AtxTopnav extends LitElement {
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <!-- NAVBAR-start -->
         <div class="navbar-start">
-          <!-- SETTINGS -->
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link is-arrowless">
               <span class="navbar-link__icon">
@@ -54,7 +90,6 @@ class AtxTopnav extends LitElement {
               </a>
             </div>
           </div>
-          <!-- DOCS -->
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link is-arrowless">
               <span class="navbar-link__icon">
@@ -72,7 +107,6 @@ class AtxTopnav extends LitElement {
             </div>
           </div>
         </div>
-        <!-- NAVBAR-END -->
         <div class="navbar-end">
           <a class="navbar-item">
             <span class="navbar-link__icon">
@@ -82,6 +116,7 @@ class AtxTopnav extends LitElement {
           </a>
         </div>
       </div>
+      -->
     `;
   }
 }
