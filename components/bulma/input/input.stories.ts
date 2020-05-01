@@ -53,6 +53,18 @@ export const withAddon = () => {
 export const withAddonFieldMods = () => {
   return html`
     <b-field label="Field Mods" color="success" size="small">
+      <b-addon>FOO</b-addon>
+      <b-input placeholder="addons">
+        <b-icon where="left">mail</b-icon>
+      </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
+    </b-field>
+  `.getHTML();
+};
+
+export const withAddonFieldModsMultiColor = () => {
+  return html`
+    <b-field label="Field Mods Expanded" color="success" size="small">
       <b-addon color="info">FOO</b-addon>
       <b-input placeholder="addons">
         <b-icon where="left">mail</b-icon>
