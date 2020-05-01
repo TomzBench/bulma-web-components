@@ -12,14 +12,15 @@ export class BIcon extends LitElement {
   @property({ type: String }) kind: string = 'material-icons';
   @property({ type: String }) icon: string | undefined = undefined;
 
-  createRenderRoot() {
-    return this;
-  }
-
   constructor() {
     super();
+    this.classList.add('b-icon');
     this.classList.add('icon');
     this.classList.add(`is-${this.where}`);
+  }
+
+  createRenderRoot() {
+    return this;
   }
 
   render() {
