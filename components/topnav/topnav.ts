@@ -49,7 +49,15 @@ class AtxTopnav extends LitElement {
           <b-icon>account_circle</b-icon>
         </b-navbar-item>
       </b-navbar>
-      <!--
+    `;
+  }
+}
+
+@customElement('atx-topnav-raw')
+class AtxTopnavRaw extends LitElement {
+  static styles = styles(scss.toString());
+  render() {
+    return html`
       <div class="navbar is-primary">
         <div class="navbar-brand">
           <a class="navbar-item">
@@ -116,7 +124,6 @@ class AtxTopnav extends LitElement {
           </a>
         </div>
       </div>
-      -->
     `;
   }
 }
