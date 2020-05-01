@@ -10,7 +10,6 @@ class JsBundleFactory {
     return {
       name: 'js-bundle',
       entry: [absPath('/components/bulma/field/field.ts')],
-      entry: [absPath('/components/bulma/navbar/navbar.ts')],
       entry: [absPath('/components/topnav/topnav.ts')],
       output: { filename: 'bundle.js' },
       resolve: { extensions: ['.js', '.scss', '.ts'] },
