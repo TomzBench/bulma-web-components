@@ -8,7 +8,7 @@ import {
 } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../styles';
-import { readAttribute } from '../../shared/attributes';
+import { writeAttribute } from '../../shared/attributes';
 import { Sizes, Colors } from '../bulma-types';
 
 @customElement('b-field')
@@ -18,6 +18,7 @@ class BField extends LitElement {
   @property({ type: String }) label?: string;
   @property({ type: String }) size?: Sizes;
   @property({ type: String }) color?: Colors;
+  @property({ type: Boolean }) grouped: boolean = false;
   addons: HTMLElement[] = [];
   inputs: HTMLElement[] = [];
 
@@ -25,16 +26,25 @@ class BField extends LitElement {
     super.connectedCallback();
     this.addons = Array.from(this.querySelectorAll('b-addon'));
     this.inputs = Array.from(this.querySelectorAll('b-input'));
-    console.log(this.addons);
+    Array.from(this.children).forEach(i => {
+      if (this.size) writeAttribute(i, 'size', this.size);
+      if (this.color) writeAttribute(i, 'color', this.color);
+    });
   }
 
   render() {
+    const hasAddons = this.addons.length && !this.grouped;
+    const grouped = this.addons.length || this.inputs.length >= 2;
+    const isGrouped = this.grouped && grouped;
+    console.log(this.inputs.length >= 2);
+    console.log(this.addons.length);
+    console.log(this.addons);
     const classes = {
       field: {
         field: true,
         'is-horizontal': this.horizontal,
-        'has-addons': this.addons.length,
-        'is-grouped': false
+        'has-addons': hasAddons,
+        'is-grouped': isGrouped
       },
       'field-label': {
         [`is-${this.size}`]: !!this.size,
@@ -45,17 +55,16 @@ class BField extends LitElement {
         [`is-${this.size}`]: !!this.size
       }
     };
+    console.log(this.grouped, grouped, classes);
+    console.log(this.label && !(this.grouped || this.addons));
     return html`
       <div class="field ${classMap(classes.field)}">
-        ${this.label
+        ${this.label && !(hasAddons || isGrouped)
           ? html`
               <label class="${classMap(classes.label)}">${this.label}</label>
             `
           : ``}
-        <!-- INPUTS -->
-        ${this.inputs}
-        <!-- ADDONS -->
-        ${this.addons}
+        ${Array.from(this.children)}
       </div>
     `;
   }

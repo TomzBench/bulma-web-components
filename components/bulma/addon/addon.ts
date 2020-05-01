@@ -3,7 +3,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { readAttribute } from '../../shared/attributes';
 import { styles } from '../styles';
 
-import { Colors } from '../bulma-types';
+import { Colors, Sizes } from '../bulma-types';
 
 @customElement('b-addon')
 export class BAddon extends LitElement {
@@ -11,6 +11,7 @@ export class BAddon extends LitElement {
   @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Boolean }) static: boolean = false;
   @property({ type: String }) color?: Colors;
+  @property({ type: String }) size?: Sizes;
 
   createRenderRoot() {
     return this;
@@ -25,6 +26,7 @@ export class BAddon extends LitElement {
     const classes = {
       [`is-${this.color}`]: !!this.color,
       [`is-static`]: !!this.static,
+      [`is-${this.size}`]: !!this.size,
       button: true
     };
     return html`

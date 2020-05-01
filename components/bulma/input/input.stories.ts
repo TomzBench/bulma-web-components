@@ -16,7 +16,7 @@ export const basic = () => {
 
 export const withIcons = () => {
   return html`
-    <b-field label="foo">
+    <b-field label="With Icons">
       <b-input>
         <b-icon where="left">mail</b-icon>
       </b-input>
@@ -26,7 +26,7 @@ export const withIcons = () => {
 
 export const withHelp = () => {
   return html`
-    <b-field>
+    <b-field label="With Help">
       <b-input
         placeholder="foo"
         help="Your name is spelled wrong"
@@ -38,24 +38,52 @@ export const withHelp = () => {
   `.getHTML();
 };
 
-/*
-export const withGrouped = () => {
+export const withAddon = () => {
   return html`
-    <b-field>
-      <b-input>
-        <span class="icon is-left"><i class="material-icons">mail</i></span>
+    <b-field label="With Addon">
+      <b-addon color="info">FOO</b-addon>
+      <b-input placeholder="addons">
+        <b-icon where="left">mail</b-icon>
       </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
     </b-field>
   `.getHTML();
 };
 
-*/
-export const withAddon = () => {
+export const withAddonFieldMods = () => {
   return html`
-    <b-field>
-      <b-input>
+    <b-field label="Field Mods" color="success" size="small">
+      <b-addon color="info">FOO</b-addon>
+      <b-input placeholder="addons">
         <b-icon where="left">mail</b-icon>
-        <b-addon color="info">FOO</b-addon>
+      </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
+    </b-field>
+  `.getHTML();
+};
+
+export const withAddonFieldModsExpanded = () => {
+  return html`
+    <b-field label="Field Mods Expanded" color="success" size="small">
+      <b-addon color="info">FOO</b-addon>
+      <b-input expanded placeholder="addons">
+        <b-icon where="left">mail</b-icon>
+      </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
+    </b-field>
+  `.getHTML();
+};
+
+export const withGrouped = () => {
+  return html`
+    <b-field label="Grouped" grouped>
+      <b-addon color="info">FOO</b-addon>
+      <b-input placeholder="addons">
+        <b-icon where="left">mail</b-icon>
+      </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
+      <b-input placeholder="email">
+        <b-icon where="left">account_circle</b-icon>
       </b-input>
     </b-field>
   `.getHTML();

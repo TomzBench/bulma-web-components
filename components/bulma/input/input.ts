@@ -80,7 +80,8 @@ export class BInput extends LitElement {
     if (iconsRight) this.classList.add('has-icons-right');
     const classes = {
       input: true,
-      [`is-${this.color}`]: !!this.color
+      [`is-${this.color}`]: !!this.color,
+      [`is-${this.size}`]: !!this.size
     };
     return html`
       <input

@@ -16,6 +16,14 @@ export function readAttribute<Ret = string, T extends Element = Element>(
     : undefined;
 }
 
+export function writeAttribute<T extends Element>(
+  el: T,
+  key: string,
+  val?: string
+) {
+  el.attributes.setNamedItem(makeAttribute(key, val));
+}
+
 export function setAttribute<T extends Element>(el: T, attr: Attr) {
   el.attributes.setNamedItem(attr);
 }
