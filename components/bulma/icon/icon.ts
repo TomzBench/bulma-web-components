@@ -19,19 +19,20 @@ export class BIcon extends LitElement {
   @property({ type: String }) kind: string = 'material-icons';
   @property({ type: String }) icon: string | undefined = undefined;
 
-  connectedCallback() {
-    super.connectedCallback();
+  createRenderRoot() {
+    return this;
+  }
+
+  constructor() {
+    super();
     this.classList.add('icon');
     this.classList.add(`is-${this.where}`);
   }
+
   render() {
     return html`
       <i class="${this.kind}">
-        ${this.icon
-          ? this.icon
-          : html`
-              <slot></slot>
-            `}
+        ${this.firstChild}
       </i>
     `;
   }

@@ -34,34 +34,30 @@ export class BInput extends LitElement {
   @property({ type: Number }) max: number | string = '';
   @property({ type: Number }) step: number | null = null;
   icons: HTMLElement[] = [];
-  iconsLeft: boolean = false;
-  iconsRight: boolean = false;
 
   protected handleInputChange() {}
 
   connectedCallback() {
     super.connectedCallback();
-    this.iconsLeft = this.querySelectorAll('.is-left').length ? true : false;
-    this.iconsRight = this.querySelectorAll('.is-right').length ? true : false;
-    this.icons = Array.from(this.querySelectorAll('.icon'));
-    this.icons.forEach(i => {
-      if (readAttribute(i, 'is-left')) {
-        this.iconsLeft = true;
-      } else if (readAttribute(i, 'is-right')) {
-        this.iconsRight = true;
-      }
-    });
-    console.log(this.icons);
-    this.classList.add('FOOFOOTEST');
+    this.icons = Array.from(this.querySelectorAll('b-icon'));
   }
 
   render() {
     const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+    let iconsLeft = false;
+    let iconsRight = false;
+    this.icons.forEach(i => {
+      if (i.classList.contains('is-left')) {
+        iconsLeft = true;
+      } else if (i.classList.contains('is-right')) {
+        iconsRight = true;
+      }
+    });
     const classes = {
       ['is-expanded']: this.expanded,
       [`is-${this.size}`]: !!this.size,
-      ['has-icons-left']: this.iconsLeft,
-      ['has-icons-right']: this.iconsRight
+      ['has-icons-left']: iconsLeft,
+      ['has-icons-right']: iconsRight
     };
     return html`
       <div class="control ${classMap(classes)}">

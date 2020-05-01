@@ -17,7 +17,7 @@ export const withIcons = () => {
   return html`
     <b-field label="foo">
       <b-input>
-        <b-icon class="icon is-left" where="left">mail</b-icon>
+        <b-icon where="left">mail</b-icon>
       </b-input>
     </b-field>
   `.getHTML();
