@@ -39,12 +39,14 @@ export class BInput extends LitElement {
   @property({ type: Number }) max: number | string = '';
   @property({ type: Number }) step: number | null = null;
   icons: HTMLElement[] = [];
+  addons: HTMLElement[] = [];
 
   protected handleInputChange() {}
 
   connectedCallback() {
     super.connectedCallback();
     this.icons = Array.from(this.querySelectorAll('b-icon'));
+    this.addons = Array.from(this.querySelectorAll('b-addon'));
   }
 
   renderHelp({ help, color }: HelpArgs) {
@@ -107,6 +109,7 @@ export class BInput extends LitElement {
         ${this.renderHelp({ help, color })}
       </div>
       <!-- ADDONS HERE -->
+      ${this.addons}
     `;
   }
 }
