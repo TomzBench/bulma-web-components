@@ -1,6 +1,5 @@
 import { html } from 'lit-element';
 import '../field/field';
-import '../field/field-horizontal';
 import '../icon/icon';
 import '../addon/addon';
 import './input';
