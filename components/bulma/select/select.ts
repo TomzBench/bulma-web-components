@@ -11,11 +11,12 @@ interface HelpArgs {
   help?: string;
 }
 
-@customElement('b-input')
-export class BInput extends LitElement {
+@customElement('b-select')
+export class BSelect extends LitElement {
   static styles = styles(styles.toString());
   @property({ type: String }) size?: Sizes;
   @property({ type: String }) color?: Colors;
+  @property({ type: Boolean }) rounded: boolean = false;
   @property({ type: String }) label?: string;
   @property({ type: String }) help?: string;
   @property({ type: String }) type: TextFieldType = 'text';
@@ -32,8 +33,9 @@ export class BInput extends LitElement {
   @property({ type: Number }) max: number | string = '';
   @property({ type: Number }) step: number | null = null;
   icons: HTMLElement[] = [];
+  options: HTMLOptionElement[] = [];
 
-  protected handleInputChange() {}
+  protected handleSelectChange() {}
 
   createRenderRoot() {
     return this;
@@ -42,6 +44,7 @@ export class BInput extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.icons = Array.from(this.querySelectorAll('b-icon'));
+    this.options = Array.from(this.querySelectorAll('option')); // TODO - b-option
   }
 
   renderHelp({ help, color }: HelpArgs) {
@@ -72,28 +75,34 @@ export class BInput extends LitElement {
     if (iconsLeft) this.classList.add('has-icons-left');
     if (iconsRight) this.classList.add('has-icons-right');
     const classes = {
-      input: true,
+      select: true,
+      ['is-fullwidth']: !!this.expanded,
       [`is-${this.color}`]: !!this.color,
-      [`is-${this.size}`]: !!this.size
+      [`is-${this.size}`]: !!this.size,
+      [`is-rounded`]: !!this.rounded
     };
     return html`
-      <input
-        class="${classMap(classes)}"
-        aria-labelledby="label"
-        type="${this.type}"
-        .value="${this.value}"
-        ?disabled="${false}"
-        placeholder="${this.placeholder}"
-        ?required="${this.required}"
-        ?readonly="${this.readOnly}"
-        maxlength="${ifDefined(maxOrUndef)}"
-        pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
-        min="${ifDefined(this.min === '' ? undefined : (this.min as number))}"
-        max="${ifDefined(this.max === '' ? undefined : (this.max as number))}"
-        step="${ifDefined(this.step === null ? undefined : this.step)}"
-        inputmode="${ifDefined(this.inputMode)}"
-        @input="${this.handleInputChange}"
-      />
+      <div class="${classMap(classes)}">
+        <select
+          class="select"
+          aria-labelledby="label"
+          type="${this.type}"
+          .value="${this.value}"
+          ?disabled="${false}"
+          placeholder="${this.placeholder}"
+          ?required="${this.required}"
+          ?readonly="${this.readOnly}"
+          maxlength="${ifDefined(maxOrUndef)}"
+          pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
+          min="${ifDefined(this.min === '' ? undefined : (this.min as number))}"
+          max="${ifDefined(this.max === '' ? undefined : (this.max as number))}"
+          step="${ifDefined(this.step === null ? undefined : this.step)}"
+          inputmode="${ifDefined(this.inputMode)}"
+          @input="${this.handleSelectChange}"
+        >
+          ${this.options}
+        </select>
+      </div>
       <!-- ICONS HERE -->
       ${this.icons}
       <!-- HELP -->
