@@ -55,7 +55,7 @@ export const withAddon = () => {
     <b-field>
       <b-input>
         <b-icon where="left">mail</b-icon>
-        <b-addon>FOO</b-addon>
+        <b-addon color="info">FOO</b-addon>
       </b-input>
     </b-field>
   `.getHTML();

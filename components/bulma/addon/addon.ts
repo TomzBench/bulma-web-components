@@ -3,11 +3,14 @@ import { classMap } from 'lit-html/directives/class-map';
 import { readAttribute } from '../../shared/attributes';
 import { styles } from '../styles';
 
+import { Colors } from '../bulma-types';
+
 @customElement('b-addon')
 export class BAddon extends LitElement {
   static styles = styles(styles.toString());
   @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Boolean }) static: boolean = false;
+  @property({ type: String }) color?: Colors;
 
   createRenderRoot() {
     return this;
@@ -19,7 +22,11 @@ export class BAddon extends LitElement {
     if (this.fullwidth) this.classList.add('is-expanded');
   }
   render() {
-    const classes = { [`is-static`]: !!this.static, button: true };
+    const classes = {
+      [`is-${this.color}`]: !!this.color,
+      [`is-static`]: !!this.static,
+      button: true
+    };
     return html`
       <a class="${classMap(classes)}">${this.firstChild}</a>
     `;
