@@ -14,11 +14,9 @@ class BNavbarDropdown extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.items = Array.from(this.querySelectorAll('b-navbar-item'));
-    console.log(this.items);
   }
 
   render() {
-    console.log(this.items);
     this.classList.add('navbar-dropdown');
     return html`
       ${this.items}

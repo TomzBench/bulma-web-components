@@ -40,11 +40,13 @@ export const hasDropdown = () => {
         <img src=${logo} />
       </b-navbar-item>
       <b-navbar-item where="left">
-        <b-icon>description</b-icon>
-        <span>Documents</span>
+        <b-navbar-label>
+          <b-icon>settings</b-icon>
+          <span>Settings</span>
+        </b-navbar-label>
         <b-navbar-dropdown>
-          <b-navbar-item><b-icon>mail</b-icon>FOO</b-navbar-item>
-          <b-navbar-item><b-icon>description</b-icon>Bar</b-navbar-item>
+          <b-navbar-item><b-icon>account_circle</b-icon>Users</b-navbar-item>
+          <b-navbar-item><b-icon>device_hub</b-icon>Devices</b-navbar-item>
         </b-navbar-dropdown>
       </b-navbar-item>
       <b-navbar-item where="right" dropdown>

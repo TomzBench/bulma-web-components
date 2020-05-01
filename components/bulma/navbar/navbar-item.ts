@@ -39,8 +39,7 @@ class BNavbarItem extends LitElement {
     return this.dropdown.length
       ? html`
           <a class="${classMap(classes.link)}">
-            <span class="b-icon icon"><i class="material-icons">mail</i></span>
-            <span>FOO</span>
+            ${Array.from(this.querySelectorAll('b-navbar-label'))}
           </a>
           ${this.dropdown}
         `

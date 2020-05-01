@@ -27,7 +27,6 @@ class BNavbar extends LitElement {
     super.connectedCallback();
     Array.from(this.children).forEach(i => {
       const where = readAttribute<NavbarWhere>(i, 'where');
-      console.log(`WHERE from NAVBAR ${where}`);
       if (where === 'brand') {
         this.brand.push(i);
       } else if (where === 'right') {
@@ -36,10 +35,6 @@ class BNavbar extends LitElement {
         this.start.push(i);
       }
     });
-    console.log(this.children);
-    console.log(this.brand);
-    console.log(this.start);
-    console.log(this.end);
   }
 
   render() {

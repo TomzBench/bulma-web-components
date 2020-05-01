@@ -8,7 +8,9 @@ class BNavbarLabel extends LitElement {
   }
 
   render() {
-    this.classList.add('b-navbar-label'); // TODO may need to turn into span
-    return this.firstChild;
+    this.classList.add('b-navbar-label');
+    return html`
+      ${Array.from(this.children)}
+    `;
   }
 }
