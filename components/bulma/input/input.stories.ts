@@ -8,8 +8,8 @@ export default { title: 'b-input' };
 
 export const basic = () => {
   return html`
-    <b-field>
-      <b-input></b-input>
+    <b-field label="Basic">
+      <b-input placeholder="basic"></b-input>
     </b-field>
   `.getHTML();
 };
