@@ -39,14 +39,16 @@ export class BInput extends LitElement {
   @property({ type: Number }) max: number | string = '';
   @property({ type: Number }) step: number | null = null;
   icons: HTMLElement[] = [];
-  addons: HTMLElement[] = [];
 
   protected handleInputChange() {}
+
+  createRenderRoot() {
+    return this;
+  }
 
   connectedCallback() {
     super.connectedCallback();
     this.icons = Array.from(this.querySelectorAll('b-icon'));
-    this.addons = Array.from(this.querySelectorAll('b-addon'));
   }
 
   renderHelp({ help, color }: HelpArgs) {
@@ -71,45 +73,37 @@ export class BInput extends LitElement {
         iconsRight = true;
       }
     });
+    this.classList.add('control');
+    if (this.expanded) this.classList.add('is-expanded');
+    if (this.size) this.classList.add(`is-${this.size}`);
+    if (iconsLeft) this.classList.add('has-icons-left');
+    if (iconsRight) this.classList.add('has-icons-right');
     const classes = {
-      control: {
-        control: true,
-        ['is-expanded']: this.expanded,
-        [`is-${this.size}`]: !!this.size,
-        ['has-icons-left']: iconsLeft,
-        ['has-icons-right']: iconsRight
-      },
-      input: {
-        input: true,
-        [`is-${this.color}`]: !!this.color
-      }
+      input: true,
+      [`is-${this.color}`]: !!this.color
     };
     return html`
-      <div class="${classMap(classes.control)}">
-        <input
-          class="${classMap(classes.input)}"
-          aria-labelledby="label"
-          type="${this.type}"
-          .value="${this.value}"
-          ?disabled="${false}"
-          placeholder="${this.placeholder}"
-          ?required="${this.required}"
-          ?readonly="${this.readOnly}"
-          maxlength="${ifDefined(maxOrUndef)}"
-          pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
-          min="${ifDefined(this.min === '' ? undefined : (this.min as number))}"
-          max="${ifDefined(this.max === '' ? undefined : (this.max as number))}"
-          step="${ifDefined(this.step === null ? undefined : this.step)}"
-          inputmode="${ifDefined(this.inputMode)}"
-          @input="${this.handleInputChange}"
-        />
-        <!-- ICONS HERE -->
-        ${this.icons}
-        <!-- HELP -->
-        ${this.renderHelp({ help, color })}
-      </div>
-      <!-- ADDONS HERE -->
-      ${this.addons}
+      <input
+        class="${classMap(classes)}"
+        aria-labelledby="label"
+        type="${this.type}"
+        .value="${this.value}"
+        ?disabled="${false}"
+        placeholder="${this.placeholder}"
+        ?required="${this.required}"
+        ?readonly="${this.readOnly}"
+        maxlength="${ifDefined(maxOrUndef)}"
+        pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
+        min="${ifDefined(this.min === '' ? undefined : (this.min as number))}"
+        max="${ifDefined(this.max === '' ? undefined : (this.max as number))}"
+        step="${ifDefined(this.step === null ? undefined : this.step)}"
+        inputmode="${ifDefined(this.inputMode)}"
+        @input="${this.handleInputChange}"
+      />
+      <!-- ICONS HERE -->
+      ${this.icons}
+      <!-- HELP -->
+      ${this.renderHelp({ help, color })}
     `;
   }
 }

@@ -18,16 +18,23 @@ class BField extends LitElement {
   @property({ type: String }) label?: string;
   @property({ type: String }) size?: Sizes;
   @property({ type: String }) color?: Colors;
+  addons: HTMLElement[] = [];
+  inputs: HTMLElement[] = [];
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addons = Array.from(this.querySelectorAll('b-addon'));
+    this.inputs = Array.from(this.querySelectorAll('b-input'));
+    console.log(this.addons);
+  }
 
   render() {
-    const addons = false;
-    const grouped = false;
     const classes = {
       field: {
         field: true,
         'is-horizontal': this.horizontal,
-        'has-addons': addons,
-        'is-grouped': grouped
+        'has-addons': this.addons.length,
+        'is-grouped': false
       },
       'field-label': {
         [`is-${this.size}`]: !!this.size,
@@ -45,7 +52,10 @@ class BField extends LitElement {
               <label class="${classMap(classes.label)}">${this.label}</label>
             `
           : ``}
-        <slot></slot>
+        <!-- INPUTS -->
+        ${this.inputs}
+        <!-- ADDONS -->
+        ${this.addons}
       </div>
     `;
   }
