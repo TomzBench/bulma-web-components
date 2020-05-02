@@ -12,3 +12,8 @@ b-navbar-item.navbar-link {
     font-weight: bold;
   }
 }
+
+// TODO
+// bulma targets a.navbar-item and misses our b-navbar-item target, need to
+// fork bulma and see if we can fix there. So we should add the .a.navbar items
+// here...

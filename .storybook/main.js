@@ -20,8 +20,6 @@ module.exports = {
     // Now merge storybook webpack with our webpack.
     //
     const bundle = jsBundleFactory.createJsBundle();
-    console.log(config.entry);
-    console.log(bundle.entry);
     return merge([config, bundle]);
   }
 };
