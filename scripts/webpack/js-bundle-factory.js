@@ -16,6 +16,7 @@ class JsBundleFactory {
         absPath('/components/bulma/icon/icon.ts'),
         absPath('/components/bulma/input/input.ts'),
         absPath('/components/bulma/select/select.ts'),
+        absPath('/components/bulma/table/table.ts'),
         absPath('/components/topnav/topnav.ts')
       ],
       output: { filename: 'bundle.js' },

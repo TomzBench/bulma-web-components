@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bulma": "^0.8.2",
+    "bulma": "git+https://github.com/TomzBench/bulma.git",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "reflect-metadata": "^0.1.13",

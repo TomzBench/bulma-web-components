@@ -1,12 +1,4 @@
-import {
-  LitElement,
-  customElement,
-  html,
-  property,
-  query,
-  queryAll
-} from 'lit-element';
-
+import { LitElement, customElement, html, property } from 'lit-element';
 import { readAttribute, writeAttribute } from '../../shared/attributes';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../styles';
