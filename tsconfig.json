@@ -18,5 +18,5 @@
     "emitDecoratorMetadata": true
   },
   "exclude": [],
-  "include": ["./src/components/declarations.d.ts", "./src/components"]
+  "include": ["./src/declarations.d.ts", "./src/components"]
 }
