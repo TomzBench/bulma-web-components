@@ -18,6 +18,7 @@ export class BIcon extends LitElement {
     super();
     this.classList.add('b-icon');
     this.classList.add('icon');
+    this.classList.add(`is-${this.where}`);
   }
 
   createRenderRoot() {
