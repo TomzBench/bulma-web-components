@@ -7,6 +7,7 @@
     "lib": ["es2017", "dom"],
     "strict": true,
     "typeRoots": ["node_modules/@types"],
+    "esModuleInterop": true,
     "outDir": "./",
     "baseUrl": "./",
     "paths": {
@@ -16,8 +17,5 @@
     "emitDecoratorMetadata": true
   },
   "exclude": [],
-  "include": [
-    "./components/declarations.d.ts",
-    "./components"
-  ]
+  "include": ["./components/declarations.d.ts", "./components"]
 }

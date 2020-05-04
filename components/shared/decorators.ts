@@ -1,10 +1,10 @@
 import { Container, decorate, injectable } from 'inversify';
 import { ServiceIdentifier } from './types';
 
-export function makeDecorator(container: Container) {
-  function domInject(serviceIdentifier: ServiceIdentifier<any>) {
-    return function(proto: any, key: string) {
-      Object.defineProperty(proto, key, {
+export function makeDecorators(container: Container) {
+  function lazyInject(serviceIdentifier: ServiceIdentifier<any>) {
+    return function(target: any, key: string) {
+      Object.defineProperty(target, key, {
         configurable: true,
         enumerable: true,
         set: () => null,
@@ -13,7 +13,7 @@ export function makeDecorator(container: Container) {
     };
   }
 
-  function service(id: ServiceIdentifier<any>) {
+  function bind(id: ServiceIdentifier<any>) {
     return function<Args extends any[], T extends {}>(
       target: new (...args: Args) => T
     ): new (...args: Args) => T {
@@ -26,5 +26,5 @@ export function makeDecorator(container: Container) {
     };
   }
 
-  return { domInject, service };
+  return { lazyInject, /*consumer,*/ bind };
 }
