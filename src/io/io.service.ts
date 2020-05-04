@@ -9,13 +9,14 @@ export class IoService implements IoRequester {
   }
 
   async put<T>(url: string, obj: any): Promise<T> {
-    return (await fetch(url, {
+    let response = await fetch(url, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'
       },
       body: obj
-    })).json();
+    });
+    return response.json();
   }
 
   async post<T>(url: string, obj: any): Promise<T> {
