@@ -6,7 +6,7 @@ const pathResolver = new PathResolver();
 const jsBundleFactory = new JsBundleFactory({ pathResolver });
 
 module.exports = {
-  stories: ['../components/**/*.stories.[tj]s'],
+  stories: ['../src/components/**/*.stories.[tj]s'],
   webpackFinal: async (config, { configType }) => {
     //
     // Replace file-loader with url-loader & babel-loader with our babel-loader

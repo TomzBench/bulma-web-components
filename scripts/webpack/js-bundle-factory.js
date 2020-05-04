@@ -10,14 +10,14 @@ class JsBundleFactory {
     return {
       name: 'js-bundle',
       entry: [
-        absPath('/components/bulma/navbar/navbar.ts'),
-        absPath('/components/bulma/addon/addon.ts'),
-        absPath('/components/bulma/field/field.ts'),
-        absPath('/components/bulma/icon/icon.ts'),
-        absPath('/components/bulma/input/input.ts'),
-        absPath('/components/bulma/select/select.ts'),
-        absPath('/components/bulma/table/table.ts'),
-        absPath('/components/topnav/topnav.ts')
+        absPath('/src/components/bulma/navbar/navbar.ts'),
+        absPath('/src/components/bulma/addon/addon.ts'),
+        absPath('/src/components/bulma/field/field.ts'),
+        absPath('/src/components/bulma/icon/icon.ts'),
+        absPath('/src/components/bulma/input/input.ts'),
+        absPath('/src/components/bulma/select/select.ts'),
+        absPath('/src/components/bulma/table/table.ts'),
+        absPath('/src/components/topnav/topnav.ts')
       ],
       output: { filename: 'bundle.js' },
       resolve: { extensions: ['.js', '.scss', '.ts'] },
