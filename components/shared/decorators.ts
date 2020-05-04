@@ -1,29 +1,30 @@
-import { Container } from 'inversify';
-// export function domInject() {
-//   return function(proto: any, key: string) {
-//     console.log(proto);
-//     console.log(key);
-//     Object.defineProperty(proto, key, {
-//       configurable: true,
-//       enumerable: true,
-//       set: () => null,
-//       get: () => 'From Injector'
-//     });
-//   };
-// }
+import { Container, decorate, injectable } from 'inversify';
+import { ServiceIdentifier } from './types';
 
-export function makeDecorator(c: Container) {
-  function domInject() {
+export function makeDecorator(container: Container) {
+  function domInject(serviceIdentifier: ServiceIdentifier<any>) {
     return function(proto: any, key: string) {
-      console.log(proto);
-      console.log(key);
       Object.defineProperty(proto, key, {
         configurable: true,
         enumerable: true,
         set: () => null,
-        get: () => 'From Injector'
+        get: () => container.get(serviceIdentifier)
       });
     };
   }
-  return { domInject };
+
+  function service(id: ServiceIdentifier<any>) {
+    return function<Args extends any[], T extends {}>(
+      target: new (...args: Args) => T
+    ): new (...args: Args) => T {
+      decorate(injectable(), target);
+      container
+        .bind(id)
+        .to(target)
+        .inSingletonScope();
+      return target;
+    };
+  }
+
+  return { domInject, service };
 }
