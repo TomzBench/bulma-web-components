@@ -1,15 +1,17 @@
-import { IoRequester } from './types';
+import { injectable } from 'inversify';
+import { IoRequester, Fetch } from './types';
 import { bind } from '../ioc/ioc';
-import { SYMBOLS } from '../ioc/constants.root';
 
-@bind(SYMBOLS.IO_SERVICE)
+@injectable()
 export class IoService implements IoRequester {
+  constructor(private fetch: Fetch) {}
   async get<T>(url: string): Promise<T> {
-    return (await fetch(url)).json();
+    let response = await this.fetch(url);
+    return response.json();
   }
 
   async put<T>(url: string, obj: any): Promise<T> {
-    let response = await fetch(url, {
+    let response = await this.fetch(url, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'
@@ -20,16 +22,20 @@ export class IoService implements IoRequester {
   }
 
   async post<T>(url: string, obj: any): Promise<T> {
-    return (await fetch(url, {
+    let response = await this.fetch(url, {
       method: 'post',
-      headers: {},
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: obj
-    })).json();
+    });
+    return response.json();
   }
 
   async delete<T>(url: string): Promise<T> {
-    return (await fetch(url, {
+    let response = await this.fetch(url, {
       method: 'delete'
-    })).json();
+    });
+    return response.json();
   }
 }

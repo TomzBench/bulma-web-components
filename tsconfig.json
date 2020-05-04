@@ -1,22 +1,40 @@
+// {
+//   "compilerOptions": {
+//     "types": ["reflect-metadata", "jest"],
+//     "target": "es2017",
+//     "module": "es2015",
+//     "moduleResolution": "node",
+//     "resolveJsonModule": true,
+//     "lib": ["es2017", "dom"],
+//     "strict": true,
+//     "typeRoots": ["node_modules/@types"],
+//     "esModuleInterop": true,
+//     "outDir": "./",
+//     "baseUrl": "./",
+//     "paths": {
+//       "~/*": ["*"]
+//     },
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true
+//   },
+//   "exclude": [],
+//   "include": ["./src/declarations.d.ts", "./src/components"]
+// }
+
 {
   "compilerOptions": {
+    "outDir": "./dist/",
     "types": ["reflect-metadata", "jest"],
-    "target": "es2017",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "lib": ["es2017", "dom"],
-    "strict": true,
-    "typeRoots": ["node_modules/@types"],
-    "esModuleInterop": true,
-    "outDir": "./",
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["*"]
-    },
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["es5", "es6", "dom"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": [],
-  "include": ["./src/declarations.d.ts", "./src/components"]
+  "include": ["./src/**/*"],
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": ["./src/**/*"]
+  }
 }
