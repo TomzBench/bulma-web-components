@@ -18,7 +18,7 @@ export class AtxTopnav extends LitElement {
     return html`
       <b-navbar color="primary">
         <b-navbar-item where="brand">
-          <img src="${logo}" height="32" />
+          <img src="${logo}" height="32px" />
         </b-navbar-item>
         <b-navbar-item>
           <b-navbar-label>
