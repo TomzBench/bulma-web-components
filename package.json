@@ -7,7 +7,8 @@
     "test": "node ./scripts/test.js",
     "build": "webpack",
     "storybook:start": "start-storybook -p 6006",
-    "storybook:build": "build-storybook"
+    "storybook:build": "build-storybook",
+    "start": "webpack-dev-server --config=scripts/webpack.dev.js"
   },
   "author": "",
   "license": "ISC",
