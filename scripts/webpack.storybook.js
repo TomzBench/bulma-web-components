@@ -12,6 +12,7 @@ module.exports = merge(commonConfig(), {
     __dirname + '/../src/components/bulma/input/input.ts',
     __dirname + '/../src/components/bulma/select/select.ts',
     __dirname + '/../src/components/bulma/table/table.ts',
-    __dirname + '/../src/components/topnav/topnav.ts'
+    __dirname + '/../src/components/topnav/topnav.ts',
+    __dirname + '/../src/components/user-table/user-table.ts'
   ]
 });
