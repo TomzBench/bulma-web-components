@@ -26,5 +26,5 @@ export function makeDecorators(container: Container) {
     };
   }
 
-  return { lazyInject, /*consumer,*/ bind };
+  return { lazyInject, bind };
 }

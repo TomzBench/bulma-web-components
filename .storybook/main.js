@@ -5,6 +5,8 @@ const merge = require('webpack-merge');
 const pathResolver = new PathResolver();
 const jsBundleFactory = new JsBundleFactory({ pathResolver });
 
+const storybookConfig = require('../scripts/webpack.storybook');
+
 module.exports = {
   stories: ['../src/components/**/*.stories.[tj]s'],
   webpackFinal: async (config, { configType }) => {
