@@ -16,7 +16,6 @@ class BNavbar extends LitElement {
   end: Element[] = [];
 
   connectedCallback() {
-    console.log(scss.toString());
     super.connectedCallback();
     Array.from(this.children).forEach(i => {
       const where = readAttribute<NavbarWhere>(i, 'where');

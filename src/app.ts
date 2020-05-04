@@ -16,6 +16,7 @@ export class App extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     let result = await this.io.get('foo').catch(e => e);
+    console.log(result);
   }
   render() {
     return html`
