@@ -45,27 +45,36 @@ export class AtxUserTable extends LitElement {
 
   render() {
     return html`
-      <div class="columns is-multiline">
-        <div class="column is-12">
-          <div class="columns">
-            <div class="column is-6"></div>
-            <div class="column is-6 right">
-              <b-field>
-                <b-select>
-                  <b-icon>search</b-icon>
-                  <option>Name</option>
-                  <option>Email</option>
-                  <option>Role</option>
-                </b-select>
-                <b-input expanded placeholder="search"></b-input>
-                <b-addon-button color="warning">
-                  <b-icon>search</b-icon>
-                </b-addon-button>
-              </b-field>
-            </div>
-          </div>
+      <div class="columns is-desktop">
+        <div class="column is-6 is-paddingless">
+          <b-field size="small" grouped>
+            <b-addon-button color="primary">
+              <b-icon>add</b-icon>
+              Add New User
+            </b-addon-button>
+            <b-addon-button color="danger">
+              <b-icon>trash</b-icon>
+              Delete Selected
+            </b-addon-button>
+          </b-field>
         </div>
-        <div class="column is-12">
+        <div class="column is-6 is-paddingless">
+          <b-field size="small">
+            <b-select>
+              <b-icon>search</b-icon>
+              <option>Name</option>
+              <option>Email</option>
+              <option>Role</option>
+            </b-select>
+            <b-input expanded placeholder="search"></b-input>
+            <b-addon-button color="warning">
+              <b-icon>search</b-icon>
+            </b-addon-button>
+          </b-field>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-12 is-paddingless">
           <b-table
             numbered
             fullwidth

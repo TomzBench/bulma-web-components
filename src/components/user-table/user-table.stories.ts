@@ -1,6 +1,8 @@
 import { html } from 'lit-element';
 import { UserTableData, AtxUserTable } from './user-table';
+import { styles } from '../bulma/styles';
 import './user-table.ts';
+import * as scss from './user-table.styles.scss';
 
 // Some dummy data
 let array = new Array(8);
