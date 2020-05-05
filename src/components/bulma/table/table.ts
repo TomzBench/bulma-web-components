@@ -50,6 +50,8 @@ export class BTable<T> extends LitElement {
   @property({ type: Boolean }) footer: boolean = false;
   @property({ type: Boolean }) narrow: boolean = false;
   @property({ type: Boolean }) hoverable: boolean = false;
+  @property({ type: Boolean }) pagination: boolean = false;
+  @property({ type: Boolean }) checkboxes: boolean = false;
   @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Boolean }) numbered: boolean = false;
   @property({ type: Number }) selected: number = -1;
@@ -81,6 +83,9 @@ export class BTable<T> extends LitElement {
     }
     this._tableData = data;
     this.requestUpdate();
+  }
+  get tableData(): TableData<T & TableDataVarientOptions> {
+    return this._tableData;
   }
 
   renderHeader() {

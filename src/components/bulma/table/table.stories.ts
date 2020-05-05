@@ -58,3 +58,31 @@ export const actions = () => {
   };
   return table;
 };
+
+export const pagination = () => {
+  let table: BTable<TableData> = new BTable();
+  table.fullwidth = true;
+  table.pagination = true;
+  table.narrow = true;
+  table.hoverable = true;
+  table.variant = 'crud';
+  table.tableData = {
+    data: [...array],
+    columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
+  };
+  return table;
+};
+
+export const withCheckboxes = () => {
+  let table: BTable<TableData> = new BTable();
+  table.fullwidth = true;
+  table.checkboxes = true;
+  table.narrow = true;
+  table.hoverable = true;
+  table.variant = 'crud';
+  table.tableData = {
+    data: [...array],
+    columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
+  };
+  return table;
+};

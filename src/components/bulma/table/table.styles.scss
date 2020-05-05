@@ -4,6 +4,11 @@
   /* margin-bottom: 0px;*/
   .table {
     tr {
+      .pagination {
+        td {
+          text-align: right;
+        }
+      }
       td {
         b-icon.is-danger {
           color: darken($danger, 1);
