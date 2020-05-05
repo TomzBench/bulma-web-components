@@ -4,6 +4,7 @@ import { styles } from '../bulma/styles';
 import * as scss from './user-table.styles.scss';
 
 import { BTable } from '../bulma/table/table';
+import '../bulma/pagination/pagination.ts';
 import '../bulma/table/table.ts';
 import '../bulma/field/field.ts';
 import '../bulma/input/input.ts';
@@ -53,7 +54,7 @@ export class AtxUserTable extends LitElement {
               Add New User
             </b-addon-button>
             <b-addon-button color="danger">
-              <b-icon>trash</b-icon>
+              <b-icon>delete</b-icon>
               Delete Selected
             </b-addon-button>
           </b-field>
@@ -83,6 +84,20 @@ export class AtxUserTable extends LitElement {
             narrow
             variant="crud"
           ></b-table>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-12 is-paddingless">
+          <b-pagination
+            simple
+            current="1"
+            size="small"
+            total="${this.users.length}"
+            per-page="1"
+            @b-prev=${() => console.log('Want users PREVIOUS')}
+            @b-next=${() => console.log('Want users NEXT')}
+          >
+          </b-pagination>
         </div>
       </div>
     `;
