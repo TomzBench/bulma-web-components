@@ -61,10 +61,6 @@ export class AtxTableDevice extends LitElement {
       <div class="columns is-desktop">
         <div class="column is-6 is-paddingless">
           <b-field size="small" grouped>
-            <b-addon-button color="primary">
-              <b-icon>add</b-icon>
-              Add New User
-            </b-addon-button>
             <b-addon-button color="danger">
               <b-icon>delete</b-icon>
               Delete Selected
@@ -88,14 +84,7 @@ export class AtxTableDevice extends LitElement {
       </div>
       <div class="columns">
         <div class="column is-12 is-paddingless">
-          <b-table
-            numbered
-            fullwidth
-            hoverable
-            striped
-            narrow
-            variant="crud"
-          ></b-table>
+          <b-table numbered fullwidth hoverable striped narrow></b-table>
         </div>
       </div>
       <div class="columns">
