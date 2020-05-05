@@ -45,7 +45,7 @@ export class AtxUserTable extends LitElement {
 
   render() {
     return html`
-      <div class="columns">
+      <div class="columns is-multiline">
         <div class="column is-12">
           <div class="columns">
             <div class="column is-6"></div>
@@ -65,8 +65,6 @@ export class AtxUserTable extends LitElement {
             </div>
           </div>
         </div>
-      </div>
-      <div class="columns">
         <div class="column is-12">
           <b-table
             numbered
