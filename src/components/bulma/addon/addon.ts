@@ -3,11 +3,10 @@ import { classMap } from 'lit-html/directives/class-map';
 import { readAttribute } from '../../shared/attributes';
 import { styles } from '../styles';
 
-import { Colors, Sizes } from '../bulma-types';
+import { Colors, Sizes, NODE_TYPES } from '../bulma-types';
 
 @customElement('b-addon')
 export class BAddon extends LitElement {
-  static styles = styles(styles.toString());
   @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Boolean }) static: boolean = false;
   @property({ type: String }) color?: Colors;
@@ -31,6 +30,43 @@ export class BAddon extends LitElement {
     };
     return html`
       <a class="${classMap(classes)}">${this.firstChild}</a>
+    `;
+  }
+}
+
+@customElement('b-addon-button')
+export class BAddonButton extends LitElement {
+  @property({ type: Boolean }) expanded: boolean = false;
+  @property({ type: String }) color?: Colors;
+  @property({ type: String }) size?: Sizes;
+  elementChildren: Element[] = [];
+  constructor() {
+    super();
+    this.classList.add('control');
+  }
+
+  createRenderRoot() {
+    return this;
+  }
+
+  render() {
+    let elementChildren = Array.from(this.childNodes).map(e =>
+      e.nodeType === NODE_TYPES.TEXT
+        ? html`
+            <span>${e}</span>
+          `
+        : e
+    );
+    console.log(elementChildren);
+    const classes = {
+      [`is-${this.color}`]: !!this.color,
+      [`is-${this.size}`]: !!this.size,
+      [`is-expanded`]: !!this.expanded
+    };
+    return html`
+      <a class="button ${classMap(classes)}">
+        ${elementChildren}
+      </a>
     `;
   }
 }

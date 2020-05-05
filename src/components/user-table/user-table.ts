@@ -7,6 +7,8 @@ import { BTable } from '../bulma/table/table';
 import '../bulma/table/table.ts';
 import '../bulma/field/field.ts';
 import '../bulma/input/input.ts';
+import '../bulma/icon/icon.ts';
+import '../bulma/select/select';
 import '../bulma/addon/addon.ts';
 
 export interface UserTableData {
@@ -45,17 +47,23 @@ export class AtxUserTable extends LitElement {
     return html`
       <div class="columns">
         <div class="column is-12">
-          <b-field>
-            <b-addon color="primary">Add</b-addon>
-            <b-input placeholder="search">
-              <b-icon>search</b-icon>
-            </b-input>
-            <b-select>
-              <option>Name</option>
-              <option>Email</option>
-              <option>Role</option>
-            </b-select>
-          </b-field>
+          <div class="columns">
+            <div class="column is-6"></div>
+            <div class="column is-6 right">
+              <b-field>
+                <b-select>
+                  <b-icon>search</b-icon>
+                  <option>Name</option>
+                  <option>Email</option>
+                  <option>Role</option>
+                </b-select>
+                <b-input expanded placeholder="search"></b-input>
+                <b-addon-button color="warning">
+                  <b-icon>search</b-icon>
+                </b-addon-button>
+              </b-field>
+            </div>
+          </div>
         </div>
       </div>
       <div class="columns">

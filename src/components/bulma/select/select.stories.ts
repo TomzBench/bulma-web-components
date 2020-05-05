@@ -1,6 +1,7 @@
 import { html } from 'lit-element';
 import '../field/field';
 import '../icon/icon';
+import '../input/input';
 import '../addon/addon';
 import './select';
 
@@ -58,11 +59,54 @@ export const withAddon = () => {
         <option>New York</option>
         <option>California</option>
       </b-select>
+      <b-input placeholder="test">
+        <b-icon>mail</b-icon>
+      </b-input>
       <b-addon static color="info">@gmail.com</b-addon>
+      <b-addon-button color="success">
+        <b-icon>search</b-icon>
+        Search
+      </b-addon-button>
     </b-field>
   `.getHTML();
 };
 
+export const withAddonOther = () => {
+  return html`
+    <b-field>
+      <b-select>
+        <b-icon where="left">search</b-icon>
+        <option>Name</option>
+        <option>Email</option>
+        <option>Role</option>
+      </b-select>
+      <b-input placeholder="search">
+        <b-icon>mail</b-icon>
+      </b-input>
+      <b-addon-button>
+        <b-icon>search</b-icon>
+        Search
+      </b-addon-button>
+    </b-field>
+    <b-field>
+      <b-select>
+        <b-icon where="left">account_circle</b-icon>
+        <option>Texas</option>
+        <option>Main</option>
+        <option>New York</option>
+        <option>California</option>
+      </b-select>
+      <b-input placeholder="test">
+        <b-icon>mail</b-icon>
+      </b-input>
+      <b-addon static color="info">@gmail.com</b-addon>
+      <b-addon-button color="success">
+        <b-icon>search</b-icon>
+        Search
+      </b-addon-button>
+    </b-field>
+  `.getHTML();
+};
 export const withAddonFieldMods = () => {
   return html`
     <b-field label="Field Mods" color="success" size="small">
