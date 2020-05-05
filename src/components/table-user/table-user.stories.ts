@@ -1,8 +1,8 @@
 import { html } from 'lit-element';
-import { UserTableData, AtxUserTable } from './user-table';
+import { UserTableData, AtxUserTable } from './table-user';
 import { styles } from '../bulma/styles';
-import './user-table.ts';
-import * as scss from './user-table.styles.scss';
+import './table-user.ts';
+import * as scss from './table-user.styles.scss';
 
 // Some dummy data
 let array = new Array(8);
@@ -13,7 +13,7 @@ for (let i = 0; i < 8; i++)
     role: 'admin'
   };
 
-export default { title: 'atx-user-table' };
+export default { title: 'atx-table-user' };
 
 export const basic = () => {
   let table: AtxUserTable = new AtxUserTable();
