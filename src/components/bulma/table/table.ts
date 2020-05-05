@@ -43,10 +43,11 @@ type TableDataHtml<T> = {
 };
 
 @customElement('b-table')
-export class BTable<T extends TableDataVarientOptions> extends LitElement {
+export class BTable<T> extends LitElement {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) bordered: boolean = false;
   @property({ type: Boolean }) striped: boolean = false;
+  @property({ type: Boolean }) footer: boolean = false;
   @property({ type: Boolean }) narrow: boolean = false;
   @property({ type: Boolean }) hoverable: boolean = false;
   @property({ type: Boolean }) fullwidth: boolean = false;
@@ -54,8 +55,11 @@ export class BTable<T extends TableDataVarientOptions> extends LitElement {
   @property({ type: Number }) selected: number = -1;
   @property({ type: String }) variant: TableVariants = 'basic';
 
-  _tableData: TableData<T> = { data: [], columns: [] };
-  set tableData(data: TableData<T>) {
+  _tableData: TableData<T & TableDataVarientOptions> = {
+    data: [],
+    columns: []
+  };
+  set tableData(data: TableData<T & TableDataVarientOptions>) {
     if (this.numbered) {
       data.columns.unshift({ label: 'idx', numeric: true });
       data.data = data.data.map((d, idx) => {
@@ -117,11 +121,15 @@ export class BTable<T extends TableDataVarientOptions> extends LitElement {
               ${this.renderHeader()}
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              ${this.renderHeader()}
-            </tr>
-          </tfoot>
+          ${this.footer
+            ? html`
+                <tfoot>
+                  <tr>
+                    ${this.renderHeader()}
+                  </tr>
+                </tfoot>
+              `
+            : ''}
           <tbody>
             ${this._tableData.data.map(
               (d, idx) =>

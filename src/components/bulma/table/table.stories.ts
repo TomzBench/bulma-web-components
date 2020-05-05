@@ -1,6 +1,5 @@
 import { html, TemplateResult } from 'lit-element';
 
-import { ExtendedTableData } from '../bulma-types';
 import { BTable } from './table';
 import './table.ts';
 
@@ -22,7 +21,7 @@ for (let i = 0; i < 20; i++)
 export default { title: 'b-table' };
 
 export const basic = () => {
-  let table: BTable<ExtendedTableData<TableData>> = new BTable();
+  let table: BTable<TableData> = new BTable();
   table.fullwidth = true;
   table.narrow = true;
   table.hoverable = true;
@@ -35,7 +34,7 @@ export const basic = () => {
 };
 
 export const numbered = () => {
-  let table: BTable<ExtendedTableData<TableData>> = new BTable();
+  let table: BTable<TableData> = new BTable();
   table.fullwidth = true;
   table.numbered = true;
   table.narrow = true;
@@ -48,7 +47,7 @@ export const numbered = () => {
 };
 
 export const actions = () => {
-  let table: BTable<ExtendedTableData<TableData>> = new BTable();
+  let table: BTable<TableData> = new BTable();
   table.fullwidth = true;
   table.narrow = true;
   table.hoverable = true;

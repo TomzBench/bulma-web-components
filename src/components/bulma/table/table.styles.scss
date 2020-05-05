@@ -1,23 +1,26 @@
 @import '../variables';
 @import '~bulma/sass/utilities/all';
-.table {
-  tr {
-    td {
-      b-icon.is-danger {
-        color: darken($danger, 1);
+.table-container {
+  /* margin-bottom: 0px;*/
+  .table {
+    tr {
+      td {
+        b-icon.is-danger {
+          color: darken($danger, 1);
+        }
+        b-icon.is-info {
+          color: darken($primary, 10);
+        }
+        b-icon {
+          vertical-align: middle;
+          margin: 0px 4px;
+        }
       }
-      b-icon.is-info {
-        color: darken($primary, 10);
+      td.is-numeric,
+      th.is-numeric {
+        text-align: right;
+        width: 20px;
       }
-      b-icon {
-        vertical-align: middle;
-        margin: 0px 4px;
-      }
-    }
-    td.is-numeric,
-    th.is-numeric {
-      text-align: right;
-      width: 20px;
     }
   }
 }
