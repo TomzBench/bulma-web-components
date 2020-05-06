@@ -88,12 +88,26 @@ test('domConsumer should request services', () => {
     name: string;
   }
 
-  class Connectable {
+  // TODO move to mock
+  class Base {
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject | null,
+      options?: boolean | AddEventListenerOptions
+    ): void {}
+    dispatchEvent(event: Event): boolean {
+      return false;
+    }
+    removeEventListener(
+      type: string,
+      callback: EventListenerOrEventListenerObject | null,
+      options?: EventListenerOptions | boolean
+    ): void {}
     connectedCallback() {}
   }
 
   @domConsumer()
-  class Foo extends Connectable {
+  class Foo extends Base {
     @domInject(TEST_SERVICE_A)
     serviceA!: Service;
     @domInject(TEST_SERVICE_B)
@@ -102,5 +116,6 @@ test('domConsumer should request services', () => {
     serviceC!: Service;
   }
   let foo = new Foo();
+  // TODO expect mock event to be called
   foo.connectedCallback();
 });

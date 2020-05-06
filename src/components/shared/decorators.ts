@@ -40,7 +40,7 @@ export interface DomPropertyMetadata {
   id: ServiceIdentifier<any>;
 }
 
-interface Connectable {
+interface Connectable extends EventTarget {
   connectedCallback(): void;
 }
 
