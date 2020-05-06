@@ -40,6 +40,33 @@ export interface DomPropertyMetadata {
   id: ServiceIdentifier<any>;
 }
 
+interface Connectable {
+  connectedCallback(): void;
+}
+
+export function domConsumer() {
+  return function<T extends { new (...args: any[]): Connectable }>(target: T) {
+    decorate(injectable(), target);
+    class C extends target {
+      constructor(...args: any[]) {
+        super(...args);
+      }
+      connectedCallback() {
+        let meta: DomPropertyMetadata[] =
+          Reflect.getMetadata(METADATA_KEYS.domConsumer, target.constructor) ||
+          [];
+        const event = new CustomEvent('dom-inject-request', {
+          composed: true,
+          bubbles: true,
+          detail: { meta }
+        });
+        super.connectedCallback();
+      }
+    }
+    return C;
+  };
+}
+
 export function domInject(id: ServiceIdentifier<any>) {
   return function(target: any, key: string) {
     let list: DomPropertyMetadata[] = [];
@@ -49,14 +76,6 @@ export function domInject(id: ServiceIdentifier<any>) {
         list,
         target.constructor
       );
-      let original = target.constructor.prototype.connectedCallback;
-      Object.defineProperty(target.constructor.prototype, 'connectedCallback', {
-        writable: false,
-        value: () => {
-          console.log('OVERRIDE');
-          original();
-        }
-      });
     } else {
       list = Reflect.getMetadata(METADATA_KEYS.domConsumer, target.constructor);
     }

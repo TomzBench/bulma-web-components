@@ -28,8 +28,8 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es5",
-    "lib": ["es5", "es6", "dom"],
+    "target": "es2015",
+    "lib": ["dom", "es2017"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },

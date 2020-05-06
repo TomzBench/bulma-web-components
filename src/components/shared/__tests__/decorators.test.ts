@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 import {
   makeDecorators,
   domInject,
+  domConsumer,
   DomPropertyMetadata,
   METADATA_KEYS
 } from '../decorators';
@@ -52,23 +53,13 @@ test('domInject should add metadata', () => {
     name: string;
   }
 
-  class Base {
-    connectedCallback() {
-      console.log('BASE');
-    }
-  }
-
-  class Foo extends Base {
+  class Foo {
     @domInject(TEST_SERVICE_A)
     serviceA!: Service;
     @domInject(TEST_SERVICE_B)
     serviceB!: Service;
     @domInject(TEST_SERVICE_C)
     serviceC!: Service;
-    connectedCallback() {
-      super.connectedCallback();
-      console.log('FOO');
-    }
   }
 
   let foo = new Foo();
@@ -76,5 +67,40 @@ test('domInject should add metadata', () => {
     METADATA_KEYS.domConsumer,
     foo.constructor
   );
+
+  expect(meta.length).toBe(3);
+  expect(meta[0].id).toBe(TEST_SERVICE_A);
+  expect(meta[0].key).toBe('serviceA');
+  expect(meta[0].target).toBe(Foo.prototype);
+  expect(meta[1].id).toBe(TEST_SERVICE_B);
+  expect(meta[1].key).toBe('serviceB');
+  expect(meta[1].target).toBe(Foo.prototype);
+  expect(meta[2].id).toBe(TEST_SERVICE_C);
+  expect(meta[2].key).toBe('serviceC');
+  expect(meta[2].target).toBe(Foo.prototype);
+});
+
+test('domConsumer should request services', () => {
+  const TEST_SERVICE_A = Symbol.for('TestServiceA');
+  const TEST_SERVICE_B = Symbol.for('TestServiceB');
+  const TEST_SERVICE_C = Symbol.for('TestServiceC');
+  interface Service {
+    name: string;
+  }
+
+  class Connectable {
+    connectedCallback() {}
+  }
+
+  @domConsumer()
+  class Foo extends Connectable {
+    @domInject(TEST_SERVICE_A)
+    serviceA!: Service;
+    @domInject(TEST_SERVICE_B)
+    serviceB!: Service;
+    @domInject(TEST_SERVICE_C)
+    serviceC!: Service;
+  }
+  let foo = new Foo();
   foo.connectedCallback();
 });
