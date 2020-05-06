@@ -4,7 +4,7 @@
   "description": "linq-developer-portal ui",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --coverage",
+    "test": "tsc && karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start --update-snapshots",
     "test:prune-snapshots": "karma start --prune-snapshots",

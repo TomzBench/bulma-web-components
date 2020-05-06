@@ -25,7 +25,7 @@ export interface AlertTableData {
 @customElement('atx-table-alert')
 export class AtxAlertTable extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<AlertTableData> | null;
+  @query('b-table') protected table!: BTable<AlertTableData>;
   _alerts: AlertTableData[] = [];
   set alerts(users: AlertTableData[]) {
     this._alerts = [...users];

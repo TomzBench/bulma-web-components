@@ -1,5 +1,15 @@
+import { html, fixture, expect } from '@open-wc/testing';
 import { IoService } from '../io.service';
 
+// TODO need to replace jest.fn() with some sinon equiv
+
+describe('io', () => {
+  it('works', () => {
+    expect(1).to.eq(1);
+  });
+});
+
+/*
 function setup(mockReturnValue: Promise<any>) {
   let mockFetch = jest.fn();
   mockFetch.mockReturnValue(mockReturnValue);
@@ -46,3 +56,4 @@ test('io.service should send a delete request', async () => {
     method: 'delete'
   });
 });
+*/

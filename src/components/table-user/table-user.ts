@@ -21,7 +21,7 @@ export interface UserTableData {
 @customElement('atx-table-user')
 export class AtxUserTable extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<UserTableData> | null;
+  @query('b-table') protected table!: BTable<UserTableData>;
 
   _users: UserTableData[] = [];
   set users(users: UserTableData[]) {

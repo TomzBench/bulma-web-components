@@ -25,7 +25,7 @@ export interface TableDeviceData {
 @customElement('atx-table-device')
 export class AtxTableDevice extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<TableDeviceData> | null;
+  @query('b-table') protected table!: BTable<TableDeviceData>;
 
   _devices: TableDeviceData[] = [];
   set devices(devices: TableDeviceData[]) {
