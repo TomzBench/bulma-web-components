@@ -28,3 +28,44 @@ export function makeDecorators(container: Container) {
 
   return { lazyInject, bind };
 }
+
+export const METADATA_KEYS = {
+  domConsumer: 'altronix/domConsumer',
+  domProperty: 'altronix/domProperty'
+};
+
+export interface DomPropertyMetadata {
+  target: any;
+  key: string;
+  id: ServiceIdentifier<any>;
+}
+
+export function domInject(id: ServiceIdentifier<any>) {
+  return function(target: any, key: string) {
+    let list: DomPropertyMetadata[] = [];
+    if (!Reflect.hasMetadata(METADATA_KEYS.domConsumer, target.constructor)) {
+      // TODO - override connectedCallback()
+      Reflect.defineMetadata(
+        METADATA_KEYS.domConsumer,
+        list,
+        target.constructor
+      );
+      let original = target.constructor.prototype.connectedCallback;
+      Object.defineProperty(target.constructor.prototype, 'connectedCallback', {
+        writable: false,
+        value: () => {
+          original();
+          console.log('OVERRIDE');
+        }
+      });
+    } else {
+      list = Reflect.getMetadata(METADATA_KEYS.domConsumer, target.constructor);
+    }
+
+    list.push({
+      target,
+      key,
+      id
+    });
+  };
+}
