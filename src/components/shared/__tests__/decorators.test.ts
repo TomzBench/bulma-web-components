@@ -54,7 +54,7 @@ test('domInject should add metadata', () => {
 
   class Base {
     connectedCallback() {
-      console.log('OLD');
+      console.log('BASE');
     }
   }
 
@@ -65,6 +65,10 @@ test('domInject should add metadata', () => {
     serviceB!: Service;
     @domInject(TEST_SERVICE_C)
     serviceC!: Service;
+    connectedCallback() {
+      super.connectedCallback();
+      console.log('FOO');
+    }
   }
 
   let foo = new Foo();

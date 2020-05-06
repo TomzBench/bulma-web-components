@@ -44,7 +44,6 @@ export function domInject(id: ServiceIdentifier<any>) {
   return function(target: any, key: string) {
     let list: DomPropertyMetadata[] = [];
     if (!Reflect.hasMetadata(METADATA_KEYS.domConsumer, target.constructor)) {
-      // TODO - override connectedCallback()
       Reflect.defineMetadata(
         METADATA_KEYS.domConsumer,
         list,
@@ -54,8 +53,8 @@ export function domInject(id: ServiceIdentifier<any>) {
       Object.defineProperty(target.constructor.prototype, 'connectedCallback', {
         writable: false,
         value: () => {
-          original();
           console.log('OVERRIDE');
+          original();
         }
       });
     } else {
