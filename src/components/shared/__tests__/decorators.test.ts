@@ -42,9 +42,9 @@ describe('lazyInject ', () => {
       serviceC!: Service;
     }
     let foo = new Foo();
-    expect(foo.serviceA.name).to.be('ServiceA');
-    expect(foo.serviceB.name).to.be('ServiceB');
-    expect(foo.serviceC.name).to.be('ServiceC');
+    expect(foo.serviceA.name).to.eq('ServiceA');
+    expect(foo.serviceB.name).to.eq('ServiceB');
+    expect(foo.serviceC.name).to.eq('ServiceC');
   });
 });
 
