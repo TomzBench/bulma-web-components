@@ -1,3 +1,4 @@
+import { html, fixture, expect } from '@open-wc/testing';
 import { Container } from 'inversify';
 import {
   makeDecorators,
@@ -40,9 +41,9 @@ test('lazyInject should inject service', () => {
     serviceC!: Service;
   }
   let foo = new Foo();
-  expect(foo.serviceA.name).toBe('ServiceA');
-  expect(foo.serviceB.name).toBe('ServiceB');
-  expect(foo.serviceC.name).toBe('ServiceC');
+  expect(foo.serviceA.name).to.be('ServiceA');
+  expect(foo.serviceB.name).to.be('ServiceB');
+  expect(foo.serviceC.name).to.be('ServiceC');
 });
 
 test('domInject should add metadata', () => {
@@ -68,16 +69,16 @@ test('domInject should add metadata', () => {
     foo.constructor
   );
 
-  expect(meta.length).toBe(3);
-  expect(meta[0].id).toBe(TEST_SERVICE_A);
-  expect(meta[0].key).toBe('serviceA');
-  expect(meta[0].target).toBe(Foo.prototype);
-  expect(meta[1].id).toBe(TEST_SERVICE_B);
-  expect(meta[1].key).toBe('serviceB');
-  expect(meta[1].target).toBe(Foo.prototype);
-  expect(meta[2].id).toBe(TEST_SERVICE_C);
-  expect(meta[2].key).toBe('serviceC');
-  expect(meta[2].target).toBe(Foo.prototype);
+  expect(meta.length).to.eq(3);
+  expect(meta[0].id).to.eq(TEST_SERVICE_A);
+  expect(meta[0].key).to.eq('serviceA');
+  expect(meta[0].target).to.eq(Foo.prototype);
+  expect(meta[1].id).to.eq(TEST_SERVICE_B);
+  expect(meta[1].key).to.eq('serviceB');
+  expect(meta[1].target).to.eq(Foo.prototype);
+  expect(meta[2].id).to.eq(TEST_SERVICE_C);
+  expect(meta[2].key).to.eq('serviceC');
+  expect(meta[2].target).to.eq(Foo.prototype);
 });
 
 test('domConsumer should request services', () => {

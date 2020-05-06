@@ -1,40 +1,17 @@
-// {
-//   "compilerOptions": {
-//     "types": ["reflect-metadata", "jest"],
-//     "target": "es2017",
-//     "module": "es2015",
-//     "moduleResolution": "node",
-//     "resolveJsonModule": true,
-//     "lib": ["es2017", "dom"],
-//     "strict": true,
-//     "typeRoots": ["node_modules/@types"],
-//     "esModuleInterop": true,
-//     "outDir": "./",
-//     "baseUrl": "./",
-//     "paths": {
-//       "~/*": ["*"]
-//     },
-//     "experimentalDecorators": true,
-//     "emitDecoratorMetadata": true
-//   },
-//   "exclude": [],
-//   "include": ["./src/declarations.d.ts", "./src/components"]
-// }
-
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "types": ["reflect-metadata", "jest"],
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "target": "es2015",
-    "lib": ["dom", "es2017"],
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["es2017", "dom"],
+    "strict": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "importHelpers": true,
+    "outDir": "out-tsc"
   },
-  "include": ["./src/**/*"],
-  "awesomeTypescriptLoaderOptions": {
-    "reportFiles": ["./src/**/*"]
-  }
+  "include": ["**/*.ts"]
 }
