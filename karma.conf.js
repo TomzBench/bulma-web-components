@@ -12,17 +12,21 @@ module.exports = config => {
         //
         // npm run test -- --grep test/foo/bar.test.js
         // npm run test -- --grep test/bar/*
-        {
-          pattern: config.grep ? config.grep : 'out-tsc/**/*.test.js',
-          type: 'module'
-        }
+        // {
+        //   pattern: config.grep ? config.grep : 'src/**/*.test.ts'
+        // }
+        './dist/bundle.js'
       ],
 
-      preprocessors: {
-        '**/*.test.js': ['webpack']
-      },
+      // preprocessors: {
+      //   '**/*.js': ['webpack'],
+      //   '**/*.test.js': ['webpack'],
+      //   '**/*.ts': ['webpack'],
+      //   '**/*.test.ts': ['webpack'],
+      //   '**/*.scss': ['webpack']
+      // },
 
-      webpack: commonWebpackConfig(),
+      // webpack: commonWebpackConfig(),
 
       esm: {
         nodeResolve: true

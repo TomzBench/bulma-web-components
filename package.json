@@ -4,7 +4,9 @@
   "description": "linq-developer-portal ui",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && karma start --coverage",
+    "test": "karma start --coverage",
+    "test:karma": "npm run test:build && npm run test",
+    "test:build": "webpack --config=scripts/webpack.test.js",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start --update-snapshots",
     "test:prune-snapshots": "karma start --prune-snapshots",
