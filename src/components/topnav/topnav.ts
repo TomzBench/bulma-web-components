@@ -9,11 +9,23 @@ import '../bulma/icon/icon';
 import '../bulma/navbar/navbar';
 import '../bulma/navbar/navbar-label';
 import '../bulma/navbar/navbar-item';
+import '../bulma/modal/modal';
 import '../bulma/navbar/navbar-dropdown';
+import '../form-login/form-login';
 
 @customElement('atx-topnav')
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
+  _show: string = '';
+  set show(val: string) {
+    this._show = val;
+    this.requestUpdate();
+    console.log('SHOW');
+  }
+  get show(): string {
+    return this._show;
+  }
+
   render() {
     return html`
       <b-navbar color="primary">
@@ -45,11 +57,24 @@ export class AtxTopnav extends LitElement {
             <b-navbar-item>Rust</b-navbar-item>
           </b-navbar-dropdown>
         </b-navbar-item>
-        <b-navbar-item where="right">
+        <b-navbar-item where="right" @click="${() => (this.show = 'signin')}">
           Sign In
-          <b-icon>account_circle</b-icon>
+          <b-icon>
+            account_circle
+          </b-icon>
         </b-navbar-item>
       </b-navbar>
+      <b-modal
+        @b-close="${() => (this.show = '')}"
+        ?show="${this.show === 'signin'}"
+      >
+        <div class="signin is-clipped">
+          <div class="box">
+            <p class="signin-title">Please sign in...</p>
+            <atx-form-login></atx-form-login>
+          </div>
+        </div>
+      </b-modal>
     `;
   }
 }

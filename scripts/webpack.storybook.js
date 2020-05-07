@@ -11,6 +11,7 @@ module.exports = merge(commonConfig(), {
     __dirname + '/../src/components/bulma/field/field.ts',
     __dirname + '/../src/components/bulma/icon/icon.ts',
     __dirname + '/../src/components/bulma/input/input.ts',
+    __dirname + '/../src/components/bulma/modal/modal.ts',
     __dirname + '/../src/components/bulma/select/select.ts',
     __dirname + '/../src/components/bulma/table/table.ts',
     __dirname + '/../src/components/form-login/form-login.ts',
