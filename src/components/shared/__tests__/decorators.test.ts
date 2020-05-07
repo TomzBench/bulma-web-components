@@ -1,12 +1,13 @@
-import { html, fixture, expect } from '@open-wc/testing';
+import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { Container } from 'inversify';
+import { LitElement, customElement } from 'lit-element';
 import {
   makeDecorators,
-  domInject,
-  domConsumer,
+  DomInjectEvent,
   DomPropertyMetadata,
   METADATA_KEYS
 } from '../decorators';
+import { ServiceIdentifier } from '../types';
 
 describe('lazyInject ', () => {
   it('should inject a service', () => {
@@ -50,6 +51,8 @@ describe('lazyInject ', () => {
 
 describe('domInject', () => {
   it('domInject should add metadata', () => {
+    const container = new Container();
+    const { bind, domConsumer, domInject } = makeDecorators(container);
     const TEST_SERVICE_A = Symbol.for('TestServiceA');
     const TEST_SERVICE_B = Symbol.for('TestServiceB');
     const TEST_SERVICE_C = Symbol.for('TestServiceC');
@@ -85,35 +88,40 @@ describe('domInject', () => {
   });
 });
 
-describe('domConsumer', () => {
-  it('domConsumer should request services', () => {
+describe('domConsumer and domProvider', () => {
+  it('domProvider should provide for domConsumer', async () => {
+    let container = new Container();
+    const { bind, domProvider, domConsumer, domInject } = makeDecorators(
+      container
+    );
     const TEST_SERVICE_A = Symbol.for('TestServiceA');
     const TEST_SERVICE_B = Symbol.for('TestServiceB');
     const TEST_SERVICE_C = Symbol.for('TestServiceC');
     interface Service {
       name: string;
     }
-
-    // TODO move to mock
-    class Base {
-      addEventListener(
-        type: string,
-        listener: EventListenerOrEventListenerObject | null,
-        options?: boolean | AddEventListenerOptions
-      ): void {}
-      dispatchEvent(event: Event): boolean {
-        return false;
-      }
-      removeEventListener(
-        type: string,
-        callback: EventListenerOrEventListenerObject | null,
-        options?: EventListenerOptions | boolean
-      ): void {}
-      connectedCallback() {}
+    @bind(TEST_SERVICE_A)
+    class ServiceA implements Service {
+      name: string = 'ServiceA';
+    }
+    @bind(TEST_SERVICE_B)
+    class ServiceB implements Service {
+      name: string = 'ServiceB';
+    }
+    @bind(TEST_SERVICE_C)
+    class ServiceC implements Service {
+      name: string = 'ServiceC';
     }
 
+    // Provider
+    @customElement('foo-provider')
+    @domProvider()
+    class FooProvider extends LitElement {}
+
+    // Consumer
+    @customElement('foo-consumer')
     @domConsumer()
-    class Foo extends Base {
+    class Foo extends LitElement {
       @domInject(TEST_SERVICE_A)
       serviceA!: Service;
       @domInject(TEST_SERVICE_B)
@@ -121,8 +129,15 @@ describe('domConsumer', () => {
       @domInject(TEST_SERVICE_C)
       serviceC!: Service;
     }
-    let foo = new Foo();
-    // TODO expect mock event to be called
-    foo.connectedCallback();
+    let test = await fixture(
+      '<foo-provider><foo-consumer></foo-consumer></foo-provider>'
+    );
+    let foo: Foo | null = test.querySelector('foo-consumer');
+    expect(foo).instanceof(Foo);
+    if (foo) {
+      expect(foo.serviceA.name).to.eq('ServiceA');
+      expect(foo.serviceB.name).to.eq('ServiceB');
+      expect(foo.serviceC.name).to.eq('ServiceC');
+    }
   });
 });
