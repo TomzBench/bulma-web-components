@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import { AlertTableData, AtxAlertTable } from './table-alert';
 import { styles } from '../bulma/styles';
-import './table-alert.ts';
+import './table-alert';
 import * as scss from './table-alert.styles.scss';
 
 // Some dummy data

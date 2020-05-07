@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { AtxFormSignup } from './form-signup';
-import './form-signup.ts';
+import './form-signup';
 
 export default { title: 'atx-form-signup' };
 

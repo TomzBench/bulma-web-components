@@ -1,7 +1,7 @@
 import { html, TemplateResult } from 'lit-element';
 
 import { BTable } from './table';
-import './table.ts';
+import './table';
 
 interface TableData {
   name: string;

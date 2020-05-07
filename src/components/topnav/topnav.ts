@@ -4,12 +4,12 @@ import { styles } from '../bulma/styles';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix_logo.png';
 
-import '../bulma/field/field.ts';
-import '../bulma/icon/icon.ts';
-import '../bulma/navbar/navbar.ts';
-import '../bulma/navbar/navbar-label.ts';
-import '../bulma/navbar/navbar-item.ts';
-import '../bulma/navbar/navbar-dropdown.ts';
+import '../bulma/field/field';
+import '../bulma/icon/icon';
+import '../bulma/navbar/navbar';
+import '../bulma/navbar/navbar-label';
+import '../bulma/navbar/navbar-item';
+import '../bulma/navbar/navbar-dropdown';
 
 @customElement('atx-topnav')
 export class AtxTopnav extends LitElement {

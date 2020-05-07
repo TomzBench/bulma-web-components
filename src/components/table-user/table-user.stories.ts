@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import { UserTableData, AtxUserTable } from './table-user';
 import { styles } from '../bulma/styles';
-import './table-user.ts';
+import './table-user';
 import * as scss from './table-user.styles.scss';
 
 // Some dummy data

@@ -6,7 +6,7 @@ import { IoService } from './io/io.service';
 import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
 
-import './components/topnav/topnav.ts';
+import './components/topnav/topnav';
 
 @customElement('atx-app')
 export class App extends LitElement {

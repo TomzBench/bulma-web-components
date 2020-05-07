@@ -4,13 +4,13 @@ import { styles } from '../bulma/styles';
 import * as scss from './table-device.styles.scss';
 
 import { BTable } from '../bulma/table/table';
-import '../bulma/pagination/pagination.ts';
-import '../bulma/table/table.ts';
-import '../bulma/field/field.ts';
-import '../bulma/input/input.ts';
-import '../bulma/icon/icon.ts';
+import '../bulma/pagination/pagination';
+import '../bulma/table/table';
+import '../bulma/field/field';
+import '../bulma/input/input';
+import '../bulma/icon/icon';
 import '../bulma/select/select';
-import '../bulma/addon/addon.ts';
+import '../bulma/addon/addon';
 
 export interface TableDeviceData {
   serial: string;

@@ -3,13 +3,13 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './form-user.styles.scss';
 
-import '../bulma/pagination/pagination.ts';
-import '../bulma/table/table.ts';
-import '../bulma/field/field.ts';
-import '../bulma/input/input.ts';
-import '../bulma/icon/icon.ts';
+import '../bulma/pagination/pagination';
+import '../bulma/table/table';
+import '../bulma/field/field';
+import '../bulma/input/input';
+import '../bulma/icon/icon';
 import '../bulma/select/select';
-import '../bulma/addon/addon.ts';
+import '../bulma/addon/addon';
 
 @customElement('atx-form-user')
 export class AtxFormUser extends LitElement {

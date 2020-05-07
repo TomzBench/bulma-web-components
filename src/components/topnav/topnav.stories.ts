@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import './topnav.ts';
+import './topnav';
 
 export default { title: 'atx-topnav' };
 

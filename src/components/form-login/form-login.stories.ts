@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { AtxFormLogin } from './form-login';
-import './form-login.ts';
+import './form-login';
 
 export default { title: 'atx-form-login' };
 

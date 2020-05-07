@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import './pagination.ts';
+import './pagination';
 import { BPagination } from './pagination';
 
 export default { title: 'b-pagination' };

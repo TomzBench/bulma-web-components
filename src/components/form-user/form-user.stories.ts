@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { AtxFormUser } from './form-user';
-import './form-user.ts';
+import './form-user';
 
 export default { title: 'atx-form-user' };
 
