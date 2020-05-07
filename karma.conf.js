@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { createDefaultConfig } = require('@open-wc/testing-karma');
 const merge = require('deepmerge');
+const commonWebpackConfig = require('./scripts/webpack.common.js');
 
 module.exports = config => {
   config.set(
@@ -16,6 +17,12 @@ module.exports = config => {
           type: 'module'
         }
       ],
+
+      preprocessors: {
+        '**/*.test.js': ['webpack']
+      },
+
+      webpack: commonWebpackConfig(),
 
       esm: {
         nodeResolve: true

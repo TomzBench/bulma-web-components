@@ -5,7 +5,7 @@ import { styles } from '../styles';
 
 import { Colors, Sizes, NavbarWhere } from '../bulma-types';
 
-import * as scss from './navbar.scss';
+import * as scss from './navbar.styles.scss';
 
 @customElement('b-navbar')
 class BNavbar extends LitElement {

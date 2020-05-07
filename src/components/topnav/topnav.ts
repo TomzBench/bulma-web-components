@@ -1,7 +1,7 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
-import * as scss from './topnav.scss';
+import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix_logo.png';
 
 import '../bulma/field/field.ts';
