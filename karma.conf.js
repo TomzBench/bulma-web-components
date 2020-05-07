@@ -15,6 +15,7 @@ module.exports = config => {
         // {
         //   pattern: config.grep ? config.grep : 'src/**/*.test.ts'
         // }
+        { pattern: './src/__tests__/setup.js', type: 'module' },
         './dist/bundle.js'
       ],
 

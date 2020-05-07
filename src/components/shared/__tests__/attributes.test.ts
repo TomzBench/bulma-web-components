@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { html, fixture, expect } from '@open-wc/testing';
 import { readAttribute, makeAttribute, setAttribute } from '../attributes';
 

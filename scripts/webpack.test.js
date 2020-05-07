@@ -10,6 +10,7 @@ module.exports = merge(commonConfig(), {
   mode: 'development',
   entry: [
     __dirname + '/../src/components/shared/__tests__/attributes.test.ts',
-    __dirname + '/../src/components/shared/__tests__/decorators.test.ts'
+    __dirname + '/../src/components/shared/__tests__/decorators.test.ts',
+    __dirname + '/../src/components/table-user/__tests__/table-user.test.ts'
   ]
 });
