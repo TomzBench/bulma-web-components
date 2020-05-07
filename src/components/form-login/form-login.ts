@@ -25,7 +25,7 @@ export class AtxFormLogin extends LitElement {
       </b-field>
       <b-field horizontal label="Password">
         <b-field>
-          <b-input type="password" placeholder="Email@mail.com">
+          <b-input type="password" placeholder="************">
             <b-icon>lock</b-icon>
           </b-input>
         </b-field>
