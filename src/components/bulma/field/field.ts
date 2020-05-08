@@ -19,9 +19,10 @@ export class BField extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addons = Array.from(this.querySelectorAll('b-addon'));
-    this.addons = this.addons.concat(
-      Array.from(this.querySelectorAll('b-addon-button'))
+    this.addons = [].concat(
+      Array.from(this.querySelectorAll('b-addon')),
+      Array.from(this.querySelectorAll('b-addon-button')),
+      Array.from(this.querySelectorAll('.control'))
     );
     this.inputs = Array.from(this.querySelectorAll('b-input'));
     this.fields = Array.from(this.querySelectorAll('b-field'));

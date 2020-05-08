@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { customElement, LitElement, html } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
 import { lazyInject } from './ioc/container.root';
-import { IoService } from './io/io.service';
+import { IoService } from './services/io/io.service';
 import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
 

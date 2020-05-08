@@ -31,7 +31,12 @@ export class AtxFormLogin extends LitElement {
         </b-field>
       </b-field>
       <b-field horizontal>
-        <b-addon-button color="info">Submit</b-addon-button>
+        <b-field grouped>
+          <b-addon-button color="info">Submit</b-addon-button>
+          <b-addon-button color="white">
+            <a class="">Forgot user name or password?</a>
+          </b-addon-button>
+        </b-field>
       </b-field>
     `;
   }
