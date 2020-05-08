@@ -2,7 +2,7 @@ import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './topnav.styles.scss';
-import * as logo from '../../assets/altronix_logo.png';
+import * as logo from '../../assets/altronix.png';
 
 import '../bulma/field/field';
 import '../bulma/icon/icon';
@@ -20,7 +20,6 @@ export class AtxTopnav extends LitElement {
   set show(val: string) {
     this._show = val;
     this.requestUpdate();
-    console.log('SHOW');
   }
   get show(): string {
     return this._show;
