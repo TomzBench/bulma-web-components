@@ -48,85 +48,81 @@ export function makeDecorators(container: Container) {
     };
   }
 
-  function domProvider(el: string) {
-    return function<T extends { new (...args: any[]): LitElement }>(target: T) {
-      class C extends target {
-        constructor(...args: any[]) {
-          super(...args);
-          this.addEventListener('dom-inject-request', e => {
-            let event = e as CustomEvent<DomInjectEvent>;
-            let service = container.get(event.detail.id);
-            if (service) {
-              event.detail.service = container.get(event.detail.id);
-              e.stopPropagation();
-            }
+  return { lazyInject, bind };
+}
+
+export function domProvider(el: string, container: Container) {
+  return function<T extends { new (...args: any[]): LitElement }>(target: T) {
+    class C extends target {
+      constructor(...args: any[]) {
+        super(...args);
+
+        // Listen for dom inject requests
+        this.addEventListener('dom-inject-request', e => {
+          let event = e as CustomEvent<DomInjectEvent>;
+          let service = container.get(event.detail.id);
+          if (service) {
+            event.detail.service = container.get(event.detail.id);
+            e.stopPropagation();
+          }
+        });
+      }
+    }
+    customElement(el)(C);
+    return C;
+  };
+}
+
+export function domConsumer(el: string) {
+  return function<T extends { new (...args: any[]): LitElement }>(target: T) {
+    class C extends target {
+      constructor(...args: any[]) {
+        super(...args);
+      }
+      connectedCallback() {
+        let meta: DomPropertyMetadata[] =
+          Reflect.getMetadata(METADATA_KEYS.domConsumer, target) || [];
+        meta.forEach(m => {
+          const event = new CustomEvent<DomInjectEvent>('dom-inject-request', {
+            composed: true,
+            bubbles: true,
+            detail: { id: m.id }
           });
-        }
+          this.dispatchEvent(event);
+          if (event.detail.service) {
+            Object.defineProperty(this, m.key, {
+              writable: false,
+              value: event.detail.service
+            });
+          } else {
+            throw new Error(`No dom provider found for ${m.id.toString()}`);
+          }
+        });
+        super.connectedCallback();
       }
-      customElement(el)(C);
-      return C;
-    };
-  }
+    }
+    customElement(el)(C);
+    return C;
+  };
+}
 
-  function domConsumer(el: string) {
-    return function<T extends { new (...args: any[]): LitElement }>(target: T) {
-      class C extends target {
-        constructor(...args: any[]) {
-          super(...args);
-        }
-        connectedCallback() {
-          let meta: DomPropertyMetadata[] =
-            Reflect.getMetadata(METADATA_KEYS.domConsumer, target) || [];
-          meta.forEach(m => {
-            const event = new CustomEvent<DomInjectEvent>(
-              'dom-inject-request',
-              {
-                composed: true,
-                bubbles: true,
-                detail: { id: m.id }
-              }
-            );
-            this.dispatchEvent(event);
-            if (event.detail.service) {
-              Object.defineProperty(this, m.key, {
-                writable: false,
-                value: event.detail.service
-              });
-            } else {
-              throw new Error(`No dom provider found for ${m.id.toString()}`);
-            }
-          });
-          super.connectedCallback();
-        }
-      }
-      customElement(el)(C);
-      return C;
-    };
-  }
+export function domInject(id: ServiceIdentifier<any>) {
+  return function(target: any, key: string) {
+    let list: DomPropertyMetadata[] = [];
+    if (!Reflect.hasMetadata(METADATA_KEYS.domConsumer, target.constructor)) {
+      Reflect.defineMetadata(
+        METADATA_KEYS.domConsumer,
+        list,
+        target.constructor
+      );
+    } else {
+      list = Reflect.getMetadata(METADATA_KEYS.domConsumer, target.constructor);
+    }
 
-  function domInject(id: ServiceIdentifier<any>) {
-    return function(target: any, key: string) {
-      let list: DomPropertyMetadata[] = [];
-      if (!Reflect.hasMetadata(METADATA_KEYS.domConsumer, target.constructor)) {
-        Reflect.defineMetadata(
-          METADATA_KEYS.domConsumer,
-          list,
-          target.constructor
-        );
-      } else {
-        list = Reflect.getMetadata(
-          METADATA_KEYS.domConsumer,
-          target.constructor
-        );
-      }
-
-      list.push({
-        target,
-        key,
-        id
-      });
-    };
-  }
-
-  return { lazyInject, bind, domProvider, domConsumer, domInject };
+    list.push({
+      target,
+      key,
+      id
+    });
+  };
 }

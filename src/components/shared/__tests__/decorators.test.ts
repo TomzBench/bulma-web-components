@@ -5,6 +5,9 @@ import {
   makeDecorators,
   DomInjectEvent,
   DomPropertyMetadata,
+  domProvider,
+  domConsumer,
+  domInject,
   METADATA_KEYS
 } from '../decorators';
 import { ServiceIdentifier } from '../types';
@@ -52,7 +55,7 @@ describe('lazyInject ', () => {
 describe('domInject', () => {
   it('domInject should add metadata', () => {
     const container = new Container();
-    const { bind, domConsumer, domInject } = makeDecorators(container);
+    const { bind } = makeDecorators(container);
     const TEST_SERVICE_A = Symbol.for('TestServiceA');
     const TEST_SERVICE_B = Symbol.for('TestServiceB');
     const TEST_SERVICE_C = Symbol.for('TestServiceC');
@@ -91,9 +94,7 @@ describe('domInject', () => {
 describe('domConsumer and domProvider', () => {
   it('domProvider should provide for domConsumer', async () => {
     let container = new Container();
-    const { bind, domProvider, domConsumer, domInject } = makeDecorators(
-      container
-    );
+    const { bind } = makeDecorators(container);
     const TEST_SERVICE_A = Symbol.for('TestServiceA');
     const TEST_SERVICE_B = Symbol.for('TestServiceB');
     const TEST_SERVICE_C = Symbol.for('TestServiceC');
@@ -114,7 +115,7 @@ describe('domConsumer and domProvider', () => {
     }
 
     // Provider
-    @domProvider('foo-provider')
+    @domProvider('foo-provider', container)
     class FooProvider extends LitElement {}
 
     // Wrapper (test events bubble up through shadow DOM)
