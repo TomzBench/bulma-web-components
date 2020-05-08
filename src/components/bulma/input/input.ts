@@ -1,4 +1,4 @@
-import { LitElement, customElement, html, property } from 'lit-element';
+import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { readAttribute } from '../../shared/attributes';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -31,9 +31,12 @@ export class BInput extends LitElement {
   @property({ type: Number }) min: number | string = '';
   @property({ type: Number }) max: number | string = '';
   @property({ type: Number }) step: number | null = null;
+  @query('input') formElement!: HTMLInputElement;
   icons: HTMLElement[] = [];
 
-  protected handleInputChange() {}
+  protected handleInputChange() {
+    this.value = this.formElement.value;
+  }
 
   createRenderRoot() {
     return this;

@@ -1,5 +1,6 @@
 import { Container, decorate, injectable } from 'inversify';
 import { ServiceIdentifier } from './types';
+import { customElement, LitElement } from 'lit-element';
 
 export const METADATA_KEYS = {
   domConsumer: 'altronix/domConsumer',
@@ -10,10 +11,6 @@ export interface DomPropertyMetadata {
   target: any;
   key: string;
   id: ServiceIdentifier<any>;
-}
-
-interface Connectable extends HTMLElement {
-  connectedCallback(): void;
 }
 
 interface DomProviderArg {
@@ -51,10 +48,8 @@ export function makeDecorators(container: Container) {
     };
   }
 
-  function domProvider() {
-    return function<T extends { new (...args: any[]): HTMLElement }>(
-      target: T
-    ) {
+  function domProvider(el: string) {
+    return function<T extends { new (...args: any[]): LitElement }>(target: T) {
       class C extends target {
         constructor(...args: any[]) {
           super(...args);
@@ -68,15 +63,13 @@ export function makeDecorators(container: Container) {
           });
         }
       }
+      customElement(el)(C);
       return C;
     };
   }
 
-  function domConsumer() {
-    return function<T extends { new (...args: any[]): Connectable }>(
-      target: T
-    ) {
-      decorate(injectable(), target);
+  function domConsumer(el: string) {
+    return function<T extends { new (...args: any[]): LitElement }>(target: T) {
       class C extends target {
         constructor(...args: any[]) {
           super(...args);
@@ -106,6 +99,7 @@ export function makeDecorators(container: Container) {
           super.connectedCallback();
         }
       }
+      customElement(el)(C);
       return C;
     };
   }

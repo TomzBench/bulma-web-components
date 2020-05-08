@@ -1,6 +1,6 @@
 import { inject } from 'inversify';
 import { IoService } from '../io/io.service';
-import { bind } from '../../ioc/ioc';
+import { bind } from '../../ioc/container.root';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { User } from './types';
 import { API } from './constants';

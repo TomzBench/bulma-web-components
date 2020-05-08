@@ -114,13 +114,15 @@ describe('domConsumer and domProvider', () => {
     }
 
     // Provider
-    @customElement('foo-provider')
-    @domProvider()
+    @domProvider('foo-provider')
     class FooProvider extends LitElement {}
 
+    // Wrapper (test events bubble up through shadow DOM)
+    @customElement('foo-wrapper')
+    class FooMiddle extends LitElement {}
+
     // Consumer
-    @customElement('foo-consumer')
-    @domConsumer()
+    @domConsumer('foo-consumer')
     class Foo extends LitElement {
       @domInject(TEST_SERVICE_A)
       serviceA!: Service;
@@ -130,7 +132,11 @@ describe('domConsumer and domProvider', () => {
       serviceC!: Service;
     }
     let test = await fixture(
-      '<foo-provider><foo-consumer></foo-consumer></foo-provider>'
+      `<foo-provider>
+        <foo-wrapper>
+          <foo-consumer></foo-consumer>
+        </foo-wrapper>
+      </foo-provider>`
     );
     let foo: Foo | null = test.querySelector('foo-consumer');
     expect(foo).instanceof(Foo);

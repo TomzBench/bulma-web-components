@@ -10,9 +10,10 @@ module.exports = merge(commonConfig(), {
   mode: 'development',
   entry: [
     // __dirname + '/../src/components/shared/__tests__/attributes.test.ts',
-    // __dirname + '/../src/components/shared/__tests__/decorators.test.ts'
-    // __dirname + '/../src/components/table-user/__tests__/table-user.test.ts'
-    __dirname + '/../src/services/io/__tests__/io.service.test.ts',
-    __dirname + '/../src/services/user/__tests__/user.service.test.ts'
+    // __dirname + '/../src/components/shared/__tests__/decorators.test.ts',
+    // __dirname + '/../src/components/table-user/__tests__/table-user.test.ts',
+    // __dirname + '/../src/services/io/__tests__/io.service.test.ts',
+    // __dirname + '/../src/services/user/__tests__/user.service.test.ts',
+    __dirname + '/../src/__tests__/app.test.ts'
   ]
 });

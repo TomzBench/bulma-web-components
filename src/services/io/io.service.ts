@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { IoRequester, Fetch } from './types';
-import { bind } from '../../ioc/ioc';
+import { bind } from '../../ioc/container.root';
 
 @injectable()
 export class IoService implements IoRequester {
