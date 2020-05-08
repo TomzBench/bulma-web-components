@@ -1,26 +1,22 @@
-import 'reflect-metadata';
 import { customElement, LitElement, html } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
-import { lazyInject } from './ioc/container.root';
+import { domConsumer, domInject } from './components/shared/decorators';
 import { UserService } from './services/user/user.service';
-import { styles } from './components/bulma/styles';
-import * as scss from './app.styles.scss';
 
 import { SubmitLoginEvent } from './components/form-login/types';
 import './components/topnav/topnav';
 
-@customElement('atx-app')
+import { styles } from './components/bulma/styles';
+import * as scss from './app.styles.scss';
+
+@domConsumer('atx-app')
 export class App extends LitElement {
   static styles = styles(scss.toString());
-  @lazyInject(SYMBOLS.USER_SERVICE) userService!: UserService;
-
-  async connectedCallback() {
-    super.connectedCallback();
-  }
+  @domInject(SYMBOLS.USER_SERVICE) userService!: UserService;
 
   async login(email: string, password: string) {
     console.log('FOOOOOO');
-    // let response = await this.userService.login(email, password);
+    let response = await this.userService.login(email, password);
   }
 
   render() {
