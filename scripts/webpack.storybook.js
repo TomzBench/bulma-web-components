@@ -20,6 +20,7 @@ module.exports = merge(commonConfig(), {
     __dirname + '/../src/components/table-alert/table-alert.ts',
     __dirname + '/../src/components/table-device/table-device.ts',
     __dirname + '/../src/components/table-user/table-user.ts',
-    __dirname + '/../src/components/topnav/topnav.ts'
+    __dirname + '/../src/components/topnav/topnav.ts',
+    __dirname + '/../src/pages/dashboard/dashboard.ts'
   ]
 });

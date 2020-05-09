@@ -8,7 +8,7 @@ const jsBundleFactory = new JsBundleFactory({ pathResolver });
 const storybookConfig = require('../scripts/webpack.storybook');
 
 module.exports = {
-  stories: ['../src/components/**/*.stories.[tj]s'],
+  stories: ['../src/**/*.stories.[tj]s'],
   webpackFinal: async (config, { configType }) => {
     //
     // Replace file-loader with url-loader & babel-loader with our babel-loader
