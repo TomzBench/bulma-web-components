@@ -24,12 +24,15 @@
 }
 
 .dashboard-sidenav {
-  top: $aside;
-  width: $aside;
+  top: 0px;
   bottom: 0px;
   left: 0px;
+  width: $aside;
   background: $primary-other;
+  background-image: linear-gradient(90deg, #051d38, #1e344c);
   position: absolute;
+  padding-top: 4px;
+  z-index: 30;
 }
 
 .title.underline {

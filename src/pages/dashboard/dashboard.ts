@@ -3,6 +3,7 @@ import { classMap } from 'lit-html/directives/class-map';
 import { stylesCustom } from '../../components/bulma/styles';
 import * as scss from './dashboard.styles.scss';
 
+import * as logo from '../../assets/altronix.png';
 import '../../components/table-user/table-user';
 import '../../components/table-alert/table-alert';
 import '../../components/table-device/table-device';
@@ -82,6 +83,9 @@ export class AtxDashboard extends LitElement {
       <div class="dashboard-sidenav">
         <div class="menu">
           <ul class="menu-list">
+            <li>
+              <a><img src="${logo}"/></a>
+            </li>
             <li>
               <a><b-icon>desktop_mac</b-icon></a>
             </li>
