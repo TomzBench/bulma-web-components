@@ -1,0 +1,27 @@
+$aside: 52px;
+$menu-item-hover-background-color: green !default;
+$primary: #167fa6;
+@import './variables.scss';
+@import '../../assets/iconfont/material-icons.css';
+@import '~bulma';
+
+.dashboard-container {
+  margin-left: $aside; /* Aligns with Atx logo */
+  padding: 10px;
+  background: whitesmoke;
+  position: relative;
+}
+
+.dashboard-sidenav {
+  top: $aside;
+  width: $aside;
+  bottom: 0px;
+  left: 0px;
+  background: $primary-other;
+  position: absolute;
+}
+
+.title.underline {
+  border-bottom: 1px solid pink;
+  line-height: 1.6;
+}

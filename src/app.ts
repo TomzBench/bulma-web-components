@@ -26,9 +26,7 @@ export class App extends LitElement {
           this.login(e.detail.email, e.detail.password);
         }}"
       ></atx-topnav>
-      <div class="">
-        <atx-dashboard></atx-dashboard>
-      </div>
+      <atx-dashboard></atx-dashboard>
     `;
   }
 }
