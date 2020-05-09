@@ -49,7 +49,7 @@ export class AtxUserTable extends LitElement {
       <div class="columns is-desktop">
         <div class="column">
           <b-field size="small" grouped>
-            <b-addon-button color="primary">
+            <b-addon-button color="info">
               <b-icon>add</b-icon>
               Add New User
             </b-addon-button>

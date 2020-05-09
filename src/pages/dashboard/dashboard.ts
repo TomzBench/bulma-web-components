@@ -42,7 +42,9 @@ export class AtxDashboard extends LitElement {
           <div class="box">
             <div class="columns">
               <div class="column">
-                <p class="title">User Management</p>
+                <p class="is-size-5 has-text-weight-light title">
+                  User Management
+                </p>
               </div>
             </div>
             <atx-table-user></atx-table-user>
@@ -52,7 +54,9 @@ export class AtxDashboard extends LitElement {
           <div class="box">
             <div class="columns">
               <div class="column">
-                <p class="title">Connected Device List</p>
+                <p class="is-size-5 has-text-weight-light title">
+                  Connected Device List
+                </p>
               </div>
             </div>
             <atx-table-device></atx-table-device>
@@ -64,7 +68,7 @@ export class AtxDashboard extends LitElement {
           <div class="box">
             <div class="columns">
               <div class="column">
-                <p class="title">Alerts</p>
+                <p class="is-size-5 has-text-weight-light title">Alerts</p>
               </div>
             </div>
             <atx-table-alert></atx-table-alert>
