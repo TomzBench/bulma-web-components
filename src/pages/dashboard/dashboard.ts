@@ -1,0 +1,76 @@
+import { LitElement, customElement, html, property, query } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map';
+import { styles } from '../../components/bulma/styles';
+import * as scss from './dashboard.styles.scss';
+
+import '../../components/table-user/table-user';
+import '../../components/table-alert/table-alert';
+import '../../components/table-device/table-device';
+
+@customElement('atx-dashboard')
+export class AtxDashboard extends LitElement {
+  static styles = styles(scss.toString());
+
+  render() {
+    return html`
+      <div class="columns">
+        <div class="column">
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <p class="title">30</p>
+                <p class="subtitle">Users</p>
+              </div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <p class="title">23</p>
+                <p class="subtitle">Connected Devices</p>
+              </div>
+            </div>
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <p class="title">300</p>
+                <p class="subtitle">Emails Sent</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div class="box">
+            <div class="columns">
+              <div class="column">
+                <p class="title">User Management</p>
+              </div>
+            </div>
+            <atx-table-user></atx-table-user>
+          </div>
+        </div>
+        <div class="column">
+          <div class="box">
+            <div class="columns">
+              <div class="column">
+                <p class="title">Connected Device List</p>
+              </div>
+            </div>
+            <atx-table-device></atx-table-device>
+          </div>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <div class="box">
+            <div class="columns">
+              <div class="column">
+                <p class="title">Alerts</p>
+              </div>
+            </div>
+            <atx-table-alert></atx-table-alert>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}

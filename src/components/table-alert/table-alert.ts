@@ -58,8 +58,7 @@ export class AtxAlertTable extends LitElement {
   render() {
     return html`
       <div class="columns is-desktop">
-        <div class="column is-6"></div>
-        <div class="column is-6">
+        <div class="column is-offset-6">
           <b-field size="small">
             <b-select>
               <b-icon>search</b-icon>
@@ -79,12 +78,12 @@ export class AtxAlertTable extends LitElement {
         </div>
       </div>
       <div class="columns">
-        <div class="column is-12">
+        <div class="column">
           <b-table numbered fullwidth hoverable striped narrow></b-table>
         </div>
       </div>
       <div class="columns">
-        <div class="column is-12">
+        <div class="column">
           <b-pagination
             simple
             current="1"

@@ -5,6 +5,7 @@ import { UserService } from './services/user/user.service';
 
 import { SubmitLoginEvent } from './components/form-login/types';
 import './components/topnav/topnav';
+import './pages/dashboard/dashboard'; // TODO this should be a link
 
 import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
@@ -25,6 +26,9 @@ export class App extends LitElement {
           this.login(e.detail.email, e.detail.password);
         }}"
       ></atx-topnav>
+      <div class="container">
+        <atx-dashboard></atx-dashboard>
+      </div>
     `;
   }
 }

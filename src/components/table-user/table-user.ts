@@ -47,7 +47,7 @@ export class AtxUserTable extends LitElement {
   render() {
     return html`
       <div class="columns is-desktop">
-        <div class="column is-6">
+        <div class="column">
           <b-field size="small" grouped>
             <b-addon-button color="primary">
               <b-icon>add</b-icon>
@@ -59,7 +59,7 @@ export class AtxUserTable extends LitElement {
             </b-addon-button>
           </b-field>
         </div>
-        <div class="column is-6">
+        <div class="column">
           <b-field size="small">
             <b-select>
               <b-icon>search</b-icon>
@@ -75,7 +75,7 @@ export class AtxUserTable extends LitElement {
         </div>
       </div>
       <div class="columns">
-        <div class="column is-12">
+        <div class="column">
           <b-table
             numbered
             fullwidth
@@ -87,7 +87,7 @@ export class AtxUserTable extends LitElement {
         </div>
       </div>
       <div class="columns">
-        <div class="column is-12">
+        <div class="column">
           <b-pagination
             simple
             current="1"
