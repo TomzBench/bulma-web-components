@@ -1,9 +1,20 @@
-$aside: 52px;
-$menu-item-hover-background-color: green !default;
-$primary: #167fa6;
 @import './variables.scss';
 @import '../../assets/iconfont/material-icons.css';
+
+// TODO import ~/bulma START
 @import '~bulma';
+
+* {
+  // Note that since we use shadow dom, bulma's BODY and HTML styles need to
+  // be applied to our component explicitly
+
+  // color: $body-color;
+  font-size: $body-font-size;
+  // font-weight: $body-weight;
+  line-height: $body-line-height;
+  font-family: $body-family;
+}
+// TODO import ~/bulma END
 
 .dashboard-container {
   margin-left: $aside; /* Aligns with Atx logo */
