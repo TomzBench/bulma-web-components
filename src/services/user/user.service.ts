@@ -8,11 +8,13 @@ import { API } from './constants';
 @bind(SYMBOLS.USER_SERVICE)
 export class UserService {
   currentUser?: User;
+
   constructor(@inject(SYMBOLS.IO_SERVICE) private io: IoService) {}
 
+  // TODO - set IO header
   async login(email: string, password: string): Promise<User> {
-    await this.io.post(API.LOGIN, { email, password });
-    // TODO receive ACCESS TOKEN, add to auth header.
-    return {} as User;
+    let response = await this.io.post<User>(API.LOGIN, { email, password });
+    this.currentUser = response.json;
+    return this.currentUser;
   }
 }

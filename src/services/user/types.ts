@@ -5,4 +5,5 @@ export interface User {
   email: string;
   devices: any[];
   role: number;
+  accessToken: string;
 }

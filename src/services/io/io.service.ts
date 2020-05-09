@@ -1,16 +1,16 @@
 import { injectable } from 'inversify';
-import { IoRequester, Fetch } from './types';
+import { IoRequester, IoResponse, Fetch } from './types';
 import { bind } from '../../ioc/container.root';
 
 @injectable()
 export class IoService implements IoRequester {
   constructor(private fetch: Fetch) {}
-  async get<T>(url: string): Promise<T> {
+  async get<T>(url: string): Promise<IoResponse<T>> {
     let response = await this.fetch(url);
-    return response.json();
+    return { ...response, json: await response.json() };
   }
 
-  async put<T>(url: string, obj: any): Promise<T> {
+  async put<T>(url: string, obj: any): Promise<IoResponse<T>> {
     let response = await this.fetch(url, {
       method: 'put',
       headers: {
@@ -18,10 +18,10 @@ export class IoService implements IoRequester {
       },
       body: obj
     });
-    return response.json();
+    return { ...response, json: await response.json() };
   }
 
-  async post<T>(url: string, obj: any): Promise<T> {
+  async post<T>(url: string, obj: any): Promise<IoResponse<T>> {
     let response = await this.fetch(url, {
       method: 'post',
       headers: {
@@ -29,13 +29,13 @@ export class IoService implements IoRequester {
       },
       body: obj
     });
-    return response.json();
+    return { ...response, json: await response.json() };
   }
 
-  async delete<T>(url: string): Promise<T> {
+  async delete<T>(url: string): Promise<IoResponse<T>> {
     let response = await this.fetch(url, {
       method: 'delete'
     });
-    return response.json();
+    return { ...response, json: await response.json() };
   }
 }

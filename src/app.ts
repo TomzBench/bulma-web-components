@@ -15,8 +15,7 @@ export class App extends LitElement {
   @domInject(SYMBOLS.USER_SERVICE) userService!: UserService;
 
   async login(email: string, password: string) {
-    console.log('FOOOOOO');
-    let response = await this.userService.login(email, password);
+    let response = await this.userService.login(email, password).catch(e => e);
   }
 
   render() {
