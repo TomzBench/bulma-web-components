@@ -116,11 +116,23 @@ describe('domConsumer and domProvider', () => {
 
     // Provider
     @domProvider('foo-provider', container)
-    class FooProvider extends LitElement {}
+    class FooProvider extends LitElement {
+      render() {
+        return html`
+          <slot></slot>
+        `;
+      }
+    }
 
     // Wrapper (test events bubble up through shadow DOM)
     @customElement('foo-wrapper')
-    class FooMiddle extends LitElement {}
+    class FooMiddle extends LitElement {
+      render() {
+        return html`
+          <slot></slot>
+        `;
+      }
+    }
 
     // Consumer
     @domConsumer('foo-consumer')
