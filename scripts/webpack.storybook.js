@@ -24,6 +24,8 @@ module.exports = merge(commonConfig(), {
     __dirname + '/../src/pages/dashboard/dashboard.ts',
     __dirname + '/../src/pages/dashboard/account/dashboard-account.ts',
     __dirname + '/../src/pages/dashboard/devices/dashboard-devices.ts',
-    __dirname + '/../src/pages/dashboard/main/dashboard-main.ts'
+    __dirname + '/../src/pages/dashboard/main/dashboard-main.ts',
+    __dirname + '/../src/pages/docs/docs.ts',
+    __dirname + '/../src/pages/home/home.ts'
   ]
 });

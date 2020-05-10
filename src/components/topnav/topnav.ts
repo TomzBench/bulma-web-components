@@ -1,6 +1,9 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
+import { domConsumer, domInject } from '../../components/shared/decorators';
+import { RouterService } from '../../services/router/router.service';
+import { SYMBOLS } from '../../ioc/constants.root';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -13,9 +16,10 @@ import '../bulma/modal/modal';
 import '../bulma/navbar/navbar-dropdown';
 import '../form-login/form-login';
 
-@customElement('atx-topnav')
+@domConsumer('atx-topnav')
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
+  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   _show: string = '';
   set show(val: string) {
     this._show = val;
@@ -31,17 +35,17 @@ export class AtxTopnav extends LitElement {
         <b-navbar-item where="brand">
           <img src="${logo}" height="32px" />
         </b-navbar-item>
-        <b-navbar-item>
+        <b-navbar-item @click="${() => this.router.route('/dashboard')}">
           <b-navbar-label>
             <b-icon>settings</b-icon>
-            Settings
+            Dashboard
           </b-navbar-label>
           <b-navbar-dropdown>
             <b-navbar-item><b-icon>account_circle</b-icon>Users</b-navbar-item>
             <b-navbar-item><b-icon>device_hub</b-icon>Devices</b-navbar-item>
           </b-navbar-dropdown>
         </b-navbar-item>
-        <b-navbar-item>
+        <b-navbar-item @click="${() => this.router.route('/docs')}">
           <b-navbar-label>
             <b-icon>description</b-icon>
             Docs
