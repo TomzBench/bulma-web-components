@@ -18,7 +18,7 @@ import { styles } from '../styles';
 
 import * as scss from './table.styles.scss';
 
-interface TableColumnData<T extends TableDataVarientOptions> {
+export interface TableColumnData<T extends TableDataVarientOptions> {
   label: keyof T;
   field?: string;
   key?: keyof T;
@@ -33,7 +33,7 @@ interface TableColumnData<T extends TableDataVarientOptions> {
   ['cell-class']?: string;
 }
 
-interface TableData<T> {
+export interface Table<T> {
   data: T[];
   columns: TableColumnData<T>[];
 }
@@ -57,11 +57,11 @@ export class BTable<T> extends LitElement {
   @property({ type: Number }) selected: number = -1;
   @property({ type: String }) variant: TableVariants = 'basic';
 
-  _tableData: TableData<T & TableDataVarientOptions> = {
+  _data: Table<T & TableDataVarientOptions> = {
     data: [],
     columns: []
   };
-  set tableData(data: TableData<T & TableDataVarientOptions>) {
+  set data(data: Table<T & TableDataVarientOptions>) {
     if (this.numbered) {
       data.columns.unshift({ label: 'idx', numeric: true });
       data.data = data.data.map((d, idx) => {
@@ -81,15 +81,15 @@ export class BTable<T> extends LitElement {
         return d;
       });
     }
-    this._tableData = data;
+    this._data = data;
     this.requestUpdate();
   }
-  get tableData(): TableData<T & TableDataVarientOptions> {
-    return this._tableData;
+  get data(): Table<T & TableDataVarientOptions> {
+    return this._data;
   }
 
   renderHeader() {
-    return this._tableData.columns.map(
+    return this._data.columns.map(
       c =>
         html`
           <th class="${c.numeric ? 'is-numeric' : ''}">${c.label}</th>
@@ -136,11 +136,11 @@ export class BTable<T> extends LitElement {
               `
             : ''}
           <tbody>
-            ${this._tableData.data.map(
+            ${this._data.data.map(
               (d, idx) =>
                 html`
                   <tr class="${classMap(classes.row(idx))}">
-                    ${this._tableData.columns.map(c =>
+                    ${this._data.columns.map(c =>
                       d[c.label] instanceof TemplateResult
                         ? d[c.label]
                         : html`

@@ -1,9 +1,9 @@
-import { LitElement, customElement, html, property, query } from 'lit-element';
+import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './table-user.styles.scss';
 
-import { BTable } from '../bulma/table/table';
+import { BTable, Table } from '../bulma/table/table';
 import '../bulma/pagination/pagination';
 import '../bulma/table/table';
 import '../bulma/field/field';
@@ -18,11 +18,11 @@ export interface UserTableData {
   role: number;
 }
 
+type UserTable = Table<UserTableData>;
+
 @customElement('atx-table-user')
 export class AtxUserTable extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<UserTableData>;
-
   _users: UserTableData[] = [];
   set users(users: UserTableData[]) {
     this._users = [...users];
@@ -31,13 +31,14 @@ export class AtxUserTable extends LitElement {
   get users(): UserTableData[] {
     return this._users;
   }
+  private table: UserTable = { data: [], columns: [] };
 
   firstUpdated() {
     this.updateTable();
   }
 
   updateTable() {
-    this.table.tableData = {
+    this.table = {
       data: [...this.users],
       columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
     };
@@ -77,6 +78,7 @@ export class AtxUserTable extends LitElement {
       <div class="columns">
         <div class="column">
           <b-table
+            .data="${this.table}"
             numbered
             fullwidth
             hoverable

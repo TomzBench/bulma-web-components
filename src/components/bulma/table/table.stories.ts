@@ -26,7 +26,7 @@ export const basic = () => {
   table.narrow = true;
   table.hoverable = true;
   table.selected = 5;
-  table.tableData = {
+  table.data = {
     data: [...array],
     columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
   };
@@ -39,7 +39,7 @@ export const numbered = () => {
   table.numbered = true;
   table.narrow = true;
   table.hoverable = true;
-  table.tableData = {
+  table.data = {
     data: [...array],
     columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
   };
@@ -52,7 +52,7 @@ export const actions = () => {
   table.narrow = true;
   table.hoverable = true;
   table.variant = 'crud';
-  table.tableData = {
+  table.data = {
     data: [...array],
     columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
   };
@@ -66,7 +66,7 @@ export const pagination = () => {
   table.narrow = true;
   table.hoverable = true;
   table.variant = 'crud';
-  table.tableData = {
+  table.data = {
     data: [...array],
     columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
   };
@@ -80,7 +80,7 @@ export const withCheckboxes = () => {
   table.narrow = true;
   table.hoverable = true;
   table.variant = 'crud';
-  table.tableData = {
+  table.data = {
     data: [...array],
     columns: [{ label: 'name' }, { label: 'email' }, { label: 'role' }]
   };

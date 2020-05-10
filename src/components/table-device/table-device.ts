@@ -1,9 +1,9 @@
-import { LitElement, customElement, html, property, query } from 'lit-element';
+import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './table-device.styles.scss';
 
-import { BTable } from '../bulma/table/table';
+import { BTable, Table } from '../bulma/table/table';
 import '../bulma/pagination/pagination';
 import '../bulma/table/table';
 import '../bulma/field/field';
@@ -22,10 +22,11 @@ export interface TableDeviceData {
   lastSeen: Date;
 }
 
+type TableDevice = Table<TableDeviceData>;
+
 @customElement('atx-table-device')
 export class AtxTableDevice extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<TableDeviceData>;
 
   _devices: TableDeviceData[] = [];
   set devices(devices: TableDeviceData[]) {
@@ -36,12 +37,14 @@ export class AtxTableDevice extends LitElement {
     return this._devices;
   }
 
+  private table: TableDevice = { columns: [], data: [] };
+
   firstUpdated() {
     this.updateTable();
   }
 
   updateTable() {
-    this.table.tableData = {
+    this.table = {
       data: [...this.devices],
       columns: [
         { label: 'serial' },
@@ -84,7 +87,14 @@ export class AtxTableDevice extends LitElement {
       </div>
       <div class="columns">
         <div class="column">
-          <b-table numbered fullwidth hoverable striped narrow></b-table>
+          <b-table
+            .data="${this.table}"
+            numbered
+            fullwidth
+            hoverable
+            striped
+            narrow
+          ></b-table>
         </div>
       </div>
       <div class="columns">

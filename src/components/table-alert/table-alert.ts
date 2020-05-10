@@ -1,9 +1,9 @@
-import { LitElement, customElement, html, property, query } from 'lit-element';
+import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './table-alert.styles.scss';
 
-import { BTable } from '../bulma/table/table';
+import { BTable, Table } from '../bulma/table/table';
 import '../bulma/pagination/pagination';
 import '../bulma/table/table';
 import '../bulma/field/field';
@@ -22,10 +22,11 @@ export interface AlertTableData {
   mesg: string;
 }
 
+export type AlertTable = Table<AlertTableData>;
+
 @customElement('atx-table-alert')
 export class AtxAlertTable extends LitElement {
   static styles = styles(scss.toString());
-  @query('b-table') protected table!: BTable<AlertTableData>;
   _alerts: AlertTableData[] = [];
   set alerts(users: AlertTableData[]) {
     this._alerts = [...users];
@@ -34,9 +35,10 @@ export class AtxAlertTable extends LitElement {
   get users(): AlertTableData[] {
     return this._alerts;
   }
+  private table: AlertTable = { data: [], columns: [] };
 
   updateTable() {
-    this.table.tableData = {
+    this.table = {
       data: [...this.users],
       columns: [
         { label: 'device' },
@@ -79,7 +81,14 @@ export class AtxAlertTable extends LitElement {
       </div>
       <div class="columns">
         <div class="column">
-          <b-table numbered fullwidth hoverable striped narrow></b-table>
+          <b-table
+            .data="${this.table}"
+            numbered
+            fullwidth
+            hoverable
+            striped
+            narrow
+          ></b-table>
         </div>
       </div>
       <div class="columns">
