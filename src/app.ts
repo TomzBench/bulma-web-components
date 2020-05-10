@@ -2,6 +2,7 @@ import { customElement, LitElement, html } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
 import { domConsumer, domInject } from './components/shared/decorators';
 import { UserService } from './services/user/user.service';
+import { RouterService } from './services/router/router.service';
 
 import { SubmitLoginEvent } from './components/form-login/types';
 import './components/topnav/topnav';
@@ -14,6 +15,7 @@ import * as scss from './app.styles.scss';
 export class App extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.USER_SERVICE) userService!: UserService;
+  @domInject(SYMBOLS.ROUTER_SERVICE) routerService!: RouterService;
 
   async login(email: string, password: string) {
     let response = await this.userService.login(email, password).catch(e => e);

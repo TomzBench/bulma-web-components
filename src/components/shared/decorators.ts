@@ -48,7 +48,20 @@ export function makeDecorators(container: Container) {
     };
   }
 
-  return { lazyInject, bind };
+  function bindTo(id: ServiceIdentifier<any>, to: () => any) {
+    return function<Args extends any[], T extends {}>(
+      target: new (...args: Args) => T
+    ): new (...args: Args) => T {
+      decorate(injectable(), target);
+      container
+        .bind(id)
+        .toDynamicValue(to)
+        .inSingletonScope();
+      return target;
+    };
+  }
+
+  return { lazyInject, bind, bindTo };
 }
 
 export function domProvider(el: string, container: Container) {

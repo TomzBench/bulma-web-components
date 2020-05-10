@@ -1,8 +1,9 @@
 import { injectable } from 'inversify';
 import { IoRequester, IoResponse, Fetch } from './types';
-import { bind } from '../../ioc/container.root';
+import { SYMBOLS } from '../../ioc/constants.root';
+import { bindTo } from '../../ioc/container.root';
 
-@injectable()
+@bindTo(SYMBOLS.IO_SERVICE, () => new IoService(fetch.bind(window)))
 export class IoService implements IoRequester {
   constructor(private fetch: Fetch) {}
   async get<T>(url: string): Promise<IoResponse<T>> {
