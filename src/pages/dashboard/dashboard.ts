@@ -16,7 +16,7 @@ export class AtxDashboard extends LitElement {
   render() {
     return html`
       <div class="dashboard-container">
-        <atx-dashboard-main></atx-dashboard-main>
+        <slot></slot>
       </div>
       <div class="dashboard-sidenav">
         <div class="logo">
@@ -25,22 +25,22 @@ export class AtxDashboard extends LitElement {
         <div class="menu">
           <ul class="menu-list">
             <li>
-              <a><b-icon>desktop_mac</b-icon></a>
+              <a href="/dashboard/main"><b-icon>desktop_mac</b-icon></a>
             </li>
             <li>
-              <a><b-icon>account_circle</b-icon></a>
+              <a href="/dashboard/account"><b-icon>account_circle</b-icon></a>
             </li>
             <li>
-              <a><b-icon>mail</b-icon></a>
+              <a href="/dashboard/mail"><b-icon>mail</b-icon></a>
             </li>
             <li>
-              <a><b-icon>lock</b-icon></a>
+              <a href="/dashboard/lock"><b-icon>lock</b-icon></a>
             </li>
             <li>
-              <a><b-icon>device_hub</b-icon></a>
+              <a href="/dashboard/devices"><b-icon>device_hub</b-icon></a>
             </li>
             <li>
-              <a><b-icon>power</b-icon></a>
+              <a href="/dashboard/power"><b-icon>power</b-icon></a>
             </li>
           </ul>
         </div>

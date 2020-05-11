@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { bindTo } from '../../ioc/container.root';
+import { Router } from '@vaadin/router';
 
 type RouteCallback = (ctx: typeof page.Context, next: () => any) => any;
 
@@ -67,6 +68,7 @@ var PATH_REGEXP = new RegExp(
   'g'
 );
 
+/*
 export function parse(str: string) {
   var tokens = [];
   var key = 0;
@@ -132,8 +134,13 @@ export function parse(str: string) {
 function escapeGroup(group: any) {
   return group.replace(/([=!:$\/()])/g, '\\$1');
 }
+*/
 
-@bindTo(SYMBOLS.ROUTER_SERVICE, () => new RouterService())
+@bindTo(SYMBOLS.ROUTER_SERVICE, () => new RouterService(Router))
 export class RouterService {
-  constructor() {}
+  constructor(private VaadinRouter: typeof Router) {}
+
+  create(el: Element) {
+    return new this.VaadinRouter(el);
+  }
 }

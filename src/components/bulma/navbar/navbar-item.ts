@@ -8,6 +8,7 @@ class BNavbarItem extends LitElement {
   @property({ type: String }) where: NavbarWhere = 'left';
   @property({ type: String }) label?: string;
   @property({ type: Boolean }) arrow: boolean = false;
+  @property({ type: String }) href: string = '';
   dropdown: HTMLElement[] = [];
 
   createRenderRoot() {
@@ -38,7 +39,7 @@ class BNavbarItem extends LitElement {
     );
     return this.dropdown.length
       ? html`
-          <a class="${classMap(classes.link)}">
+          <a href="${this.href}" class="${classMap(classes.link)}">
             ${Array.from(this.querySelectorAll('b-navbar-label'))}
           </a>
           ${this.dropdown}

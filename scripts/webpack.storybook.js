@@ -5,6 +5,7 @@ const commonConfig = require('./webpack.common');
 module.exports = merge(commonConfig(), {
   mode: 'development',
   entry: [
+    __dirname + '/../src/__tests__/setup.js',
     __dirname + '/../src/components/bulma/navbar/navbar.ts',
     __dirname + '/../src/components/bulma/pagination/pagination.ts',
     __dirname + '/../src/components/bulma/addon/addon.ts',
@@ -24,7 +25,10 @@ module.exports = merge(commonConfig(), {
     __dirname + '/../src/pages/dashboard/dashboard.ts',
     __dirname + '/../src/pages/dashboard/account/dashboard-account.ts',
     __dirname + '/../src/pages/dashboard/devices/dashboard-devices.ts',
+    __dirname + '/../src/pages/dashboard/lock/dashboard-lock.ts',
+    __dirname + '/../src/pages/dashboard/mail/dashboard-mail.ts',
     __dirname + '/../src/pages/dashboard/main/dashboard-main.ts',
+    __dirname + '/../src/pages/dashboard/power/dashboard-power.ts',
     __dirname + '/../src/pages/docs/docs.ts',
     __dirname + '/../src/pages/home/home.ts'
   ]
