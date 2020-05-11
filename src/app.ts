@@ -19,15 +19,16 @@ type View = 'home' | 'docs' | 'dashboard';
 export class App extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.USER_SERVICE) userService!: UserService;
-  @domInject(SYMBOLS.ROUTER_SERVICE) routerService!: RouterService;
+  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   private view: View = 'home';
 
   connectedCallback() {
     super.connectedCallback();
-    this.routerService.route('/', () => this.onRoute('home'));
-    this.routerService.route('/home', () => this.onRoute('home'));
-    this.routerService.route('/docs', () => this.onRoute('docs'));
-    this.routerService.route('/dashboard', () => this.onRoute('dashboard'));
+    this.router.route('/', () => this.onRoute('home'));
+    this.router.route('/home', () => this.onRoute('home'));
+    this.router.route('/docs', () => this.onRoute('docs'));
+    this.router.route('/dashboard', () => this.onRoute('dashboard'));
+    this.router.ready();
   }
 
   onRoute(nav: View) {
