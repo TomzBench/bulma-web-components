@@ -23,7 +23,6 @@
     "inversify": "^5.0.1",
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
-    "page": "^1.11.6",
     "reflect-metadata": "^0.1.13",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2"

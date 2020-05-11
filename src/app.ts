@@ -24,39 +24,10 @@ export class App extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.router.route('/', () => this.onRoute('home'));
-    this.router.route('/home', () => this.onRoute('home'));
-    this.router.route('/docs', () => this.onRoute('docs'));
-    this.router.route('/dashboard', () => this.onRoute('dashboard'));
-    this.router.ready();
-  }
-
-  onRoute(nav: View) {
-    this.view = nav;
-    this.requestUpdate();
   }
 
   async login(email: string, password: string) {
     let response = await this.userService.login(email, password).catch(e => e);
-  }
-
-  renderCurrentView() {
-    switch (this.view) {
-      case 'dashboard':
-        return html`
-          <atx-dashboard></atx-dashboard>
-        `;
-        break;
-      case 'docs':
-        return html`
-          <atx-docs></atx-docs>
-        `;
-        break;
-      default:
-        return html`
-          <atx-home></atx-home>
-        `;
-    }
   }
 
   render() {
@@ -66,7 +37,7 @@ export class App extends LitElement {
           this.login(e.detail.email, e.detail.password);
         }}"
       ></atx-topnav>
-      ${this.renderCurrentView()}
+      <atx-dashboard></atx-dashboard>
     `;
   }
 }

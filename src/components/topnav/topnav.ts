@@ -35,7 +35,7 @@ export class AtxTopnav extends LitElement {
         <b-navbar-item where="brand">
           <img src="${logo}" height="32px" />
         </b-navbar-item>
-        <b-navbar-item @click="${() => this.router.route('/dashboard')}">
+        <b-navbar-item @click="${() => console.log('dashboard')}">
           <b-navbar-label>
             <b-icon>settings</b-icon>
             Dashboard
@@ -45,7 +45,7 @@ export class AtxTopnav extends LitElement {
             <b-navbar-item><b-icon>device_hub</b-icon>Devices</b-navbar-item>
           </b-navbar-dropdown>
         </b-navbar-item>
-        <b-navbar-item @click="${() => this.router.route('/docs')}">
+        <b-navbar-item @click="${() => console.log('docs')}">
           <b-navbar-label>
             <b-icon>description</b-icon>
             Docs
