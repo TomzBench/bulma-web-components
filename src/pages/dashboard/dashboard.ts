@@ -11,7 +11,6 @@ import './main/dashboard-main';
 @domConsumer('atx-dashboard')
 export class AtxDashboard extends LitElement {
   static styles = stylesCustom(scss.toString());
-  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
 
   render() {
     return html`
