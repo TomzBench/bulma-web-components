@@ -27,6 +27,7 @@ class BNavbar extends LitElement {
       } else {
         this.start.push(i);
       }
+      if (!i.classList.contains('navbar-item')) i.classList.add('navbar-item');
     });
   }
 

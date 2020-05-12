@@ -13,7 +13,7 @@ export class AtxHome extends LitElement {
       <div class="home">
         <div class="hero is-fullheight">
           <atx-topnav>
-            <a class="navbar-item" href="/dashboard">Dashboard</a>
+            <a href="/dashboard">Dashboard</a>
           </atx-topnav>
           <div class="hero-body">
             <div class="container has-text-centered">

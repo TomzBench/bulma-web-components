@@ -15,7 +15,7 @@ export class AtxDashboard extends LitElement {
   render() {
     return html`
       <atx-topnav wide>
-        <a class="navbar-item" href="/home">< BACK</a>
+        <a href="/home">< BACK</a>
       </atx-topnav>
       <div class="dashboard-container">
         <slot></slot>
