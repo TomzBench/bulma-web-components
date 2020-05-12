@@ -36,23 +36,7 @@ export class AtxTopnav extends LitElement {
         <b-navbar-item where="brand">
           <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
-        <a class="navbar-item" href="/dashboard">
-          Dashboard
-        </a>
-        <b-navbar-item href="/docs">
-          <b-navbar-label>
-            Docs
-          </b-navbar-label>
-          <b-navbar-dropdown>
-            <b-navbar-item>API</b-navbar-item>
-            <b-navbar-item>DashboardV12</b-navbar-item>
-            <b-navbar-item>LinQM5</b-navbar-item>
-            <b-navbar-item>SDK</b-navbar-item>
-            <b-navbar-item>C++</b-navbar-item>
-            <b-navbar-item>NodeJS</b-navbar-item>
-            <b-navbar-item>Rust</b-navbar-item>
-          </b-navbar-dropdown>
-        </b-navbar-item>
+        ${Array.from(this.children)}
         <b-navbar-item where="right" @click="${() => (this.show = 'signin')}">
           Sign In
           <b-icon>
