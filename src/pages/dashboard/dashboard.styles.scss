@@ -17,10 +17,15 @@
 // TODO import ~/bulma END
 
 .dashboard-container {
-  margin-left: $aside; /* Aligns with Atx logo */
-  // padding: 10px;
+  // margin-left: $aside; /* Aligns with Atx logo */
   background: whitesmoke;
-  position: relative;
+  position: fixed;
+  top: $aside;
+  right: 0px;
+  bottom: 0px;
+  left: $aside;
+  overflow-x: hidden !important;
+  overflow-y: auto;
 }
 
 .dashboard-sidenav {
