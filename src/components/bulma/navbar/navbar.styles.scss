@@ -13,6 +13,12 @@ b-navbar-item.navbar-link {
   }
 }
 
+.navbar-container {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
 // TODO
 // bulma targets a.navbar-item and misses our b-navbar-item target, need to
 // fork bulma and see if we can fix there. So we should add the .a.navbar items

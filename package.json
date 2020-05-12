@@ -16,7 +16,7 @@
     "build": "webpack",
     "storybook:start": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
-    "start": "webpack-dev-server --config=scripts/webpack.dev.js"
+    "start": "node ./scripts/start.js"
   },
   "author": "",
   "license": "ISC",

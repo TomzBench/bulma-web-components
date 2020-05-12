@@ -18,7 +18,7 @@
 
 .dashboard-container {
   margin-left: $aside; /* Aligns with Atx logo */
-  padding: 10px;
+  // padding: 10px;
   background: whitesmoke;
   position: relative;
 }
@@ -32,7 +32,6 @@
   background-image: linear-gradient(90deg, #051d38, #1e344c);
   position: absolute;
   padding-top: 4px;
-  z-index: 30;
   .logo {
     display: block;
     padding: 0.5em 0.75em;

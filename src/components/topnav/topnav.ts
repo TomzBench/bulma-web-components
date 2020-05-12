@@ -33,21 +33,13 @@ export class AtxTopnav extends LitElement {
     return html`
       <b-navbar color="primary">
         <b-navbar-item where="brand">
-          <img src="${logo}" height="32px" />
+          <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
         <b-navbar-item href="/dashboard">
-          <b-navbar-label>
-            <b-icon>settings</b-icon>
-            Dashboard
-          </b-navbar-label>
-          <b-navbar-dropdown>
-            <b-navbar-item><b-icon>account_circle</b-icon>Users</b-navbar-item>
-            <b-navbar-item><b-icon>device_hub</b-icon>Devices</b-navbar-item>
-          </b-navbar-dropdown>
+          Dashboard
         </b-navbar-item>
         <b-navbar-item href="/docs">
           <b-navbar-label>
-            <b-icon>description</b-icon>
             Docs
           </b-navbar-label>
           <b-navbar-dropdown>

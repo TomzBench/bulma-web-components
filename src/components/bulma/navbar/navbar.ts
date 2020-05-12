@@ -11,6 +11,7 @@ import * as scss from './navbar.styles.scss';
 class BNavbar extends LitElement {
   static styles = styles(scss.toString());
   @property({ type: String }) color?: Colors;
+  @property({ type: Boolean }) wide?: boolean = false;
   brand: Element[] = [];
   start: Element[] = [];
   end: Element[] = [];
@@ -35,23 +36,25 @@ class BNavbar extends LitElement {
     };
     return html`
       <div class="${classMap(classes.navbar)}">
-        <div class="navbar-brand">
-          ${this.brand}
-          <a
-            class="navbar-burger burger"
-            role="button"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="brandButton"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-        <div class="navbar-menu">
-          <div class="navbar-start">${this.start}</div>
-          <div class="navbar-end">${this.end}</div>
+        <div class="${this.wide ? 'navbar-container' : 'container'}">
+          <div class="navbar-brand">
+            ${this.brand}
+            <a
+              class="navbar-burger burger"
+              role="button"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="brandButton"
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="navbar-menu">
+            <div class="navbar-start">${this.start}</div>
+            <div class="navbar-end">${this.end}</div>
+          </div>
         </div>
       </div>
     `;

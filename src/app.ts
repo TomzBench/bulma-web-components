@@ -54,11 +54,6 @@ export class App extends LitElement {
 
   render() {
     return html`
-      <atx-topnav
-        @atx-login="${(e: CustomEvent<SubmitLoginEvent>) => {
-          this.login(e.detail.email, e.detail.password);
-        }}"
-      ></atx-topnav>
       <div class="outlet"></div>
     `;
   }
