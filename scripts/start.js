@@ -103,11 +103,15 @@ async function stopContainers(config) {
       `Dev Server: ${atxConfig.devServer.host}:${atxConfig.devServer.port}`
     );
 
+    let shuttingDown = false;
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
       process.on(sig, async function() {
-        devServer.close();
-        await stopContainers(atxConfig);
-        await stopApiServer(atxConfig);
+        if (!shuttingDown) {
+          shuttingDown = true;
+          devServer.close();
+          await stopContainers(atxConfig);
+          await stopApiServer(atxConfig);
+        }
       });
     });
   } catch (e) {

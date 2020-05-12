@@ -13,7 +13,7 @@ export class AtxHome extends LitElement {
       <div class="home">
         <div class="hero is-fullheight">
           <atx-topnav>
-            <a href="/dashboard">Dashboard</a>
+            <!--<a href="/dashboard">Dashboard</a>-->
           </atx-topnav>
           <div class="hero-body">
             <div class="container has-text-centered">
@@ -21,9 +21,28 @@ export class AtxHome extends LitElement {
               <h1 class="title has-text-weight-light">
                 Altronix Device Portal
               </h1>
-              <button class="button is-primary">
-                <span>Sign In</span>
-              </button>
+              <nav class="breadcrumb is-centered">
+                <ul>
+                  <li>
+                    <a class="has-text-primary" href="/dashboard">
+                      <b-icon>desktop_mac</b-icon>
+                      <span>Dashboard</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary" href="/docs">
+                      <b-icon>description</b-icon>
+                      <span>Documentation</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary">
+                      <b-icon>mail</b-icon>
+                      <span>Contact</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
