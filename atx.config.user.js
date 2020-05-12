@@ -1,11 +1,28 @@
 const atxConfig = require('./atx.config.js');
-module.exports = Object.assign({}, atxConfig, {
-  session: 'atx.user.config',
-  dockerHost: '172.17.0.1',
-  devServerPort: 33443,
-  devServerHost: '127.0.0.1',
-  httpPort: 33444,
-  zmtpPort: 33456,
-  zmtpsPort: 33457,
-  containers: [{ image: 'atxmon' }, { image: 'linq2' }]
+
+// Create some devices
+let CONTAINER_PORT_START = 44000;
+let devices = [];
+for (let i = 0; i < 10; i++) {
+  devices.push({
+    image: 'linq2',
+    container: true,
+    httpPort: CONTAINER_PORT_START++,
+    httpsPort: CONTAINER_PORT_START++
+  });
+}
+
+// Configure backend
+let apiServer = Object.assign({}, atxConfig.apiServer, {
+  httpPort: 3000,
+  zmtpPort: 33455,
+  container: false
 });
+
+module.exports = Object.assign(
+  {},
+  atxConfig,
+  { session: 'atx.config.user' },
+  { devices },
+  { apiServer }
+);

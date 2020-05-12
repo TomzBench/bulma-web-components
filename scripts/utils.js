@@ -72,11 +72,13 @@ exports.startDeviceContainer = async function(userConfig = {}) {
     `docker run -d ` +
     `--name=${config.name} ` +
     `${httpPort}` +
-    `${httpPort}` +
+    `${httpsPort}` +
     `${config.image} ` +
     `-n 127.0.0.1:8080 ` +
     `-c ${config.dockerHost}:${config.zmtpPort} ` +
+    `-s ${config.secure ? 1 : 0} ` +
     `-p 0`;
+  logger.debug(`Running command [${cmd}]`);
   logger.info(`Booting container: ${config.name}`);
   return exports.execute(cmd);
 };
@@ -105,6 +107,7 @@ exports.startAtxmonContainer = async function(userConfig = {}) {
     `--zmtpPort 33455 ` +
     `--zmtpsPort 33456}`
   ).split(' ');
+  logger.debug(`Running command [${args}]`);
   logger.info(`Booting container: ${config.name}`);
   let shell = process.platform === 'win32' ? true : false;
   return new Promise(resolve => {

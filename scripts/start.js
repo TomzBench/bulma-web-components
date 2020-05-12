@@ -1,3 +1,6 @@
+// Boot WebpackDevServer ourself
+// https://gist.github.com/michaelrambeau/b04f83ef16fc78feee09
+
 let path = require('path'),
   logger = require('./logger'),
   utils = require('./utils'),
@@ -7,74 +10,107 @@ let path = require('path'),
   webpackConfig = require('./webpack.dev.js'),
   WebpackDevServer = require('webpack-dev-server/lib/Server');
 
-// https://gist.github.com/michaelrambeau/b04f83ef16fc78feee09
-// Boot WebpackDevServer ourself
+// Try and find a suitable atx.config.js file
+async function loadAtxConfig() {
+  let { root } = await utils.seekRoot('portal');
+  return (
+    (await requirePath(`${root}/atx.config.user.js`)) ||
+    (await requirePath(`${root}/atx.config.js`))
+  );
+}
+
+// Require a file located on path, return file or undefined
+async function requirePath(path) {
+  return await fs.promises
+    .stat(path)
+    .then(() => require(path))
+    .catch(e => undefined);
+}
+
+// Read apiServer config, load docker container and configure devServer proxy
+async function startApiServer(config) {
+  if (config.apiServer && config.apiServer.container) {
+    logger.info(`Starting backend [PORT: ${config.apiServer.httpPort}]`);
+    const name = `${config.session}.atxmon`;
+    await utils.startAtxmonContainer({ name, ...config.apiServer });
+  } else {
+    logger.info(`Assuming API [PORT: ${config.apiServer.httpPort}] exists!`);
+  }
+  if (!config.devServer.proxy) config.devServer.proxy = {};
+  config.devServer.proxy['/api'] = {
+    target: `${config.host}:${config.apiServer.port}`
+  };
+}
+
+// Stop apiServer container if it is running
+async function stopApiServer(config) {
+  if (config.apiServer && config.apiServer.container) {
+    const name = `${config.session}.atxmon`;
+    await utils.stopDockerContainer(name);
+  }
+}
+
+// Start any k64 docker devices
+async function startContainers(config) {
+  let devices = config.devices || [];
+  devices.forEach(async (c, idx) => {
+    const dockerHost = config.dockerHost;
+    const { zmtpPort, zmtpsPort } = config.apiServer;
+    const { httpPort, httpsPort, image } = c;
+    const name = `${config.session}.${image}.${idx}`;
+    await utils.startDeviceContainer({
+      name,
+      image,
+      dockerHost,
+      httpPort,
+      httpsPort,
+      zmtpPort,
+      zmtpsPort
+    });
+  });
+}
+
+// Stop any k64 docker devices
+async function stopContainers(config) {
+  let devices = config.devices || [];
+  devices.forEach(async (c, idx) => {
+    const name = `${config.session}.${c.image}.${idx}`;
+    await utils.stopDockerContainer(name);
+  });
+}
 
 (async () => {
   try {
-    let { root } = await utils.seekRoot('portal'),
-      args = process.argv.slice(2),
-      env = Object.assign({}, process.env, { ATXMON_PATH: root }),
-      shell = process.platform === 'win32' ? true : false,
-      atxConfig =
-        (await loadAtxConfig(`${root}/atx.config.user.js`)) ||
-        (await loadAtxConfig(`${root}/atx.config.js`));
+    const atxConfig = await loadAtxConfig();
 
-    webpackConfig.devServer.proxy = [];
-    atxConfig.containers.forEach(async (c, idx) => {
-      const image = c.image;
-      const name = `${atxConfig.session}.${image}.${idx}`;
-      if (c.image === 'atxmon') {
-        await utils.startAtxmonContainer({ name, ...atxConfig });
-        webpackConfig.devServer.proxy.push({
-          context: ['/api'],
-          target: `${atxConfig.host}:${atxConfig.httpPort}`,
-          bypass: function(req, res, opts) {
-            console.log(req);
-            console.log(res);
-            console.log(opts);
-          }
-        });
-      } else {
-        const { zmtpPort, zmtpsPort, dockerHost } = atxConfig;
-        await utils.startDeviceContainer({
-          dockerHost,
-          zmtpPort,
-          zmtpsPort,
-          name,
-          image
-        });
-      }
-    });
+    await startApiServer(atxConfig);
+    await startContainers(atxConfig);
+    webpackConfig.devServer = Object.assign(
+      {},
+      webpackConfig.devServer,
+      atxConfig.devServer
+    );
 
     let devServer = new WebpackDevServer(await webpack(webpackConfig));
     let app = devServer.listen(
-      atxConfig.devServerPort,
-      atxConfig.devServerHost,
+      atxConfig.devServer.port,
+      atxConfig.devServer.host,
       e => {
         if (e) throw e;
       }
     );
-    logger.info(`Listening on port ${atxConfig.devServerPort}`);
+    logger.info(
+      `Dev Server: ${atxConfig.devServer.host}:${atxConfig.devServer.port}`
+    );
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-      process.on(sig, function() {
+      process.on(sig, async function() {
         devServer.close();
-        atxConfig.containers.forEach(async (c, idx) => {
-          const name = `${atxConfig.session}.${c.image}.${idx}`;
-          await utils.stopDockerContainer(name);
-        });
+        await stopContainers(atxConfig);
+        await stopApiServer(atxConfig);
       });
     });
   } catch (e) {
     logger.error(e);
   }
 })();
-
-// Read an atx.config file
-async function loadAtxConfig(path) {
-  return await fs.promises
-    .stat(path)
-    .then(() => require(path))
-    .catch(e => undefined);
-}
