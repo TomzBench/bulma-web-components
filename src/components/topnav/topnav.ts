@@ -19,6 +19,7 @@ import '../form-login/form-login';
 @domConsumer('atx-topnav')
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
+  @property({ type: Boolean }) wide: boolean = false;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   _show: string = '';
   set show(val: string) {
@@ -31,13 +32,13 @@ export class AtxTopnav extends LitElement {
 
   render() {
     return html`
-      <b-navbar color="primary">
+      <b-navbar color="primary" ?wide="${this.wide}">
         <b-navbar-item where="brand">
           <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
-        <b-navbar-item href="/dashboard">
+        <a class="navbar-item" href="/dashboard">
           Dashboard
-        </b-navbar-item>
+        </a>
         <b-navbar-item href="/docs">
           <b-navbar-label>
             Docs
