@@ -2,7 +2,6 @@ import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import { domConsumer, domInject } from '../../components/shared/decorators';
-import { RouterService } from '../../services/router/router.service';
 import { SYMBOLS } from '../../ioc/constants.root';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
@@ -20,17 +19,11 @@ import '../form-login/form-login';
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
-  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
-  _show: string = '';
-  set show(val: string) {
-    this._show = val;
-    this.requestUpdate();
-  }
-  get show(): string {
-    return this._show;
-  }
+  @property({ type: String }) user: string | undefined = undefined;
+  @property({ type: String }) show?: string;
 
   render() {
+    const message = this.user ? this.user : 'Sign In';
     return html`
       <b-navbar color="primary" ?wide="${this.wide}">
         <b-navbar-item where="brand">
@@ -38,7 +31,7 @@ export class AtxTopnav extends LitElement {
         </b-navbar-item>
         ${Array.from(this.children)}
         <b-navbar-item where="right" @click="${() => (this.show = 'signin')}">
-          Sign In
+          <span>${message}</span>
           <b-icon>
             account_circle
           </b-icon>

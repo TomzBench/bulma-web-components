@@ -14,6 +14,7 @@ import { ServiceIdentifier } from '../../../components/shared/types';
 
 import '../home';
 import { UserService } from '../../../services/user/user.service';
+import { RouterService } from '../../../services/router/router.service';
 import { IoService } from '../../../services/io/io.service';
 import { AtxTopnav } from '../../../components/topnav/topnav';
 import { SubmitLoginEvent } from '../../../components/form-login/types';
@@ -42,13 +43,17 @@ function queryAll(el: Element | null, query: string) {
 async function setup(name: string) {
   let container = new Container();
   let users = new UserService({} as IoService);
+  let router = new RouterService({} as any);
   let usersMock = sinon.mock(users);
+  let routerMock = sinon.mock(router);
   container.bind(SYMBOLS.USER_SERVICE).toDynamicValue(() => users);
+  container.bind(SYMBOLS.ROUTER_SERVICE).toDynamicValue(() => router);
   @domProvider(`provider-${name}`, container)
   class Provider extends LitElement {}
   return {
     users,
     usersMock,
+    routerMock,
     test: await fixture(
       `<provider-${name}><atx-home></atx-home></provider-${name}>`
     )
@@ -58,9 +63,9 @@ async function setup(name: string) {
 describe('home', () => {
   it('Should login', async () => {
     // Setup
-    const { test, users, usersMock } = await setup('login');
+    const { test, users, usersMock, routerMock } = await setup('login');
     let shadowRoot = test.shadowRoot as ShadowRoot;
-    let home = query(test, 'atx-home');
+    let home = query(test, 'atx-home') as LitElement;
     let topnav: AtxTopnav = shadowQuery(home, 'atx-topnav') as AtxTopnav;
 
     // Test
@@ -69,6 +74,10 @@ describe('home', () => {
       .once()
       .returns(new Promise(resolve => resolve({ accessToken: 'foo' })))
       .calledWith('foo-email', 'foo-password');
+    routerMock
+      .expects('route')
+      .once()
+      .calledWith('/dashboard');
 
     topnav.dispatchEvent(
       new CustomEvent<SubmitLoginEvent>('atx-login', {
@@ -77,6 +86,8 @@ describe('home', () => {
         detail: { email: 'foo-email', password: 'foo-password' }
       })
     );
+    await home.requestUpdate();
     usersMock.verify();
+    routerMock.verify();
   });
 });

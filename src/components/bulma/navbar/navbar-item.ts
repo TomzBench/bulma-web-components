@@ -30,6 +30,8 @@ class BNavbarItem extends LitElement {
     const classes = {
       link: { ['navbar-link']: true, [`is-arrowless`]: !this.arrow }
     };
+
+    // TODO - this causes some problems (dom.js start == null crash)
     const labels = Array.from(this.childNodes).map(i =>
       i.nodeType === NODE_TYPES.TEXT
         ? html`

@@ -28,7 +28,7 @@ export class BIcon extends LitElement {
   render() {
     this.classList.add(`is-${this.where}`);
     if (this.size) this.classList.add(`is-${this.size}`);
-    if (this.color) this.classList.add(`is-${this.color}`);
+    if (this.color) this.classList.add(`has-text-${this.color}`);
     return html`
       <i class="${this.kind}">
         ${this.firstChild}

@@ -4,17 +4,25 @@ import { bind } from '../../ioc/container.root';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { User } from './types';
 import { API } from './constants';
+import { BehaviorSubject } from 'rxjs';
+
+interface LoginResponse {
+  user: User;
+  accessToken: string;
+}
 
 @bind(SYMBOLS.USER_SERVICE)
 export class UserService {
-  currentUser?: User;
+  user = new BehaviorSubject<User | undefined>(undefined);
 
   constructor(@inject(SYMBOLS.IO_SERVICE) private io: IoService) {}
 
-  // TODO - set IO header
   async login(email: string, password: string): Promise<User> {
-    let response = await this.io.post<User>(API.LOGIN, { email, password });
-    this.currentUser = response.json;
-    return this.currentUser;
+    let response = await this.io.post<LoginResponse>(API.LOGIN, {
+      email,
+      password
+    });
+    this.user.next(response.json.user);
+    return response.json.user;
   }
 }

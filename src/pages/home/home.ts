@@ -3,8 +3,11 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../../components/bulma/styles';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { UserService } from '../../services/user/user.service';
+import { RouterService } from '../../services/router/router.service';
+import { User } from '../../services/user/types';
 import { domInject, domConsumer } from '../../components/shared/decorators';
 import { SubmitLoginEvent } from '../../components/form-login/types';
+import { Subscription } from 'rxjs';
 import * as scss from './home.styles.scss';
 import * as logo from '../../assets/altronix_logo_large.png';
 import * as facebook from '../../assets/facebook.svg';
@@ -17,33 +20,42 @@ import * as googleLocation from '../../assets/location.svg';
 export class AtxHome extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
-  _show: string = '';
-  set show(val: string) {
-    this._show = val;
-    this.requestUpdate();
+  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
+  @property({ type: String }) user?: string;
+  @property({ type: String }) show: string = '';
+  $user?: Subscription;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.$user = this.users.user.subscribe(u => {
+      this.user = u && u.firstName;
+    });
   }
-  get show(): string {
-    return this._show;
+
+  disconnectedCallback() {
+    if (this.$user) this.$user.unsubscribe();
+    super.disconnectedCallback();
   }
 
   onBeforeLeave(location: Location, commands: any) {
-    if (location.pathname === '/dashboard' && !this.users.currentUser) {
-      // TODO present sign in Modal and prevent navigation
-      // return commands.prevent();
+    if (location.pathname === '/dashboard' && !this.user) {
+      this.show = 'login';
+      return commands.prevent();
     }
   }
 
   async login(e: CustomEvent<SubmitLoginEvent>) {
     let response = await this.users
       .login(e.detail.email, e.detail.password)
-      .catch(e => e);
+      .catch(e => (this.show = '')); // TODO show login error
+    this.router.route('/dashboard');
   }
 
   render() {
     return html`
       <div class="home">
         <div class="hero is-fullheight">
-          <atx-topnav @atx-login="${this.login}">
+          <atx-topnav .user="${this.user}" @atx-login="${this.login}">
             <a class="is-size-5" href="/home">Altronix Developer Portal</a>
             <!--<a href="/dashboard">Dashboard</a>-->
           </atx-topnav>
@@ -119,10 +131,23 @@ export class AtxHome extends LitElement {
         @b-close="${() => (this.show = '')}"
         ?show="${this.show === 'contact'}"
       >
-        <div class="contact is-clipped">
+        <div class="popup is-clipped">
           <div class="box">
-            <p class="contact-title">Submit message...</p>
+            <p class="popup-title">Submit message...</p>
             <atx-form-contact></atx-form-contact>
+          </div>
+        </div>
+      </b-modal>
+      <b-modal
+        @b-close="${() => (this.show = '')}"
+        ?show="${this.show === 'login'}"
+      >
+        <div class="popup is-clipped">
+          <div class="box">
+            <div class="container has-text-centered">
+              <b-icon color="danger">warning</b-icon>
+              <p class="popup-title">Please Log In To Continue...</p>
+            </div>
           </div>
         </div>
       </b-modal>
