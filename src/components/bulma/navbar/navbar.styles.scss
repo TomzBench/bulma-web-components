@@ -19,6 +19,12 @@ b-navbar-item.navbar-link {
   width: 100%;
 }
 
+.navbar-item {
+  img {
+    vertical-align: middle;
+  }
+}
+
 // TODO
 // bulma targets a.navbar-item and misses our b-navbar-item target, need to
 // fork bulma and see if we can fix there. So we should add the .a.navbar items

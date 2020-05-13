@@ -22,9 +22,13 @@ export class BField extends LitElement {
     this.addons = [].concat(
       Array.from(this.querySelectorAll('b-addon')),
       Array.from(this.querySelectorAll('b-addon-button')),
+      Array.from(this.querySelectorAll('b-select')),
       Array.from(this.querySelectorAll('.control'))
     );
-    this.inputs = Array.from(this.querySelectorAll('b-input'));
+    this.inputs = [].concat(
+      Array.from(this.querySelectorAll('b-input')),
+      Array.from(this.querySelectorAll('b-textarea'))
+    );
     this.fields = Array.from(this.querySelectorAll('b-field'));
     Array.from(this.children).forEach(i => {
       if (this.size) writeAttribute(i, 'size', this.size);

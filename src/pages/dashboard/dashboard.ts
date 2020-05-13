@@ -12,10 +12,12 @@ import './main/dashboard-main';
 export class AtxDashboard extends LitElement {
   static styles = stylesCustom(scss.toString());
 
+  onBeforeEnter() {}
+
   render() {
     return html`
       <atx-topnav wide>
-        <a href="/home">< BACK</a>
+        <a class="is-size-5" href="/home">< BACK</a>
       </atx-topnav>
       <div class="dashboard-container">
         <slot></slot>

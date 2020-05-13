@@ -12,6 +12,8 @@ import './components/bulma/navbar/navbar';
 import './components/bulma/pagination/pagination';
 import './components/bulma/select/select';
 import './components/bulma/table/table';
+import './components/bulma/textarea/textarea';
+import './components/form-contact/form-contact';
 import './components/form-user/form-user';
 import './components/form-login/form-login';
 import './components/form-signup/form-signup';
