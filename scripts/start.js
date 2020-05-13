@@ -37,6 +37,7 @@ async function startApiServer(config) {
     logger.info(`Assuming API [PORT: ${config.apiServer.httpPort}] exists!`);
   }
   if (!config.devServer.proxy) config.devServer.proxy = {};
+  config.devServer.historyApiFallback = true;
   Object.assign(config.devServer.proxy, {
     '/api/**': {
       target: `http://${config.host}:${config.apiServer.httpPort}`
