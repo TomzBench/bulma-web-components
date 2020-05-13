@@ -1,20 +1,4 @@
 @import './variables.scss';
-@import '../../assets/iconfont/material-icons.css';
-
-// TODO import ~/bulma START
-@import '~bulma';
-
-* {
-  // Note that since we use shadow dom, bulma's BODY and HTML styles need to
-  // be applied to our component explicitly
-
-  // color: $body-color;
-  font-size: $body-font-size;
-  // font-weight: $body-weight;
-  line-height: $body-line-height;
-  font-family: $body-family;
-}
-// TODO import ~/bulma END
 
 .dashboard-container {
   // margin-left: $aside; /* Aligns with Atx logo */
@@ -29,6 +13,14 @@
 }
 
 .dashboard-sidenav {
+  .menu-list {
+    a {
+      border-radius: 0px;
+    }
+    a:focus {
+      outline: none;
+    }
+  }
   top: 0px;
   bottom: 0px;
   left: 0px;

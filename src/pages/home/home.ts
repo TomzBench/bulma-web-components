@@ -68,8 +68,48 @@ export class AtxHome extends LitElement {
               </nav>
             </div>
           </div>
+          <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+              <div class="container social-tabs">
+                <ul>
+                  <li>
+                    <a class="has-text-primary">
+                      <b-icon>location_on</b-icon>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary">
+                      <span>facebook</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary">
+                      <span>github</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary">
+                      <span>linkedin</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="has-text-primary">
+                      <span>twitter</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
+      <!--
+      <div>
+        <div class="container has-text-centered">
+          <p class="has-text-grey is-size-7">Altronix Corp.</p>
+        </div>
+      </div>
+      -->
       <b-modal
         @b-close="${() => (this.show = '')}"
         ?show="${this.show === 'contact'}"

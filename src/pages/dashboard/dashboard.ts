@@ -1,6 +1,6 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
-import { stylesCustom } from '../../components/bulma/styles';
+import { styles } from '../../components/bulma/styles';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { RouterService } from '../../services/router/router.service';
@@ -10,7 +10,7 @@ import './main/dashboard-main';
 
 @domConsumer('atx-dashboard')
 export class AtxDashboard extends LitElement {
-  static styles = stylesCustom(scss.toString());
+  static styles = styles(scss.toString());
 
   onBeforeEnter() {}
 
