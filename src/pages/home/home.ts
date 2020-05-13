@@ -6,6 +6,11 @@ import { UserService } from '../../services/user/user.service';
 import { domInject, domConsumer } from '../../components/shared/decorators';
 import * as scss from './home.styles.scss';
 import * as logo from '../../assets/altronix_logo_large.png';
+import * as facebook from '../../assets/facebook.svg';
+import * as github from '../../assets/github.svg';
+import * as twitter from '../../assets/twitter.svg';
+import * as linkedin from '../../assets/linkedin.svg';
+import * as googleLocation from '../../assets/location.svg';
 
 @domConsumer('atx-home')
 export class AtxHome extends LitElement {
@@ -28,6 +33,7 @@ export class AtxHome extends LitElement {
   }
 
   render() {
+    console.log(facebook);
     return html`
       <div class="home">
         <div class="hero is-fullheight">
@@ -73,28 +79,28 @@ export class AtxHome extends LitElement {
               <div class="container social-tabs">
                 <ul>
                   <li>
-                    <a class="has-text-primary">
-                      <b-icon>location_on</b-icon>
+                    <a class="location">
+                      <img src="${googleLocation}" />
                     </a>
                   </li>
                   <li>
-                    <a class="has-text-primary">
-                      <span>facebook</span>
+                    <a class="facebook">
+                      <img src="${facebook}" />
                     </a>
                   </li>
                   <li>
-                    <a class="has-text-primary">
-                      <span>github</span>
+                    <a class="github">
+                      <img src="${github}" />
                     </a>
                   </li>
                   <li>
-                    <a class="has-text-primary">
-                      <span>linkedin</span>
+                    <a class="linkedin">
+                      <img src="${linkedin}" />
                     </a>
                   </li>
                   <li>
-                    <a class="has-text-primary">
-                      <span>twitter</span>
+                    <a class="twitter">
+                      <img src="${twitter}" />
                     </a>
                   </li>
                 </ul>
