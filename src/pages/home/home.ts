@@ -4,6 +4,7 @@ import { styles } from '../../components/bulma/styles';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { UserService } from '../../services/user/user.service';
 import { domInject, domConsumer } from '../../components/shared/decorators';
+import { SubmitLoginEvent } from '../../components/form-login/types';
 import * as scss from './home.styles.scss';
 import * as logo from '../../assets/altronix_logo_large.png';
 import * as facebook from '../../assets/facebook.svg';
@@ -15,7 +16,7 @@ import * as googleLocation from '../../assets/location.svg';
 @domConsumer('atx-home')
 export class AtxHome extends LitElement {
   static styles = styles(scss.toString());
-  @domInject(SYMBOLS.USER_SERVICE) user!: UserService;
+  @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   _show: string = '';
   set show(val: string) {
     this._show = val;
@@ -26,18 +27,23 @@ export class AtxHome extends LitElement {
   }
 
   onBeforeLeave(location: Location, commands: any) {
-    if (location.pathname === '/dashboard' && !this.user.currentUser) {
+    if (location.pathname === '/dashboard' && !this.users.currentUser) {
       // TODO present sign in Modal and prevent navigation
       // return commands.prevent();
     }
   }
 
+  async login(e: CustomEvent<SubmitLoginEvent>) {
+    let response = await this.users
+      .login(e.detail.email, e.detail.password)
+      .catch(e => e);
+  }
+
   render() {
-    console.log(facebook);
     return html`
       <div class="home">
         <div class="hero is-fullheight">
-          <atx-topnav>
+          <atx-topnav @atx-login="${this.login}">
             <a class="is-size-5" href="/home">Altronix Developer Portal</a>
             <!--<a href="/dashboard">Dashboard</a>-->
           </atx-topnav>
@@ -109,13 +115,6 @@ export class AtxHome extends LitElement {
           </div>
         </div>
       </div>
-      <!--
-      <div>
-        <div class="container has-text-centered">
-          <p class="has-text-grey is-size-7">Altronix Corp.</p>
-        </div>
-      </div>
-      -->
       <b-modal
         @b-close="${() => (this.show = '')}"
         ?show="${this.show === 'contact'}"

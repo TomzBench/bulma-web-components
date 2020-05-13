@@ -1,9 +1,7 @@
 import { customElement, LitElement, html, query } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
 import { domConsumer, domInject } from './components/shared/decorators';
-import { UserService } from './services/user/user.service';
 import { RouterService } from './services/router/router.service';
-import { SubmitLoginEvent } from './components/form-login/types';
 
 import './components/topnav/topnav';
 import './pages/dashboard/dashboard';
@@ -22,9 +20,12 @@ import * as scss from './app.styles.scss';
 @domConsumer('atx-app')
 export class App extends LitElement {
   static styles = styles(scss.toString());
-  @domInject(SYMBOLS.USER_SERVICE) userService!: UserService;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @query('.outlet') outlet!: Element;
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
 
   firstUpdated() {
     let router = this.router.create(this.outlet);
@@ -46,10 +47,6 @@ export class App extends LitElement {
         ]
       }
     ]);
-  }
-
-  async login(email: string, password: string) {
-    let response = await this.userService.login(email, password).catch(e => e);
   }
 
   render() {

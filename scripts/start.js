@@ -38,7 +38,7 @@ async function startApiServer(config) {
   }
   if (!config.devServer.proxy) config.devServer.proxy = {};
   config.devServer.proxy['/api'] = {
-    target: `${config.host}:${config.apiServer.port}`
+    target: `${config.host}:${config.apiServer.httpPort}`
   };
 }
 
@@ -90,6 +90,7 @@ async function stopContainers(config) {
       webpackConfig.devServer,
       atxConfig.devServer
     );
+    console.log(webpackConfig.devServer);
 
     let devServer = new WebpackDevServer(await webpack(webpackConfig));
     let app = devServer.listen(
