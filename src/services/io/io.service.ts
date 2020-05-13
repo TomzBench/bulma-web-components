@@ -17,7 +17,7 @@ export class IoService implements IoRequester {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: obj
+      body: JSON.stringify(obj)
     });
     return { ...response, json: await response.json() };
   }
@@ -28,7 +28,7 @@ export class IoService implements IoRequester {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: obj
+      body: JSON.stringify(obj)
     });
     return { ...response, json: await response.json() };
   }

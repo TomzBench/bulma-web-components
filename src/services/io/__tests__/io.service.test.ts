@@ -25,7 +25,7 @@ describe('io.service should send a get request', async () => {
     expect(mockFetch).calledWith('foo', {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
-      body: { data: 'bar' }
+      body: JSON.stringify({ data: 'bar' })
     });
   });
 
@@ -37,7 +37,7 @@ describe('io.service should send a get request', async () => {
     expect(mockFetch).calledWith('foo', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: { data: 'bar' }
+      body: JSON.stringify({ data: 'bar' })
     });
   });
 
