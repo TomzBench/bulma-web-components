@@ -14,7 +14,7 @@ describe('io.service', async () => {
     let { mockFetch } = setup(response);
     let io = new IoService(mockFetch);
     await io.get('foo');
-    mockFetch.calledWith('foo', { credentials: 'same-origin' });
+    mockFetch.calledWith('foo', { credentials: 'same-origin', method: 'get' });
   });
 
   it('should send a put request', async () => {
@@ -62,12 +62,16 @@ describe('io.service', async () => {
     await io.get('foo');
     expect(mockFetch).calledWith('foo', {
       credentials: 'same-origin',
+      method: 'get',
       headers: { Authorization: 'foo' }
     });
 
     io.removeHeader('Authorization');
     await io.get('foo');
-    expect(mockFetch).calledWith('foo', { credentials: 'same-origin' });
+    expect(mockFetch).calledWith('foo', {
+      credentials: 'same-origin',
+      method: 'get'
+    });
   });
 
   it('should send headers with delete request', async () => {

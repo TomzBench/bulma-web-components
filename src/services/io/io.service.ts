@@ -3,6 +3,12 @@ import { IoRequester, IoResponse, Fetch } from './types';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { bindTo } from '../../ioc/container.root';
 
+const GET = 'get';
+const PUT = 'put';
+const POST = 'post';
+const DELETE = 'delete';
+type METHOD = typeof GET | typeof PUT | typeof POST | typeof DELETE;
+
 type Headers = {
   [key: string]: string;
 };
@@ -11,13 +17,6 @@ type Headers = {
 export class IoService implements IoRequester {
   headers: Headers = {};
   constructor(private fetch: Fetch) {}
-  async get<T>(url: string): Promise<IoResponse<T>> {
-    let config = { credentials: 'same-origin' };
-    let headers = this.headers;
-    if (Object.keys(headers).length) Object.assign(config, { headers });
-    let response = await this.fetch(url, config);
-    return { ...response, json: await response.json() };
-  }
 
   setHeader(key: string, value: string) {
     this.headers[key] = value;
@@ -27,37 +26,35 @@ export class IoService implements IoRequester {
     delete this.headers[key];
   }
 
-  async put<T>(url: string, obj: any): Promise<IoResponse<T>> {
-    const headers = Object.assign({}, this.headers, {
-      'Content-Type': 'application/json'
-    });
-    let response = await this.fetch(url, {
-      method: 'put',
-      credentials: 'same-origin',
-      headers,
-      body: JSON.stringify(obj)
-    });
+  async request<T>(
+    method: METHOD,
+    url: string,
+    obj?: any
+  ): Promise<IoResponse<T>> {
+    let config = { credentials: 'same-origin', method };
+    let headers = this.headers;
+    if (Object.keys(headers).length) Object.assign(config, { headers });
+    if (obj) {
+      headers['Content-Type'] = 'application/json';
+      Object.assign(config, { headers }, { body: JSON.stringify(obj) });
+    }
+    let response = await this.fetch(url, config);
     return { ...response, json: await response.json() };
+  }
+
+  async get<T>(url: string): Promise<IoResponse<T>> {
+    return this.request(GET, url);
+  }
+
+  async put<T>(url: string, obj: any): Promise<IoResponse<T>> {
+    return this.request(PUT, url, obj);
   }
 
   async post<T>(url: string, obj: any): Promise<IoResponse<T>> {
-    const headers = Object.assign({}, this.headers, {
-      'Content-Type': 'application/json'
-    });
-    let response = await this.fetch(url, {
-      method: 'post',
-      credentials: 'same-origin',
-      headers,
-      body: JSON.stringify(obj)
-    });
-    return { ...response, json: await response.json() };
+    return this.request(POST, url, obj);
   }
 
   async delete<T>(url: string): Promise<IoResponse<T>> {
-    const headers = this.headers;
-    const config = { credentials: 'same-origin', method: 'delete' };
-    if (Object.keys(headers).length) Object.assign(config, { headers });
-    let response = await this.fetch(url, config);
-    return { ...response, json: await response.json() };
+    return this.request(DELETE, url);
   }
 }
