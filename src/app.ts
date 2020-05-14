@@ -15,6 +15,7 @@ import './pages/dashboard/mail/dashboard-mail';
 import './pages/dashboard/power/dashboard-power';
 import './pages/docs/docs';
 import './pages/home/home';
+import './pages/logout/logout';
 
 import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
@@ -48,6 +49,7 @@ export class App extends LitElement {
     router.setRoutes([
       { path: '/', component: 'atx-home' },
       { path: '/home', component: 'atx-home' },
+      { path: '/logout', component: 'atx-logout' },
       { path: '/docs', component: 'atx-docs' },
       {
         path: '/dashboard',
