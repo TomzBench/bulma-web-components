@@ -2,7 +2,6 @@ import { customElement, LitElement, html, query } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
 import { domConsumer, domInject } from './components/shared/decorators';
 import { RouterService } from './services/router/router.service';
-import { UserService } from './services/user/user.service';
 import { Subscription } from 'rxjs';
 
 import './components/topnav/topnav';
@@ -24,25 +23,7 @@ import * as scss from './app.styles.scss';
 export class App extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
-  @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   @query('.outlet') outlet!: Element;
-  $user?: Subscription;
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.$user = this.users.user.subscribe(u => {
-      if (u) {
-        this.router.route('/dashboard');
-      } else {
-        this.router.route('/logout');
-      }
-    });
-  }
-
-  disconnectedCallback() {
-    if (this.$user) this.$user.unsubscribe();
-    super.disconnectedCallback();
-  }
 
   firstUpdated() {
     let router = this.router.create(this.outlet);
