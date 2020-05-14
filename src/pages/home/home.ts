@@ -21,45 +21,13 @@ export class AtxHome extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
-  @property({ type: String }) user?: string;
   @property({ type: String }) show: string = '';
-  $user?: Subscription;
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.$user = this.users.user.subscribe(u => {
-      this.user = u && u.firstName;
-    });
-  }
-
-  disconnectedCallback() {
-    if (this.$user) this.$user.unsubscribe();
-    super.disconnectedCallback();
-  }
-
-  onBeforeLeave(location: Location, commands: any) {
-    if (location.pathname === '/dashboard' && !this.user) {
-      this.show = 'login';
-      return commands.prevent();
-    }
-  }
-
-  async login(e: CustomEvent<SubmitLoginEvent>) {
-    this.users
-      .login(e.detail.email, e.detail.password)
-      .then(() => this.router.route('/dashboard'))
-      .catch(e => {
-        // TODO show login error
-        this.show = '';
-        console.log(e);
-      });
-  }
 
   render() {
     return html`
       <div class="home">
         <div class="hero is-fullheight">
-          <atx-topnav .user="${this.user}" @atx-login="${this.login}">
+          <atx-topnav ">
             <a class="is-size-5" href="/home">Altronix Developer Portal</a>
             <!--<a href="/dashboard">Dashboard</a>-->
           </atx-topnav>

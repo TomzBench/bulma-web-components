@@ -1,8 +1,12 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
+import { UserService } from '../../services/user/user.service';
+import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
+import { SubmitLoginEvent } from '../../components/form-login/types';
+import { Subscription } from 'rxjs';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -18,24 +22,77 @@ import '../form-login/form-login';
 @domConsumer('atx-topnav')
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
+  @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
+  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string | undefined = undefined;
   @property({ type: String }) show?: string;
+  $user?: Subscription;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.$user = this.users.user.subscribe(u => {
+      this.user = u && u.firstName;
+      console.log(`SUBSCRIPTION: ${this.user}`);
+    });
+  }
+
+  disconnectedCallback() {
+    if (this.$user) this.$user.unsubscribe();
+    super.disconnectedCallback();
+  }
+
+  showSignin() {
+    this.show = 'signin';
+  }
+
+  async logout() {
+    await this.users.logout();
+    this.router.route('/home');
+  }
+
+  async login(e: CustomEvent<SubmitLoginEvent>) {
+    this.users
+      .login(e.detail.email, e.detail.password)
+      .then(() => this.router.route('/dashboard'))
+      .catch(e => {
+        // TODO show login error
+        this.show = '';
+        console.log(e);
+      });
+  }
+
+  renderAccountCircle() {
+    const user = this.user;
+    console.log(`ACCOUNT_CIRCLE: ${user}`);
+    return !!user
+      ? html`
+          <b-navbar-item where="right">
+            <b-navbar-label>
+              <span>${user}</span>
+              <b-icon>account_circle</b-icon>
+            </b-navbar-label>
+            <b-navbar-dropdown>
+              <b-navbar-item @click="${this.logout}">Sign Out</b-navbar-item>
+            </b-navbar-dropdown>
+          </b-navbar-item>
+        `
+      : html`
+          <b-navbar-item @click="${this.showSignin}" where="right">
+            <span>Sign In</span>
+            <b-icon>account_circle</b-icon>
+          </b-navbar-item>
+        `;
+  }
 
   render() {
-    const message = this.user ? this.user : 'Sign In';
     return html`
       <b-navbar color="primary" ?wide="${this.wide}">
         <b-navbar-item where="brand">
           <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
         ${Array.from(this.children)}
-        <b-navbar-item where="right" @click="${() => (this.show = 'signin')}">
-          <span>${message}</span>
-          <b-icon>
-            account_circle
-          </b-icon>
-        </b-navbar-item>
+        ${this.renderAccountCircle()}
       </b-navbar>
       <b-modal
         @b-close="${() => (this.show = '')}"
@@ -44,7 +101,7 @@ export class AtxTopnav extends LitElement {
         <div class="signin is-clipped">
           <div class="box">
             <p class="signin-title">Please sign in...</p>
-            <atx-form-login></atx-form-login>
+            <atx-form-login @atx-login="${this.login}"</atx-form-login>
           </div>
         </div>
       </b-modal>
