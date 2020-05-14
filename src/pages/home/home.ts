@@ -45,10 +45,14 @@ export class AtxHome extends LitElement {
   }
 
   async login(e: CustomEvent<SubmitLoginEvent>) {
-    let response = await this.users
+    this.users
       .login(e.detail.email, e.detail.password)
-      .catch(e => (this.show = '')); // TODO show login error
-    this.router.route('/dashboard');
+      .then(() => this.router.route('/dashboard'))
+      .catch(e => {
+        // TODO show login error
+        this.show = '';
+        console.log(e);
+      });
   }
 
   render() {

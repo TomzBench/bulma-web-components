@@ -18,11 +18,12 @@ export class UserService {
   constructor(@inject(SYMBOLS.IO_SERVICE) private io: IoService) {}
 
   async login(email: string, password: string): Promise<User> {
-    let response = await this.io.post<LoginResponse>(API.LOGIN, {
+    let resp = await this.io.post<LoginResponse>(API.LOGIN, {
       email,
       password
     });
-    this.user.next(response.json.user);
-    return response.json.user;
+    this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
+    this.user.next(resp.json.user);
+    return resp.json.user;
   }
 }
