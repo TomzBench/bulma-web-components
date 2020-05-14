@@ -2,7 +2,6 @@ import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import { UserService } from '../../services/user/user.service';
-import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { SubmitLoginEvent } from '../../components/form-login/types';
@@ -23,19 +22,15 @@ import '../form-login/form-login';
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
-  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string | undefined = undefined;
   @property({ type: String }) show?: string;
   $user?: Subscription;
-  loggedIn: boolean = false;
 
   connectedCallback() {
     super.connectedCallback();
     this.$user = this.users.user.subscribe(u => {
       this.user = u && u.firstName;
-      this.loggedIn = u ? true : false;
-      this.requestUpdate();
     });
   }
 
@@ -50,18 +45,14 @@ export class AtxTopnav extends LitElement {
 
   async logout() {
     await this.users.logout();
-    this.router.route('/home');
   }
 
   async login(e: CustomEvent<SubmitLoginEvent>) {
-    this.users
-      .login(e.detail.email, e.detail.password)
-      .then(() => this.router.route('/dashboard'))
-      .catch(e => {
-        // TODO show login error
-        this.show = '';
-        console.log(e);
-      });
+    this.users.login(e.detail.email, e.detail.password).catch(e => {
+      // TODO show login error
+      this.show = '';
+      console.log(e);
+    });
   }
 
   renderAccountCircleUser() {

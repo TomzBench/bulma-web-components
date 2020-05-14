@@ -27,9 +27,8 @@ export class AtxHome extends LitElement {
     return html`
       <div class="home">
         <div class="hero is-fullheight">
-          <atx-topnav ">
+          <atx-topnav>
             <a class="is-size-5" href="/home">Altronix Developer Portal</a>
-            <!--<a href="/dashboard">Dashboard</a>-->
           </atx-topnav>
           <div class="hero-body">
             <div class="container has-text-centered">
