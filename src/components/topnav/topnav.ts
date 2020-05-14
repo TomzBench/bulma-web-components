@@ -28,12 +28,14 @@ export class AtxTopnav extends LitElement {
   @property({ type: String }) user: string | undefined = undefined;
   @property({ type: String }) show?: string;
   $user?: Subscription;
+  loggedIn: boolean = false;
 
   connectedCallback() {
     super.connectedCallback();
     this.$user = this.users.user.subscribe(u => {
       this.user = u && u.firstName;
-      console.log(`SUBSCRIPTION: ${this.user}`);
+      this.loggedIn = u ? true : false;
+      this.requestUpdate();
     });
   }
 
@@ -62,27 +64,28 @@ export class AtxTopnav extends LitElement {
       });
   }
 
-  renderAccountCircle() {
-    const user = this.user;
-    console.log(`ACCOUNT_CIRCLE: ${user}`);
-    return !!user
-      ? html`
-          <b-navbar-item where="right">
-            <b-navbar-label>
-              <span>${user}</span>
-              <b-icon>account_circle</b-icon>
-            </b-navbar-label>
-            <b-navbar-dropdown>
-              <b-navbar-item @click="${this.logout}">Sign Out</b-navbar-item>
-            </b-navbar-dropdown>
-          </b-navbar-item>
-        `
-      : html`
-          <b-navbar-item @click="${this.showSignin}" where="right">
-            <span>Sign In</span>
-            <b-icon>account_circle</b-icon>
-          </b-navbar-item>
-        `;
+  renderAccountCircleUser() {
+    let ret = html`
+      <b-navbar-item where="right">
+        <b-navbar-label>
+          <span>${this.user}</span>
+          <b-icon>account_circle</b-icon>
+        </b-navbar-label>
+        <b-navbar-dropdown>
+          <b-navbar-item @click="${this.logout}">Sign Out</b-navbar-item>
+        </b-navbar-dropdown>
+      </b-navbar-item>
+    `;
+    return ret;
+  }
+
+  renderAccountCircleSignin() {
+    return html`
+      <b-navbar-item @click="${this.showSignin}" where="right">
+        <span>Sign In</span>
+        <b-icon>account_circle</b-icon>
+      </b-navbar-item>
+    `;
   }
 
   render() {
@@ -92,19 +95,11 @@ export class AtxTopnav extends LitElement {
           <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
         ${Array.from(this.children)}
-        ${this.renderAccountCircle()}
+        <b-navbar-item><span>${this.user}</span></b-navbar-item>
+        ${this.user
+          ? this.renderAccountCircleUser()
+          : this.renderAccountCircleSignin()}
       </b-navbar>
-      <b-modal
-        @b-close="${() => (this.show = '')}"
-        ?show="${this.show === 'signin'}"
-      >
-        <div class="signin is-clipped">
-          <div class="box">
-            <p class="signin-title">Please sign in...</p>
-            <atx-form-login @atx-login="${this.login}"</atx-form-login>
-          </div>
-        </div>
-      </b-modal>
     `;
   }
 }
