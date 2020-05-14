@@ -7,8 +7,7 @@
     "disableUsageStatistics": true
   },
   "scripts": {
-    "test-beta": "node ./scripts/test.js",
-    "test": "npm run test:build && npm run test:karma",
+    "test": "node ./scripts/test.js",
     "test:build": "webpack --config=scripts/webpack.test.js",
     "test:karma": "karma start",
     "test:watch": "karma start --auto-watch=true --single-run=false",

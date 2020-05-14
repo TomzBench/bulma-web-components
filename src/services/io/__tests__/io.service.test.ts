@@ -8,7 +8,7 @@ function setup(mockReturnValue: Promise<any>) {
   return { mockFetch };
 }
 
-describe('io.service should send a get request', async () => {
+describe('io.service', async () => {
   it('should send a get request', async () => {
     let response = new Promise(resolve => resolve({ json: () => {} }));
     let { mockFetch } = setup(response);
@@ -17,7 +17,7 @@ describe('io.service should send a get request', async () => {
     mockFetch.calledWith('foo');
   });
 
-  it('io.service should send a put request', async () => {
+  it('should send a put request', async () => {
     let response = new Promise(resolve => resolve({ json: () => {} }));
     let { mockFetch } = setup(response);
     let io = new IoService(mockFetch);
@@ -29,7 +29,7 @@ describe('io.service should send a get request', async () => {
     });
   });
 
-  it('io.service should send a post request', async () => {
+  it('should send a post request', async () => {
     let response = new Promise(resolve => resolve({ json: () => {} }));
     let { mockFetch } = setup(response);
     let io = new IoService(mockFetch);
@@ -41,10 +41,43 @@ describe('io.service should send a get request', async () => {
     });
   });
 
-  it('io.service should send a delete request', async () => {
+  it('should send a delete request', async () => {
     let response = new Promise(resolve => resolve({ json: () => {} }));
     let { mockFetch } = setup(response);
     let io = new IoService(mockFetch);
+    await io.delete('foo');
+    expect(mockFetch).calledOnceWith('foo', {
+      method: 'delete'
+    });
+  });
+
+  it('should send headers with get request', async () => {
+    let response = new Promise(resolve => resolve({ json: () => {} }));
+    let { mockFetch } = setup(response);
+    let io = new IoService(mockFetch);
+    io.setHeader('Authorization', 'foo');
+    await io.get('foo');
+    expect(mockFetch).calledWith('foo', {
+      headers: { Authorization: 'foo' }
+    });
+
+    io.removeHeader('Authorization');
+    await io.get('foo');
+    expect(mockFetch).calledWith('foo');
+  });
+
+  it('should send headers with delete request', async () => {
+    let response = new Promise(resolve => resolve({ json: () => {} }));
+    let { mockFetch } = setup(response);
+    let io = new IoService(mockFetch);
+    io.setHeader('Authorization', 'foo');
+    await io.delete('foo');
+    expect(mockFetch).calledWith('foo', {
+      headers: { Authorization: 'foo' },
+      method: 'delete'
+    });
+
+    io.removeHeader('Authorization');
     await io.delete('foo');
     expect(mockFetch).calledWith('foo', {
       method: 'delete'
