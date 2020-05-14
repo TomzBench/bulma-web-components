@@ -2,6 +2,7 @@
 
 .dashboard-container {
   // margin-left: $aside; /* Aligns with Atx logo */
+  padding: 10px;
   background: whitesmoke;
   position: fixed;
   top: $aside;
@@ -10,6 +11,12 @@
   left: $aside;
   overflow-x: hidden !important;
   overflow-y: auto;
+  nav.breadcrumb {
+    margin-bottom: 0.5rem;
+  }
+  &.sub-container {
+    top: $aside + 40px;
+  }
 }
 
 .dashboard-sidenav {

@@ -16,10 +16,15 @@ export class AtxDashboard extends LitElement {
 
   render() {
     return html`
-      <atx-topnav wide>
-        <a class="is-size-5" href="/home">< BACK</a>
-      </atx-topnav>
+      <atx-topnav wide> </atx-topnav>
       <div class="dashboard-container">
+        <nav class="breadcrumb">
+          <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li class="is-active"><a>Main</a></li>
+          </ul>
+        </nav>
         <slot></slot>
       </div>
       <div class="dashboard-sidenav">
