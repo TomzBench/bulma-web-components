@@ -14,7 +14,7 @@ describe('io.service', async () => {
     let { mockFetch } = setup(response);
     let io = new IoService(mockFetch);
     await io.get('foo');
-    mockFetch.calledWith('foo');
+    mockFetch.calledWith('foo', { credentials: 'same-origin' });
   });
 
   it('should send a put request', async () => {
@@ -24,6 +24,7 @@ describe('io.service', async () => {
     await io.put('foo', { data: 'bar' });
     expect(mockFetch).calledWith('foo', {
       method: 'put',
+      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: 'bar' })
     });
@@ -36,6 +37,7 @@ describe('io.service', async () => {
     await io.post('foo', { data: 'bar' });
     expect(mockFetch).calledWith('foo', {
       method: 'post',
+      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: 'bar' })
     });
@@ -47,6 +49,7 @@ describe('io.service', async () => {
     let io = new IoService(mockFetch);
     await io.delete('foo');
     expect(mockFetch).calledOnceWith('foo', {
+      credentials: 'same-origin',
       method: 'delete'
     });
   });
@@ -58,12 +61,13 @@ describe('io.service', async () => {
     io.setHeader('Authorization', 'foo');
     await io.get('foo');
     expect(mockFetch).calledWith('foo', {
+      credentials: 'same-origin',
       headers: { Authorization: 'foo' }
     });
 
     io.removeHeader('Authorization');
     await io.get('foo');
-    expect(mockFetch).calledWith('foo');
+    expect(mockFetch).calledWith('foo', { credentials: 'same-origin' });
   });
 
   it('should send headers with delete request', async () => {
@@ -73,6 +77,7 @@ describe('io.service', async () => {
     io.setHeader('Authorization', 'foo');
     await io.delete('foo');
     expect(mockFetch).calledWith('foo', {
+      credentials: 'same-origin',
       headers: { Authorization: 'foo' },
       method: 'delete'
     });
@@ -80,6 +85,7 @@ describe('io.service', async () => {
     io.removeHeader('Authorization');
     await io.delete('foo');
     expect(mockFetch).calledWith('foo', {
+      credentials: 'same-origin',
       method: 'delete'
     });
   });

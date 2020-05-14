@@ -12,10 +12,10 @@ export class IoService implements IoRequester {
   headers: Headers = {};
   constructor(private fetch: Fetch) {}
   async get<T>(url: string): Promise<IoResponse<T>> {
-    console.log(this.headers);
-    let response = Object.keys(this.headers).length
-      ? await this.fetch(url, { headers: this.headers })
-      : await this.fetch(url);
+    let config = { credentials: 'same-origin' };
+    let headers = this.headers;
+    if (Object.keys(headers).length) Object.assign(config, { headers });
+    let response = await this.fetch(url, config);
     return { ...response, json: await response.json() };
   }
 
@@ -33,6 +33,7 @@ export class IoService implements IoRequester {
     });
     let response = await this.fetch(url, {
       method: 'put',
+      credentials: 'same-origin',
       headers,
       body: JSON.stringify(obj)
     });
@@ -45,6 +46,7 @@ export class IoService implements IoRequester {
     });
     let response = await this.fetch(url, {
       method: 'post',
+      credentials: 'same-origin',
       headers,
       body: JSON.stringify(obj)
     });
@@ -53,7 +55,7 @@ export class IoService implements IoRequester {
 
   async delete<T>(url: string): Promise<IoResponse<T>> {
     const headers = this.headers;
-    const config = { method: 'delete' };
+    const config = { credentials: 'same-origin', method: 'delete' };
     if (Object.keys(headers).length) Object.assign(config, { headers });
     let response = await this.fetch(url, config);
     return { ...response, json: await response.json() };

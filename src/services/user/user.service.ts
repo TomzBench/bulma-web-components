@@ -22,6 +22,7 @@ export class UserService {
       email,
       password
     });
+    console.log(await this.io.get(API.REFRESH));
     this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
     this.user.next(resp.json.user);
     return resp.json.user;
