@@ -65,8 +65,9 @@ export class AtxTopnav extends LitElement {
   }
 
   renderAccountCircleUser() {
+    const classes = { ['is-hidden']: !this.user };
     let ret = html`
-      <b-navbar-item where="right">
+      <b-navbar-item class="${classMap(classes)}" where="right">
         <b-navbar-label>
           <span>${this.user}</span>
           <b-icon>account_circle</b-icon>
@@ -80,8 +81,13 @@ export class AtxTopnav extends LitElement {
   }
 
   renderAccountCircleSignin() {
+    const classes = { ['is-hidden']: !!this.user };
     return html`
-      <b-navbar-item @click="${this.showSignin}" where="right">
+      <b-navbar-item
+        class="${classMap(classes)}"
+        @click="${this.showSignin}"
+        where="right"
+      >
         <span>Sign In</span>
         <b-icon>account_circle</b-icon>
       </b-navbar-item>
@@ -95,11 +101,23 @@ export class AtxTopnav extends LitElement {
           <a href="/home"><img src="${logo}" height="32px"/></a>
         </b-navbar-item>
         ${Array.from(this.children)}
-        <b-navbar-item><span>${this.user}</span></b-navbar-item>
-        ${this.user
-          ? this.renderAccountCircleUser()
-          : this.renderAccountCircleSignin()}
+        <!-- -->
+        ${this.renderAccountCircleUser()}
+        <!-- -->
+        ${this.renderAccountCircleSignin()}
+        <!-- -->
       </b-navbar>
+      <b-modal
+        @b-close="${() => (this.show = '')}"
+        ?show="${this.show === 'signin'}"
+      >
+        <div class="signin is-clipped">
+          <div class="box">
+            <p class="signin-title">Please sign in...</p>
+            <atx-form-login @atx-login="${this.login}"></atx-form-login>
+          </div>
+        </div>
+      </b-modal>
     `;
   }
 }
