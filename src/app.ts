@@ -4,6 +4,7 @@ import { domConsumer, domInject } from './components/shared/decorators';
 import { RouterService } from './services/router/router.service';
 import { Subscription } from 'rxjs';
 
+import './components/footer/footer';
 import './components/topnav/topnav';
 import './pages/dashboard/dashboard';
 import './pages/dashboard/main/dashboard-main';

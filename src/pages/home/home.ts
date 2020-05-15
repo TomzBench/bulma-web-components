@@ -64,37 +64,11 @@ export class AtxHome extends LitElement {
             </div>
           </div>
           <div class="hero-foot">
-            <nav class="tabs is-boxed is-fullwidth">
-              <div class="container social-tabs">
-                <ul>
-                  <li>
-                    <a class="location">
-                      <img src="${googleLocation}" />
-                    </a>
-                  </li>
-                  <li>
-                    <a class="facebook">
-                      <img src="${facebook}" />
-                    </a>
-                  </li>
-                  <li>
-                    <a class="github">
-                      <img src="${github}" />
-                    </a>
-                  </li>
-                  <li>
-                    <a class="linkedin">
-                      <img src="${linkedin}" />
-                    </a>
-                  </li>
-                  <li>
-                    <a class="twitter">
-                      <img src="${twitter}" />
-                    </a>
-                  </li>
-                </ul>
+            <div class="">
+              <div class="column">
+                <atx-footer></atx-footer>
               </div>
-            </nav>
+            </div>
           </div>
         </div>
       </div>

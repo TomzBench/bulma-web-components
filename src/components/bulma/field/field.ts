@@ -10,6 +10,8 @@ export class BField extends LitElement {
   static styles = styles(styles.toString());
   @property({ type: String }) label?: string;
   @property({ type: String }) horizontal: boolean = false;
+  @property({ type: Boolean }) centered: boolean = false;
+  @property({ type: Boolean }) right: boolean = false;
   @property({ type: String }) size?: Sizes;
   @property({ type: String }) color?: Colors;
   @property({ type: Boolean }) grouped: boolean = false;
@@ -50,6 +52,8 @@ export class BField extends LitElement {
       field: {
         field: true,
         'has-addons': hasAddons,
+        'has-addons-centered': hasAddons && this.centered,
+        'has-addons-right': hasAddons && this.right,
         'is-grouped': isGrouped
       },
       ['field-label']: {
@@ -63,6 +67,7 @@ export class BField extends LitElement {
         [`is-${this.size}`]: !!this.size
       }
     };
+    console.log(classes);
     return classes;
   }
 
