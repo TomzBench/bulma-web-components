@@ -4,6 +4,12 @@ import { Container } from 'inversify';
 import { SYMBOLS } from '../../../ioc/constants.root';
 import { LitElement, customElement } from 'lit-element';
 import { domProvider } from '../../../components/shared/decorators';
+import {
+  shadowQuery,
+  shadowQueryAll,
+  query,
+  queryAll
+} from '../../../__tests__/__helpers__/helpers';
 
 import '../router-guard';
 import { UserService } from '../../../services/user/user.service';
@@ -39,12 +45,26 @@ describe('router-guard', () => {
         </atx-router-guard>
       </provider-testa>
       `);
-    let guard = test.querySelector('atx-router-guard') as LitElement;
-    // await guard.requestUpdate();
+    let guard = query<LitElement>(test, 'atx-router-guard');
+    let button = shadowQuery<HTMLButtonElement>(guard, 'button');
+    button.click();
+    await guard.requestUpdate();
     routerMock.verify();
   });
 
-  it('Should not redirect', async done => {
-    done();
+  it('Should not redirect', async () => {
+    const { Provider, users, routerMock } = await setup('testb', 2);
+    routerMock.expects('route').notCalled;
+    const test = await fixture(`
+      <provider-testb>
+        <atx-router-guard role="2" redirect="/fooey">
+        </atx-router-guard>
+      </provider-testb>
+      `);
+    let guard = query<LitElement>(test, 'atx-router-guard');
+    let button = shadowQuery<HTMLButtonElement>(guard, 'button');
+    button.click();
+    await guard.requestUpdate();
+    routerMock.verify();
   });
 });

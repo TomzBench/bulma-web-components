@@ -5,6 +5,12 @@ import { SYMBOLS } from '../../../ioc/constants.root';
 import { LitElement, customElement } from 'lit-element';
 import { domProvider } from '../../../components/shared/decorators';
 import { ServiceIdentifier } from '../../../components/shared/types';
+import {
+  shadowQuery,
+  shadowQueryAll,
+  query,
+  queryAll
+} from '../../../__tests__/__helpers__/helpers';
 
 import '../topnav';
 import { UserService } from '../../../services/user/user.service';
@@ -13,26 +19,6 @@ import { IoService } from '../../../services/io/io.service';
 import { AtxTopnav } from '../../../components/topnav/topnav';
 import { SubmitLoginEvent } from '../../../components/form-login/types';
 import sinon from 'sinon';
-
-function shadowQuery(el: Element | null, query: string) {
-  expect(el).instanceof(Element);
-  return ((el as Element).shadowRoot as ShadowRoot).querySelector(query);
-}
-
-function shadowQueryAll(el: Element | null, query: string) {
-  expect(el).instanceof(Element);
-  return ((el as Element).shadowRoot as ShadowRoot).querySelectorAll(query);
-}
-
-function query(el: Element | null, query: string) {
-  expect(el).instanceof(Element);
-  return (el as Element).querySelector(query);
-}
-
-function queryAll(el: Element | null, query: string) {
-  expect(el).instanceof(Element);
-  return (el as Element).querySelectorAll(query);
-}
 
 async function setup(name: string) {
   let container = new Container();
