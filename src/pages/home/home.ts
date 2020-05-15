@@ -4,6 +4,7 @@ import { styles } from '../../components/bulma/styles';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { UserService } from '../../services/user/user.service';
 import { RouterService } from '../../services/router/router.service';
+import { AtxModalLogin } from '../../components/modal-login/modal-login';
 import { User } from '../../services/user/types';
 import { domInject, domConsumer } from '../../components/shared/decorators';
 import { SubmitLoginEvent } from '../../components/form-login/types';
@@ -17,6 +18,11 @@ export class AtxHome extends LitElement {
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @property({ type: String }) show: string = '';
+  @query('atx-modal-login') loginModal!: AtxModalLogin;
+
+  showLoginModal() {
+    this.loginModal.show();
+  }
 
   render() {
     return html`
@@ -65,7 +71,10 @@ export class AtxHome extends LitElement {
                 : html`
                     <div class="columns">
                       <div class="column">
-                        <button class="button is-primary is-outlined">
+                        <button
+                          @click="${this.showLoginModal}"
+                          class="button is-primary is-outlined"
+                        >
                           Sign In
                         </button>
                       </div>
@@ -82,6 +91,7 @@ export class AtxHome extends LitElement {
           </div>
         </div>
       </div>
+      <atx-modal-login></atx-modal-login>
       <b-modal
         @b-close="${() => (this.show = '')}"
         ?show="${this.show === 'contact'}"

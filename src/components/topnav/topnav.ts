@@ -7,6 +7,7 @@ import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { SubmitLoginEvent } from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
+import { AtxModalLogin } from '../modal-login/modal-login';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -27,7 +28,12 @@ export class AtxTopnav extends LitElement {
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string | undefined = undefined;
   @property({ type: String }) show?: string;
+  @query('atx-modal-login') loginModal!: AtxModalLogin;
   $user?: Subscription;
+
+  showLoginModal() {
+    this.loginModal.show();
+  }
 
   connectedCallback() {
     super.connectedCallback();
@@ -39,10 +45,6 @@ export class AtxTopnav extends LitElement {
   disconnectedCallback() {
     if (this.$user) this.$user.unsubscribe();
     super.disconnectedCallback();
-  }
-
-  showSignin() {
-    this.show = 'signin';
   }
 
   async logout() {
@@ -76,12 +78,12 @@ export class AtxTopnav extends LitElement {
     return ret;
   }
 
-  renderAccountCircleSignin() {
+  renderAccountCircleLogin() {
     const classes = { ['is-hidden']: !!this.user };
     return html`
       <b-navbar-item
         class="${classMap(classes)}"
-        @click="${this.showSignin}"
+        @click="${this.showLoginModal}"
         where="right"
       >
         <span>Sign In</span>
@@ -100,20 +102,10 @@ export class AtxTopnav extends LitElement {
         <!-- -->
         ${this.renderAccountCircleUser()}
         <!-- -->
-        ${this.renderAccountCircleSignin()}
+        ${this.renderAccountCircleLogin()}
         <!-- -->
       </b-navbar>
-      <b-modal
-        @b-close="${() => (this.show = '')}"
-        ?show="${this.show === 'signin'}"
-      >
-        <div class="signin is-clipped">
-          <div class="box">
-            <p class="signin-title">Please sign in...</p>
-            <atx-form-login @atx-login="${this.login}"></atx-form-login>
-          </div>
-        </div>
-      </b-modal>
+      <atx-modal-login @atx-login="${this.login}"></atx-modal-login>
     `;
   }
 }

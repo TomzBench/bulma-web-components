@@ -49,7 +49,7 @@ describe('topnav', () => {
     const { test, users, usersMock, routerMock } = await setup('login');
     let shadowRoot = test.shadowRoot as ShadowRoot;
     let topnav = query(test, 'atx-topnav') as LitElement;
-    let login = shadowQuery(topnav, 'atx-form-login') as Element;
+    let login = shadowQuery(topnav, 'atx-modal-login') as Element;
 
     // Test
     usersMock
