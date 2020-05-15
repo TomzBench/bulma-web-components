@@ -27,7 +27,6 @@ export class AtxTopnav extends LitElement {
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string | undefined = undefined;
-  @property({ type: String }) show?: string;
   @query('atx-modal-login') loginModal!: AtxModalLogin;
   $user?: Subscription;
 
@@ -57,7 +56,6 @@ export class AtxTopnav extends LitElement {
       .then(() => this.router.route('/dashboard'))
       .catch(e => {
         // TODO show login error
-        this.show = '';
         console.log(e);
       });
   }
