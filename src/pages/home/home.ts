@@ -60,11 +60,17 @@ export class AtxHome extends LitElement {
                   </nav>
                 </div>
               </div>
-              <div class="columns">
-                <div class="column">
-                  <button class="button is-primary is-outlined">Sign In</button>
-                </div>
-              </div>
+              ${this.users.user.value
+                ? html``
+                : html`
+                    <div class="columns">
+                      <div class="column">
+                        <button class="button is-primary is-outlined">
+                          Sign In
+                        </button>
+                      </div>
+                    </div>
+                  `}
             </div>
           </div>
           <div class="hero-foot">
