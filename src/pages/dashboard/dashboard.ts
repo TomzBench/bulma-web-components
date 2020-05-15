@@ -7,6 +7,7 @@ import { RouterService } from '../../services/router/router.service';
 import * as scss from './dashboard.styles.scss';
 import * as logo from '../../assets/altronix.png';
 import './main/dashboard-main';
+import '../../components/router-guard/router-guard';
 
 @domConsumer('atx-dashboard')
 export class AtxDashboard extends LitElement {
@@ -18,14 +19,16 @@ export class AtxDashboard extends LitElement {
     return html`
       <atx-topnav wide> </atx-topnav>
       <div class="dashboard-container">
-        <nav class="breadcrumb">
-          <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li class="is-active"><a>Main</a></li>
-          </ul>
-        </nav>
-        <slot></slot>
+        <atx-router-guard role="0" redirect="/home">
+          <nav class="breadcrumb">
+            <ul>
+              <li><a href="/home">Home</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li class="is-active"><a>Main</a></li>
+            </ul>
+          </nav>
+          <slot></slot>
+        </atx-router-guard>
       </div>
       <div class="dashboard-sidenav">
         <div class="logo">

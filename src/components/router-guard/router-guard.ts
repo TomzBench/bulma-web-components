@@ -33,7 +33,11 @@ export class AtxRouterGuard extends LitElement {
       ? 'You do not have access'
       : 'Please sign in';
     return html`
-      <slot></slot>
+      ${this.popup
+        ? ''
+        : html`
+            <slot></slot>
+          `}
       <b-modal @b-close="${this.back}" ?show="${this.popup}">
         <div class="box popup is-clipped">
           <div class="container has-text-centered">

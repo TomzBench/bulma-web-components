@@ -27,35 +27,44 @@ export class AtxHome extends LitElement {
           </atx-topnav>
           <div class="hero-body">
             <div class="container has-text-centered">
-              <h1 class="title"><img src="${logo}" /></h1>
-              <h1 class="title has-text-weight-light">
-                Altronix Developer Portal
-              </h1>
-              <nav class="breadcrumb is-centered">
-                <ul>
-                  <li>
-                    <a class="has-text-primary" href="/dashboard">
-                      <b-icon>desktop_mac</b-icon>
-                      <span>Dashboard</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="has-text-primary" href="/docs">
-                      <b-icon>description</b-icon>
-                      <span>Documentation</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      @click="${() => (this.show = 'contact')}"
-                      class="has-text-primary"
-                    >
-                      <b-icon>mail</b-icon>
-                      <span>Contact</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div class="columns">
+                <div class="column">
+                  <h1 class="title"><img src="${logo}" /></h1>
+                  <h1 class="title has-text-weight-light">
+                    Altronix Developer Portal
+                  </h1>
+                  <nav class="breadcrumb is-centered">
+                    <ul>
+                      <li>
+                        <a class="has-text-primary" href="/dashboard">
+                          <b-icon>desktop_mac</b-icon>
+                          <span>Dashboard</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="has-text-primary" href="/docs">
+                          <b-icon>description</b-icon>
+                          <span>Documentation</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          @click="${() => (this.show = 'contact')}"
+                          class="has-text-primary"
+                        >
+                          <b-icon>mail</b-icon>
+                          <span>Contact</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <button class="button is-primary is-outlined">Sign In</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="hero-foot">
