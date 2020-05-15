@@ -14,6 +14,7 @@ import '../bulma/addon/addon';
 
 @customElement('atx-form-login')
 export class AtxFormLogin extends LitElement {
+  @property({ type: String }) redirect: string = '/dashboard';
   static styles = styles(scss.toString());
   email: string = '';
   password: string = '';
@@ -23,7 +24,11 @@ export class AtxFormLogin extends LitElement {
       new CustomEvent<SubmitLoginEvent>('atx-login', {
         bubbles: true,
         composed: true,
-        detail: { email: this.email, password: this.password }
+        detail: {
+          email: this.email,
+          password: this.password,
+          redirect: this.redirect
+        }
       })
     );
   }
