@@ -5,7 +5,7 @@ import { UserService } from '../../services/user/user.service';
 import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
-import { SubmitLoginEvent } from '../../components/form-login/types';
+import { SubmitLogoutEvent } from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
 import { AtxModalLogin } from '../modal-login/modal-login';
 import * as scss from './topnav.styles.scss';
@@ -23,45 +23,26 @@ import '../form-login/form-login';
 @domConsumer('atx-topnav')
 export class AtxTopnav extends LitElement {
   static styles = styles(scss.toString());
-  @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
-  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @property({ type: Boolean }) wide: boolean = false;
-  @property({ type: String }) user: string | undefined = undefined;
+  @property({ type: String }) user: string = '';
   @query('atx-modal-login') loginModal!: AtxModalLogin;
-  $user?: Subscription;
 
   showLoginModal() {
     this.loginModal.show();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.$user = this.users.user.subscribe(u => {
-      this.user = u && u.firstName;
-    });
-  }
-
-  disconnectedCallback() {
-    if (this.$user) this.$user.unsubscribe();
-    super.disconnectedCallback();
-  }
-
-  async logout() {
-    await this.users.logout().then(() => this.router.route('/logout'));
-  }
-
-  async login(e: CustomEvent<SubmitLoginEvent>) {
-    this.users
-      .login(e.detail.email, e.detail.password)
-      .then(() => this.router.route('/dashboard'))
-      .catch(e => {
-        // TODO show login error
-        console.log(e);
-      });
+  logout() {
+    this.dispatchEvent(
+      new CustomEvent<SubmitLogoutEvent>('atx-logout', {
+        bubbles: true,
+        composed: true,
+        detail: { redirect: '/logout' }
+      })
+    );
   }
 
   renderAccountCircleUser() {
-    const classes = { ['is-hidden']: !this.user };
+    const classes = { ['is-hidden']: this.user.length === 0 };
     let ret = html`
       <b-navbar-item class="${classMap(classes)}" where="right">
         <b-navbar-label>
@@ -77,7 +58,7 @@ export class AtxTopnav extends LitElement {
   }
 
   renderAccountCircleLogin() {
-    const classes = { ['is-hidden']: !!this.user };
+    const classes = { ['is-hidden']: this.user.length !== 0 };
     return html`
       <b-navbar-item
         class="${classMap(classes)}"
@@ -103,7 +84,7 @@ export class AtxTopnav extends LitElement {
         ${this.renderAccountCircleLogin()}
         <!-- -->
       </b-navbar>
-      <atx-modal-login @atx-login="${this.login}"></atx-modal-login>
+      <atx-modal-login></atx-modal-login>
     `;
   }
 }
