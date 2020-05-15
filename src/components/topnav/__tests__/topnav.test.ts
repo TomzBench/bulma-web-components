@@ -3,13 +3,7 @@ import { html, fixture, expect, oneEvent } from '@open-wc/testing';
 import { Container } from 'inversify';
 import { SYMBOLS } from '../../../ioc/constants.root';
 import { LitElement, customElement } from 'lit-element';
-import {
-  makeDecorators,
-  DomInjectEvent,
-  DomPropertyMetadata,
-  domProvider,
-  METADATA_KEYS
-} from '../../../components/shared/decorators';
+import { domProvider } from '../../../components/shared/decorators';
 import { ServiceIdentifier } from '../../../components/shared/types';
 
 import '../topnav';

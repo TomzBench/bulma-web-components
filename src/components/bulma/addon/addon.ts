@@ -57,7 +57,6 @@ export class BAddonButton extends LitElement {
           `
         : e
     );
-    console.log(elementChildren);
     const classes = {
       [`is-${this.color}`]: !!this.color,
       [`is-${this.size}`]: !!this.size,

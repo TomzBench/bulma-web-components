@@ -67,7 +67,6 @@ export class BField extends LitElement {
         [`is-${this.size}`]: !!this.size
       }
     };
-    console.log(classes);
     return classes;
   }
 

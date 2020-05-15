@@ -10,11 +10,6 @@ import { SubmitLoginEvent } from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
 import * as scss from './home.styles.scss';
 import * as logo from '../../assets/altronix_logo_large.png';
-import * as facebook from '../../assets/facebook.svg';
-import * as github from '../../assets/github.svg';
-import * as twitter from '../../assets/twitter.svg';
-import * as linkedin from '../../assets/linkedin.svg';
-import * as googleLocation from '../../assets/location.svg';
 
 @domConsumer('atx-home')
 export class AtxHome extends LitElement {
