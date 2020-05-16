@@ -36,7 +36,7 @@ export class AtxDashboard extends LitElement {
           <a class="is-size-5" href="/home">Altronix Developer Portal</a>
         </atx-topnav>
         <div class="dashboard-container">
-          <atx-router-guard role="0" redirect="/home">
+          <atx-router-guard transition="750" role="0" redirect="/home">
             <nav class="breadcrumb">
               <ul>
                 <li><a href="/home">Home</a></li>

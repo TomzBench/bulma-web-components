@@ -8,12 +8,14 @@ import { RouterService } from '../../services/router/router.service';
 import { domInject, domConsumer } from '../../components/shared/decorators';
 
 import * as scss from './router-guard.styles.scss';
+import '../material/circular-progress/circular-progress';
 
 @domConsumer('atx-router-guard')
 export class AtxRouterGuard extends LitElement {
   @property({ type: Number }) role: number = 0;
   @property({ type: String }) redirect: string = '/home';
   @property({ type: Boolean }) popup: boolean = false;
+  @property({ type: Number }) transition: number = 10;
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   static styles = styles(scss.toString());
@@ -30,7 +32,15 @@ export class AtxRouterGuard extends LitElement {
   async asyncRender() {
     await this.users.ready;
     const user = this.users.user.value;
-    if (!user || user.role < this.role) this.popup = true;
+    if (!user || user.role < this.role) {
+      this.popup = true;
+    } else {
+      if (this.transition) {
+        await new Promise(resolve =>
+          setTimeout(() => resolve(), this.transition)
+        );
+      }
+    }
     const message = this.users.user.value
       ? 'You do not have access'
       : 'Please sign in';
@@ -66,7 +76,14 @@ export class AtxRouterGuard extends LitElement {
     return until(
       this.asyncRender(),
       html`
-        <span>Loading...</span>
+        <div class="hero is-fullheight">
+          <div class="hero-body">
+            <m-circular-progress
+              class="loading"
+              size="large"
+            ></m-circular-progress>
+          </div>
+        </div>
       `
     );
   }

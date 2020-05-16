@@ -35,4 +35,6 @@ export function queryAll<T extends Element = Element>(
   return (el as Element).querySelectorAll(query) as NodeListOf<T>;
 }
 
+// TODO need helpers to read shadowRoot (with open-wc filtering comments)
+// console.log((guard.shadowRoot as any).innerHTML);
 export default { shadowQuery, shadowQueryAll, query, queryAll };

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { html, fixture, expect, oneEvent } from '@open-wc/testing';
+import { html, fixture, elementUpdated, expect } from '@open-wc/testing';
 import { Container } from 'inversify';
 import { SYMBOLS } from '../../../ioc/constants.root';
 import { LitElement, customElement } from 'lit-element';
@@ -38,34 +38,42 @@ async function setup(name: string, role: number) {
 
 describe('router-guard', () => {
   it('Should redirect', async () => {
+    let clock = sinon.useFakeTimers();
     const { Provider, users, routerMock } = await setup('testa', 2);
     routerMock.expects('route').calledWith('/fooey');
     const test = await fixture(`
       <provider-testa>
-        <atx-router-guard role="0" redirect="/fooey">
+        <atx-router-guard transition="1000" role="0" redirect="/fooey">
         </atx-router-guard>
       </provider-testa>
       `);
-    let guard = query<LitElement>(test, 'atx-router-guard');
+    let guard = query<LitElement>(test, 'atx-router-guard') as LitElement;
+    clock.tick(1000);
+    await elementUpdated(guard);
     let button = shadowQuery<HTMLButtonElement>(guard, 'button');
     button.click();
     await guard.requestUpdate();
     routerMock.verify();
+    clock.restore();
   });
 
   it('Should not redirect', async () => {
+    let clock = sinon.useFakeTimers();
     const { Provider, users, routerMock } = await setup('testb', 2);
     routerMock.expects('route').notCalled;
     const test = await fixture(`
       <provider-testb>
-        <atx-router-guard role="2" redirect="/fooey">
+        <atx-router-guard transition="1000" role="2" redirect="/fooey">
         </atx-router-guard>
       </provider-testb>
       `);
     let guard = query<LitElement>(test, 'atx-router-guard');
+    clock.tick(1000);
+    await elementUpdated(guard);
     let button = shadowQuery<HTMLButtonElement>(guard, 'button');
     button.click();
     await guard.requestUpdate();
     routerMock.verify();
+    clock.restore();
   });
 });
