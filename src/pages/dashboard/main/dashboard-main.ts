@@ -47,7 +47,9 @@ export class AtxDashboardMain extends LitElement {
                   </p>
                 </div>
               </div>
-              <atx-table-user></atx-table-user>
+              <atx-ui-blocker ?active="${false}">
+                <atx-table-user></atx-table-user>
+              </atx-ui-blocker>
             </div>
           </div>
           <div class="column">

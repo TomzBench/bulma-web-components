@@ -1,21 +1,23 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 
-import * as style from './ui-blocker.styles.scss';
 import { styles } from '../bulma/styles';
+import * as style from './ui-blocker.styles.scss';
 
 import '../material/circular-progress/circular-progress';
 
 @customElement('atx-ui-blocker')
 class AtxUiBlocker extends LitElement {
   @property({ type: Number }) transition: number = 100;
-  static styles = styles(styles.toString());
+  @property({ type: Boolean }) active: boolean = false;
+  static styles = styles(style.toString());
 
   render() {
+    const classes = { 'is-active': this.active };
     return html`
-      <div class=""><slot></slot></div>
-      <div class="hero is-fullheight">
-        <div class="hero-body">
+      <div class="blocker ${classMap(classes)}">
+        <div class="blocked"><slot></slot></div>
+        <div class="guard">
           <m-circular-progress
             class="loading"
             size="large"

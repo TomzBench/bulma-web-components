@@ -72,13 +72,11 @@ export class AtxRouterGuard extends LitElement {
     return until(
       this.asyncRender(),
       html`
-        <div class="hero is-fullheight">
-          <div class="hero-body">
-            <m-circular-progress
-              class="loading"
-              size="large"
-            ></m-circular-progress>
-          </div>
+        <div class="guard">
+          <m-circular-progress
+            class="loading"
+            size="large"
+          ></m-circular-progress>
         </div>
       `
     );
