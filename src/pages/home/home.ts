@@ -19,14 +19,14 @@ export class AtxHome extends LitElement {
   @query('atx-modal-login') loginModal!: AtxModalLogin;
   $user?: Subscription;
 
-  connectedCallback(){
+  connectedCallback() {
     super.connectedCallback();
     this.$user = this.users.user.subscribe(u => {
       this.requestUpdate();
     });
   }
 
-  disconnectedCallback(){
+  disconnectedCallback() {
     if (this.$user) this.$user.unsubscribe();
     super.disconnectedCallback();
   }
@@ -36,7 +36,7 @@ export class AtxHome extends LitElement {
   }
 
   render() {
-    const user = this.users.user.value?.firstName || '';
+    const user = this.users.user.value ? this.users.user.value.firstName : '';
     return html`
       <atx-login-container>
         <div class="home">
