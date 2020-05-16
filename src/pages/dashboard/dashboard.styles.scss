@@ -14,9 +14,8 @@
   nav.breadcrumb {
     margin-bottom: 0.5rem;
   }
-  .dashboard-container-sub-container {
-    position: fixed;
-    width: 100%;
+  &.sub-container {
+    top: $aside + 40px;
   }
 }
 

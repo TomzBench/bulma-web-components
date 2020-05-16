@@ -13,7 +13,15 @@ class AtxUiBlocker extends LitElement {
 
   render() {
     return html`
-      <p>atx-ui-blocker works!</p>
+      <div class=""><slot></slot></div>
+      <div class="hero is-fullheight">
+        <div class="hero-body">
+          <m-circular-progress
+            class="loading"
+            size="large"
+          ></m-circular-progress>
+        </div>
+      </div>
     `;
   }
 }

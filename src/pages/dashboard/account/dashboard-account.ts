@@ -8,7 +8,7 @@ export class AtxDashboardAccount extends LitElement {
   static styles = styles(scss.toString());
   render() {
     return html`
-      <div class="hero is-fullheight">
+      <div class="hero is-fullheight dashboard-container sub-container">
         <div class="hero-head"></div>
         <div class="hero-body">
           <p>TODO</p>
