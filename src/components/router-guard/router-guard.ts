@@ -20,10 +20,6 @@ export class AtxRouterGuard extends LitElement {
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   static styles = styles(scss.toString());
 
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
   back() {
     this.popup = false;
     this.router.route(this.redirect);

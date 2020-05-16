@@ -36,16 +36,18 @@ export class AtxDashboard extends LitElement {
           <a class="is-size-5" href="/home">Altronix Developer Portal</a>
         </atx-topnav>
         <div class="dashboard-container">
-          <atx-router-guard transition="750" role="0" redirect="/home">
-            <nav class="breadcrumb">
-              <ul>
-                <li><a href="/home">Home</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li class="is-active"><a>Main</a></li>
-              </ul>
-            </nav>
-            <slot></slot>
-          </atx-router-guard>
+          <div class="dashboard-container-sub-container">
+            <atx-router-guard transition="750" role="0" redirect="/home">
+              <nav class="breadcrumb">
+                <ul>
+                  <li><a href="/home">Home</a></li>
+                  <li><a href="/dashboard">Dashboard</a></li>
+                  <li class="is-active"><a>Main</a></li>
+                </ul>
+              </nav>
+              <slot></slot>
+            </atx-router-guard>
+          </div>
         </div>
         <div class="dashboard-sidenav">
           <div class="logo">
