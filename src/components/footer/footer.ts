@@ -16,33 +16,35 @@ export class AtxFooter extends LitElement {
   static styles = styles(scss.toString());
   render() {
     return html`
-      <section class="footer">
+      <section class="footer align-with-container">
         <div class="columns main has-text-centered">
           <div class="column">
-            <div class="columns">
-              <div class="column">
-                <div class="container social-tabs">
-                  <a class="location">
-                    <img src="${googleLocation}" />
-                  </a>
-                  <a class="facebook">
-                    <img src="${facebook}" />
-                  </a>
-                  <a class="github">
-                    <img src="${github}" />
-                  </a>
-                  <a class="linkedin">
-                    <img src="${linkedin}" />
-                  </a>
-                  <a class="twitter">
-                    <img src="${twitter}" />
-                  </a>
+            <div class="is-pulled-left">
+              <div class="columns">
+                <div class="column">
+                  <div class="container social-tabs">
+                    <a class="location">
+                      <img src="${googleLocation}" />
+                    </a>
+                    <a class="facebook">
+                      <img src="${facebook}" />
+                    </a>
+                    <a class="github">
+                      <img src="${github}" />
+                    </a>
+                    <a class="linkedin">
+                      <img src="${linkedin}" />
+                    </a>
+                    <a class="twitter">
+                      <img src="${twitter}" />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-                <p class="is-size-7 has-text-grey">&#169; Altronix Corp</p>
+              <div class="columns">
+                <div class="column">
+                  <p class="is-size-7 has-text-grey">&#169; Altronix Corp</p>
+                </div>
               </div>
             </div>
           </div>
@@ -65,7 +67,7 @@ export class AtxFooter extends LitElement {
             </div>
           </div>
           <div class="column">
-            <div class="">
+            <div class="is-pulled-right">
               <p class="is-size-7 has-text-grey">Subscribe to Alronix News!</p>
               <b-field centered size="small">
                 <b-input placeholder="Email Address">

@@ -96,10 +96,8 @@ export class AtxHome extends LitElement {
               </div>
             </div>
             <div class="hero-foot">
-              <div class="">
-                <div class="column">
-                  <atx-footer></atx-footer>
-                </div>
+              <div class="container">
+                <atx-footer></atx-footer>
               </div>
             </div>
           </div>

@@ -1,6 +1,9 @@
 @import '../bulma/variables.scss';
 .footer {
   overflow: hidden;
+  &.align-with-container {
+    padding: 1.5rem 0rem;
+  }
   .columns.main {
     > .column:not(:last-child) {
       border-right: 1px solid $primary;
