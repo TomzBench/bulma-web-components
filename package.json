@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material/circular-progress": "^6.0.0",
     "@types/page": "^1.8.0",
     "@vaadin/router": "^1.7.2",
     "bulma": "git+https://github.com/TomzBench/bulma.git",

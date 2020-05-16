@@ -32,7 +32,9 @@ export class AtxDashboard extends LitElement {
     const user = this.users.user.value ? this.users.user.value.firstName : '';
     return html`
       <atx-login-container>
-        <atx-topnav user="${user}" wide> </atx-topnav>
+        <atx-topnav user="${user}" wide>
+          <a class="is-size-5" href="/home">Altronix Developer Portal</a>
+        </atx-topnav>
         <div class="dashboard-container">
           <atx-router-guard role="0" redirect="/home">
             <nav class="breadcrumb">
