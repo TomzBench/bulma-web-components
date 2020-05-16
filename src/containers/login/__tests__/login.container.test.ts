@@ -30,8 +30,6 @@ async function setup(name: string) {
   let router = new RouterService({} as any);
   let usersMock = sinon.mock(users);
   let routerMock = sinon.mock(router);
-  sinon.stub(ioService, 'get').returns(new Promise(resolve => resolve()));
-  sinon.stub(ioService, 'setHeader');
   container.bind(SYMBOLS.USER_SERVICE).toDynamicValue(() => users);
   container.bind(SYMBOLS.ROUTER_SERVICE).toDynamicValue(() => router);
   @domProvider(`provider-${name}`, container)

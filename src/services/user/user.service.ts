@@ -14,15 +14,26 @@ interface TokenResponse {
 @bind(SYMBOLS.USER_SERVICE)
 export class UserService {
   user = new BehaviorSubject<User | undefined>(undefined);
+  ready: Promise<void>;
+  private _resolve!: () => void;
+  private _reject!: (e: any) => void;
 
   constructor(@inject(SYMBOLS.IO_SERVICE) private io: IoService) {
+    this.ready = new Promise((resolve, reject) => {
+      this._resolve = resolve;
+      this._reject = reject;
+    });
+  }
+
+  async refresh() {
     this.io
       .get<TokenResponse>(API.REFRESH)
       .then(resp => {
         this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
         this.user.next(resp.json.user);
+        this._resolve();
       })
-      .catch(e => {});
+      .catch(e => this._reject(e));
   }
 
   async login(email: string, password: string): Promise<User> {

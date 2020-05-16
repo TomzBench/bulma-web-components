@@ -19,7 +19,9 @@ import { IoService } from '../../../services/io/io.service';
 import sinon from 'sinon';
 
 async function setup(name: string, role: number) {
-  const users = { user: { value: { role } } };
+  const ready = sinon.stub();
+  ready.returns(new Promise(resolve => resolve()));
+  const users = { user: { value: { role } }, ready };
   const router = { route: () => {} };
   let container = new Container();
   container.bind(SYMBOLS.USER_SERVICE).toDynamicValue(() => users);

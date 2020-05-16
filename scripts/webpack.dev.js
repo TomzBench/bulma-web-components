@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(commonConfig(), {
   mode: 'development',
-  entry: [__dirname + '/../src/app-root.ts'],
+  entry: [__dirname + '/../src/boot.ts'],
   devServer: {
     host: '127.0.0.1',
     port: 3002,

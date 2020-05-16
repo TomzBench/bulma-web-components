@@ -1,5 +1,6 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
+import { until } from 'lit-html/directives/until';
 import { styles } from '../../components/bulma/styles';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { UserService } from '../../services/user/user.service';
@@ -19,8 +20,6 @@ export class AtxRouterGuard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    const user = this.users.user.value;
-    if (!user || user.role < this.role) this.popup = true;
   }
 
   back() {
@@ -28,7 +27,10 @@ export class AtxRouterGuard extends LitElement {
     this.router.route(this.redirect);
   }
 
-  render() {
+  async asyncRender() {
+    await this.users.ready;
+    const user = this.users.user.value;
+    if (!user || user.role < this.role) this.popup = true;
     const message = this.users.user.value
       ? 'You do not have access'
       : 'Please sign in';
@@ -58,5 +60,14 @@ export class AtxRouterGuard extends LitElement {
         </div>
       </b-modal>
     `;
+  }
+
+  render() {
+    return until(
+      this.asyncRender(),
+      html`
+        <span>Loading...</span>
+      `
+    );
   }
 }
