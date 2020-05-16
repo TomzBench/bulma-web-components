@@ -25,6 +25,7 @@ import './components/table-alert/table-alert';
 import './components/table-user/table-user';
 import './components/table-device/table-device';
 import './components/topnav/topnav';
+import './components/ui-blocker/ui-blocker';
 import './containers/login/login.container';
 import './pages/dashboard/dashboard';
 import './pages/dashboard/account/dashboard-account';
