@@ -17,12 +17,7 @@ class AtxUiBlocker extends LitElement {
     return html`
       <div class="blocker ${classMap(classes)}">
         <div class="blocked"><slot></slot></div>
-        <div class="guard">
-          <m-circular-progress
-            class="loading"
-            size="large"
-          ></m-circular-progress>
-        </div>
+        <m-circular-progress class="guard" size="large"></m-circular-progress>
       </div>
     `;
   }

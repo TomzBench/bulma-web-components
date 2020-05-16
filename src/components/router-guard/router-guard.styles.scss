@@ -1,11 +1,9 @@
-.loading {
-  margin: auto;
-}
-
 .guard {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin: -24px -24px; // 1/2 48px (large spinner)
   opacity: 0.4;
+  &[size='large'] {
+    margin: -24px -24px; // 1/2 48px (large spinner)
+  }
 }
