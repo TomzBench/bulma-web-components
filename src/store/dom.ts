@@ -10,3 +10,5 @@ export function dispatchEvent<A extends Action>(el: Element, action: A) {
     })
   );
 }
+
+// Connect a component to the store
