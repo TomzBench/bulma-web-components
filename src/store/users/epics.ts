@@ -24,3 +24,5 @@ export const login$ = (
     )
   );
 };
+
+export default combineEpics(login$);
