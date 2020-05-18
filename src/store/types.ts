@@ -1,7 +1,5 @@
-type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
-
-export interface Action<Type extends string = string> {
-  type: Type;
+export interface Action<T = any> {
+  type: T;
 }
 
 type ActionPayload<K extends string, TAction extends Action<K>> = Omit<
@@ -15,14 +13,4 @@ export function actionCreator<
   return function(payload?: ActionPayload<K, TAction>) {
     return payload ? { ...payload, type } : { type };
   };
-}
-
-export function dispatchEvent<A extends Action>(el: Element, action: A) {
-  el.dispatchEvent(
-    new CustomEvent<A>(`atx-dispatch`, {
-      bubbles: true,
-      composed: true,
-      detail: action
-    })
-  );
 }
