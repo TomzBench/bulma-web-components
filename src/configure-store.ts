@@ -3,7 +3,7 @@ import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { RootActions } from './store/action';
 import { Dependencies } from './store/dependencies';
 import { rootReducer, RootState } from './store/reducers';
-import { rootEpics, createAppEpicMiddleware } from './store/epics';
+import { rootEpics } from './store/epics';
 import { container } from './ioc/container.root';
 import { UserService } from './services/user/user.service';
 import { SYMBOLS } from './ioc/constants.root';
