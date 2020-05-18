@@ -1,5 +1,6 @@
-import { ofType, combineEpics, ActionsObservable } from 'redux-observable';
+import { Epic, combineEpics, ActionsObservable } from 'redux-observable';
 import { RootState } from '../reducers';
+import { RootActions } from '../action';
 import { Dependencies } from '../dependencies';
 import { UserService } from '../../services/user/user.service';
 import { Observable } from 'rxjs';
@@ -10,10 +11,10 @@ import * as Actions from './action';
 import { from } from 'rxjs';
 import { map, switchMap, startWith, filter } from 'rxjs/operators';
 
-export const login$ = (
-  action$: ActionsObservable<Actions.Actions>,
-  state$: Observable<RootState>,
-  { users }: Dependencies
+export const login$: Epic<RootActions, RootActions, RootState, Dependencies> = (
+  action$,
+  state$,
+  { users }
 ): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.LOGIN>(Actions.LOGIN)),
