@@ -46,10 +46,14 @@ function fetchErr(state: State, action: Action.FetchErr): State {
 }
 
 function login(state: State, action: Action.Login): State {
+  console.log('LOGIN');
+  console.log(action);
   return { ...state };
 }
 
 function loginOk(state: State, action: Action.LoginOk): State {
+  console.log('LOGIN_OK');
+  console.log(action);
   return { ...state };
 }
 
@@ -58,10 +62,14 @@ function loginErr(state: State, action: Action.LoginErr): State {
 }
 
 function logout(state: State, action: Action.Logout): State {
+  console.log('LOGOUT');
+  console.log(action);
   return { ...state };
 }
 
 function logoutOk(state: State, action: Action.LogoutOk): State {
+  console.log('LOGOUT_OK');
+  console.log(action);
   return { ...state };
 }
 

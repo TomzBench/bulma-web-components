@@ -5,6 +5,9 @@ import { UserService } from '../../services/user/user.service';
 import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import { SYMBOLS } from '../../ioc/constants.root';
+import { connect } from '../../ioc/container.root';
+import { RootState } from '../../store/reducers';
+import { actions } from '../../store/users/action';
 import { SubmitLogoutEvent } from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
 import { AtxModalLogin } from '../modal-login/modal-login';
@@ -32,6 +35,7 @@ export class AtxTopnav extends LitElement {
   }
 
   logout() {
+    // this.store.dispatch(actions.logout());
     this.dispatchEvent(
       new CustomEvent<SubmitLogoutEvent>('atx-logout', {
         bubbles: true,
@@ -39,6 +43,10 @@ export class AtxTopnav extends LitElement {
         detail: { redirect: '/logout' }
       })
     );
+  }
+
+  stateChanged(state: RootState) {
+    console.log('State Changed');
   }
 
   renderAccountCircleUser() {

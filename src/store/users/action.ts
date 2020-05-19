@@ -1,6 +1,5 @@
 import { Action, actionCreator } from '../types';
 import { User } from '../../services/user/types';
-import { action } from 'typesafe-actions';
 
 export const FETCH = 'users/fetch';
 export const FETCH_OK = 'users/fetch/ok';
@@ -37,15 +36,17 @@ export interface Logout extends Action<typeof LOGOUT> {}
 export interface LogoutOk extends Action<typeof LOGOUT_OK> {}
 export interface LogoutErr extends Action<typeof LOGOUT_ERR> {}
 
-export const fetch = actionCreator<Fetch>(FETCH);
-export const fetchOk = actionCreator<FetchOk>(FETCH_OK);
-export const fetchErr = actionCreator<FetchErr>(FETCH_ERR);
-export const login = actionCreator<Login>(LOGIN);
-export const loginOk = actionCreator<LoginOk>(LOGIN_OK);
-export const loginErr = actionCreator<LoginErr>(LOGIN_ERR);
-export const logout = actionCreator<Logout>(LOGOUT);
-export const logoutOk = actionCreator<LogoutOk>(LOGOUT_OK);
-export const logoutErr = actionCreator<LogoutErr>(LOGOUT_ERR);
+export const actions = {
+  fetch: actionCreator<Fetch>(FETCH),
+  fetchOk: actionCreator<FetchOk>(FETCH_OK),
+  fetchErr: actionCreator<FetchErr>(FETCH_ERR),
+  login: actionCreator<Login>(LOGIN),
+  loginOk: actionCreator<LoginOk>(LOGIN_OK),
+  loginErr: actionCreator<LoginErr>(LOGIN_ERR),
+  logout: actionCreator<Logout>(LOGOUT),
+  logoutOk: actionCreator<LogoutOk>(LOGOUT_OK),
+  logoutErr: actionCreator<LogoutErr>(LOGOUT_ERR)
+};
 
 export type Actions =
   | Fetch
