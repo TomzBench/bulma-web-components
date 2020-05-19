@@ -12,25 +12,12 @@ interface TokenResponse {
 }
 
 export class UserService {
-  user = new BehaviorSubject<User | undefined>(undefined);
-  ready: Promise<void>;
-  private _resolve!: () => void;
-  private _reject!: (e: any) => void;
-
-  constructor(private io: IoService) {
-    this.ready = new Promise((resolve, reject) => {
-      this._resolve = resolve;
-      this._reject = reject;
-    });
-  }
+  constructor(private io: IoService) {}
 
   async refresh() {
     let resp = await this.io.get<TokenResponse>(API.REFRESH);
     this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
-    this.user.next(resp.json.user);
-    this._resolve();
     return resp.json.user;
-    // .catch(e => this._reject(e));
   }
 
   async login(email: string, password: string): Promise<User> {
@@ -39,13 +26,11 @@ export class UserService {
       password
     });
     this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
-    this.user.next(resp.json.user);
     return resp.json.user;
   }
 
   async logout(): Promise<void> {
     await this.io.get<string>(API.LOGOUT);
-    this.user.next(undefined);
     this.io.removeHeader('Authorization');
   }
 }

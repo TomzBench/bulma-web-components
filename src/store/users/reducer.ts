@@ -73,7 +73,7 @@ function logout(state: State, action: Action.Logout): State {
 }
 
 function logoutOk(state: State, action: Action.LogoutOk): State {
-  return { ...state };
+  return { ...state, user: undefined };
 }
 
 function logoutErr(state: State, action: Action.LogoutErr): State {

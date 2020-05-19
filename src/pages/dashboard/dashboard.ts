@@ -13,25 +13,18 @@ import '../../components/router-guard/router-guard';
 @domConsumer('atx-dashboard')
 export class AtxDashboard extends LitElement {
   static styles = styles(scss.toString());
-  @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
-  $user?: Subscription;
 
   connectedCallback() {
     super.connectedCallback();
-    this.$user = this.users.user.subscribe(u => {
-      this.requestUpdate();
-    });
   }
 
   disconnectedCallback() {
-    if (this.$user) this.$user.unsubscribe();
     super.disconnectedCallback();
   }
 
   render() {
-    const user = this.users.user.value ? this.users.user.value.firstName : '';
     return html`
-      <atx-topnav user="${user}" wide>
+      <atx-topnav wide>
         <a class="is-size-5" href="/home">Altronix Developer Portal</a>
       </atx-topnav>
       <div class="dashboard-container">

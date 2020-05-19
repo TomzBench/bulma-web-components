@@ -38,9 +38,7 @@ export class AtxRouterGuard extends connect<RootState>()(LitElement) {
         );
       }
     }
-    const message = this.users.user.value
-      ? 'You do not have access'
-      : 'Please sign in';
+    const message = user ? 'You do not have access' : 'Please sign in';
     return html`
       ${this.popup
         ? ''
