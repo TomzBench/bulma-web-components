@@ -87,7 +87,7 @@ export function domProvider(el: string, container: Container) {
   };
 }
 
-export function domConsumer(el: string) {
+export function domConsumer(el?: string) {
   return function<T extends { new (...args: any[]): LitElement }>(target: T) {
     class C extends target {
       constructor(...args: any[]) {
@@ -115,7 +115,7 @@ export function domConsumer(el: string) {
         super.connectedCallback();
       }
     }
-    customElement(el)(C);
+    if (el) customElement(el)(C);
     return C;
   };
 }

@@ -9,7 +9,7 @@ import { AtxModalLogin } from '../modal-login/modal-login';
 import { connect } from '../../store/connect';
 import { RootState } from '../../store/reducers';
 import { actions } from '../../store/users/action';
-import { store } from '../../configure-store';
+// import { store } from '../../configure-store';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -23,7 +23,7 @@ import '../bulma/navbar/navbar-dropdown';
 import '../form-login/form-login';
 
 @domConsumer('atx-topnav')
-export class AtxTopnav extends connect(store)(LitElement) {
+export class AtxTopnav extends connect()(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string = '';
