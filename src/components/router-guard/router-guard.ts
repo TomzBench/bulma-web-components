@@ -4,30 +4,31 @@ import { until } from 'lit-html/directives/until';
 import { styles } from '../../components/bulma/styles';
 import { SYMBOLS } from '../../ioc/constants.root';
 import { UserService } from '../../services/user/user.service';
-import { RouterService } from '../../services/router/router.service';
 import { domInject, domConsumer } from '../../components/shared/decorators';
+
+import { connect } from '../../store/connect';
+import { RootState } from '../../store/reducers';
+import { actions } from '../../store/action';
 
 import * as scss from './router-guard.styles.scss';
 import '../material/circular-progress/circular-progress';
 
 @domConsumer('atx-router-guard')
-export class AtxRouterGuard extends LitElement {
+export class AtxRouterGuard extends connect<RootState>()(LitElement) {
   @property({ type: Number }) role: number = 0;
   @property({ type: String }) redirect: string = '/home';
   @property({ type: Boolean }) popup: boolean = false;
   @property({ type: Number }) transition: number = 10;
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
-  @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   static styles = styles(scss.toString());
 
   back() {
     this.popup = false;
-    this.router.route(this.redirect);
+    this.store.dispatch(actions.route({ route: this.redirect }));
   }
 
   async asyncRender() {
-    await this.users.ready;
-    const user = this.users.user.value;
+    const user = this.store.getState().users.user;
     if (!user || user.role < this.role) {
       this.popup = true;
     } else {

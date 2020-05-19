@@ -25,14 +25,12 @@ export class UserService {
   }
 
   async refresh() {
-    this.io
-      .get<TokenResponse>(API.REFRESH)
-      .then(resp => {
-        this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
-        this.user.next(resp.json.user);
-        this._resolve();
-      })
-      .catch(e => this._reject(e));
+    let resp = await this.io.get<TokenResponse>(API.REFRESH);
+    this.io.setHeader('Authorization', `Bearer ${resp.json.accessToken}`);
+    this.user.next(resp.json.user);
+    this._resolve();
+    return resp.json.user;
+    // .catch(e => this._reject(e));
   }
 
   async login(email: string, password: string): Promise<User> {

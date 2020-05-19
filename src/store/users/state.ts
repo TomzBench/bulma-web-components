@@ -10,10 +10,12 @@ export interface User {
 
 export type State = {
   user: User | undefined;
+  ready: boolean;
   users: User[];
 };
 
 export const initial: State = {
   user: undefined,
+  ready: false,
   users: []
 };

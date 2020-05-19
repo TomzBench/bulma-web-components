@@ -1,7 +1,6 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
-import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
 import {
   SubmitLogoutEvent,
@@ -12,7 +11,6 @@ import { AtxModalLogin } from '../modal-login/modal-login';
 import { connect } from '../../store/connect';
 import { RootState } from '../../store/reducers';
 import { actions } from '../../store/users/action';
-// import { store } from '../../configure-store';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -26,7 +24,7 @@ import '../bulma/navbar/navbar-dropdown';
 import '../form-login/form-login';
 
 @domConsumer('atx-topnav')
-export class AtxTopnav extends connect()(LitElement) {
+export class AtxTopnav extends connect<RootState>()(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string = '';
@@ -48,12 +46,12 @@ export class AtxTopnav extends connect()(LitElement) {
 
   stateChanged(state: RootState) {
     this.user = state.users.user ? state.users.user.firstName : '';
-    console.log(`STATE CHANGED ${this.user || 'empty'}`);
   }
 
   connectedCallback() {
-    console.log(this.store.getState());
     super.connectedCallback();
+    const { users } = this.store.getState();
+    this.user = users.user ? users.user.firstName : '';
   }
 
   renderAccountCircleUser() {
@@ -87,7 +85,6 @@ export class AtxTopnav extends connect()(LitElement) {
   }
 
   render() {
-    console.log(this.user);
     return html`
       <b-navbar color="primary" ?wide="${this.wide}">
         <b-navbar-item where="brand">

@@ -1,8 +1,11 @@
-import { customElement, LitElement, html, query } from 'lit-element';
+import { customElement, property, LitElement, html, query } from 'lit-element';
 import { SYMBOLS } from './ioc/constants.root';
 import { domConsumer, domInject } from './components/shared/decorators';
 import { RouterService } from './services/router/router.service';
 import { Subscription } from 'rxjs';
+import { connect } from './store/connect';
+import { RootState } from './store/reducers';
+import { actions } from './store/action';
 
 import './components/footer/footer';
 import './components/topnav/topnav';
@@ -21,12 +24,29 @@ import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
 
 @domConsumer('atx-app')
-export class App extends LitElement {
+export class App extends connect<RootState>()(LitElement) {
   static styles = styles(scss.toString());
+  @property({ type: Boolean }) ready: boolean = false;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   @query('.outlet') outlet!: Element;
 
-  firstUpdated() {
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.store.getState().users.ready) {
+      this.store.dispatch(actions.refresh());
+    } else {
+      this.onReady();
+    }
+  }
+
+  stateChanged(s: RootState) {
+    if (!this.ready && s.users.ready) {
+      this.onReady();
+      this.ready = true;
+    }
+  }
+
+  onReady() {
     let router = this.router.create(this.outlet);
     router.setRoutes([
       { path: '/', component: 'atx-home' },

@@ -30,6 +30,15 @@ export default function reducer(state = initial, action: Action.Actions) {
     case Action.LOGOUT_ERR:
       return logoutErr(state, action);
       break;
+    case Action.REFRESH:
+      return refresh(state, action);
+      break;
+    case Action.REFRESH_OK:
+      return refreshOk(state, action);
+      break;
+    case Action.REFRESH_ERR:
+      return refreshErr(state, action);
+      break;
     default:
       return state;
   }
@@ -48,15 +57,11 @@ function fetchErr(state: State, action: Action.FetchErr): State {
 }
 
 function login(state: State, action: Action.Login): State {
-  console.log('LOGIN');
-  console.log(action);
   return { ...state };
 }
 
 function loginOk(state: State, action: Action.LoginOk): State {
-  console.log('LOGIN_OK');
-  console.log(action);
-  return { ...state };
+  return { ...state, user: action.user };
 }
 
 function loginErr(state: State, action: Action.LoginErr): State {
@@ -64,17 +69,25 @@ function loginErr(state: State, action: Action.LoginErr): State {
 }
 
 function logout(state: State, action: Action.Logout): State {
-  console.log('LOGOUT');
-  console.log(action);
   return { ...state };
 }
 
 function logoutOk(state: State, action: Action.LogoutOk): State {
-  console.log('LOGOUT_OK');
-  console.log(action);
   return { ...state };
 }
 
 function logoutErr(state: State, action: Action.LogoutErr): State {
   return { ...state };
+}
+
+function refresh(state: State, action: Action.Refresh): State {
+  return { ...state };
+}
+
+function refreshOk(state: State, action: Action.RefreshOk): State {
+  return { ...state, user: action.user, ready: true };
+}
+
+function refreshErr(state: State, action: Action.RefreshErr): State {
+  return { ...state, user: undefined, ready: true };
 }

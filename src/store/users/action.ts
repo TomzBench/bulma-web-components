@@ -13,6 +13,9 @@ export const LOGIN_ERR = 'users/login/err';
 export const LOGOUT = 'users/logout';
 export const LOGOUT_OK = 'users/logout/ok';
 export const LOGOUT_ERR = 'users/logout/err';
+export const REFRESH = 'users/refresh';
+export const REFRESH_OK = 'users/refresh/ok';
+export const REFRESH_ERR = 'users/refresh/err';
 
 //
 // ACTION INTERFACES
@@ -31,11 +34,18 @@ export interface Login extends Action<typeof LOGIN> {
   email: string;
   password: string;
 }
-export interface LoginOk extends User, Action<typeof LOGIN_OK> {}
+export interface LoginOk extends Action<typeof LOGIN_OK> {
+  user: User;
+}
 export interface LoginErr extends Action<typeof LOGIN_ERR> {}
 export interface Logout extends Action<typeof LOGOUT> {}
 export interface LogoutOk extends Action<typeof LOGOUT_OK> {}
 export interface LogoutErr extends Action<typeof LOGOUT_ERR> {}
+export interface Refresh extends Action<typeof REFRESH> {}
+export interface RefreshOk extends Action<typeof REFRESH_OK> {
+  user: User;
+}
+export interface RefreshErr extends Action<typeof REFRESH_ERR> {}
 export type Actions =
   | Fetch
   | FetchErr
@@ -45,7 +55,10 @@ export type Actions =
   | LoginErr
   | Logout
   | LogoutOk
-  | LogoutErr;
+  | LogoutErr
+  | Refresh
+  | RefreshOk
+  | RefreshErr;
 
 //
 // ACTIONS CREATORS
@@ -59,5 +72,8 @@ export const actions = {
   loginErr: actionCreator<LoginErr>(LOGIN_ERR),
   logout: actionCreator<Logout>(LOGOUT),
   logoutOk: actionCreator<LogoutOk>(LOGOUT_OK),
-  logoutErr: actionCreator<LogoutErr>(LOGOUT_ERR)
+  logoutErr: actionCreator<LogoutErr>(LOGOUT_ERR),
+  refresh: actionCreator<Logout>(REFRESH),
+  refreshOk: actionCreator<LogoutOk>(REFRESH_OK),
+  refreshErr: actionCreator<LogoutErr>(REFRESH_ERR)
 };
