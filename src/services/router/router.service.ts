@@ -9,7 +9,6 @@ interface RouteArgs {
   hash?: string;
 }
 
-@bindTo(SYMBOLS.ROUTER_SERVICE, () => new RouterService(Router))
 export class RouterService {
   constructor(private VaadinRouter: typeof Router) {}
 

@@ -1,6 +1,9 @@
 import { Action, actionCreator } from '../types';
 import { User } from '../../services/user/types';
 
+//
+// ACTION TYPES
+//
 export const FETCH = 'users/fetch';
 export const FETCH_OK = 'users/fetch/ok';
 export const FETCH_ERR = 'users/fetch/err';
@@ -11,7 +14,9 @@ export const LOGOUT = 'users/logout';
 export const LOGOUT_OK = 'users/logout/ok';
 export const LOGOUT_ERR = 'users/logout/err';
 
-// Fetch users from the database
+//
+// ACTION INTERFACES
+//
 export interface Fetch extends Action<typeof FETCH> {
   query?: { [key: string]: string | number };
   sort?: string;
@@ -22,20 +27,29 @@ export interface FetchOk extends User, Action<typeof FETCH_OK> {
   users: User[];
 }
 export interface FetchErr extends Action<typeof FETCH_ERR> {}
-
-// Submit login for authentication
 export interface Login extends Action<typeof LOGIN> {
   email: string;
   password: string;
 }
 export interface LoginOk extends User, Action<typeof LOGIN_OK> {}
 export interface LoginErr extends Action<typeof LOGIN_ERR> {}
-
-// Logout actions
 export interface Logout extends Action<typeof LOGOUT> {}
 export interface LogoutOk extends Action<typeof LOGOUT_OK> {}
 export interface LogoutErr extends Action<typeof LOGOUT_ERR> {}
+export type Actions =
+  | Fetch
+  | FetchErr
+  | FetchOk
+  | Login
+  | LoginOk
+  | LoginErr
+  | Logout
+  | LogoutOk
+  | LogoutErr;
 
+//
+// ACTIONS CREATORS
+//
 export const actions = {
   fetch: actionCreator<Fetch>(FETCH),
   fetchOk: actionCreator<FetchOk>(FETCH_OK),
@@ -47,14 +61,3 @@ export const actions = {
   logoutOk: actionCreator<LogoutOk>(LOGOUT_OK),
   logoutErr: actionCreator<LogoutErr>(LOGOUT_ERR)
 };
-
-export type Actions =
-  | Fetch
-  | FetchErr
-  | FetchOk
-  | Login
-  | LoginOk
-  | LoginErr
-  | Logout
-  | LogoutOk
-  | LogoutErr;

@@ -3,7 +3,10 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
-import { SubmitLogoutEvent } from '../../components/form-login/types';
+import {
+  SubmitLogoutEvent,
+  SubmitLoginEvent
+} from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
 import { AtxModalLogin } from '../modal-login/modal-login';
 import { connect } from '../../store/connect';
@@ -34,18 +37,23 @@ export class AtxTopnav extends connect()(LitElement) {
   }
 
   logout() {
-    // this.store.dispatch(actions.logout());
-    this.dispatchEvent(
-      new CustomEvent<SubmitLogoutEvent>('atx-logout', {
-        bubbles: true,
-        composed: true,
-        detail: { redirect: '/logout' }
-      })
-    );
+    this.store.dispatch(actions.logout());
+  }
+
+  async login(e: CustomEvent<SubmitLoginEvent>) {
+    const { email, password } = e.detail;
+    this.store.dispatch(actions.login({ email, password }));
+    e.stopPropagation();
   }
 
   stateChanged(state: RootState) {
-    console.log('State Changed');
+    this.user = state.users.user ? state.users.user.firstName : '';
+    console.log(`STATE CHANGED ${this.user || 'empty'}`);
+  }
+
+  connectedCallback() {
+    console.log(this.store.getState());
+    super.connectedCallback();
   }
 
   renderAccountCircleUser() {
@@ -79,6 +87,7 @@ export class AtxTopnav extends connect()(LitElement) {
   }
 
   render() {
+    console.log(this.user);
     return html`
       <b-navbar color="primary" ?wide="${this.wide}">
         <b-navbar-item where="brand">
@@ -91,7 +100,7 @@ export class AtxTopnav extends connect()(LitElement) {
         ${this.renderAccountCircleLogin()}
         <!-- -->
       </b-navbar>
-      <atx-modal-login></atx-modal-login>
+      <atx-modal-login @atx-login="${this.login}"></atx-modal-login>
     `;
   }
 }

@@ -31,50 +31,48 @@ export class AtxDashboard extends LitElement {
   render() {
     const user = this.users.user.value ? this.users.user.value.firstName : '';
     return html`
-      <atx-login-container>
-        <atx-topnav user="${user}" wide>
-          <a class="is-size-5" href="/home">Altronix Developer Portal</a>
-        </atx-topnav>
-        <div class="dashboard-container">
-          <atx-router-guard transition="750" role="0" redirect="/home">
-            <nav class="breadcrumb">
-              <ul>
-                <li><a href="/home">Home</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li class="is-active"><a>Main</a></li>
-              </ul>
-            </nav>
-            <slot></slot>
-          </atx-router-guard>
-        </div>
-        <div class="dashboard-sidenav">
-          <div class="logo">
-            <img src="${logo}" />
-          </div>
-          <div class="menu">
-            <ul class="menu-list">
-              <li>
-                <a href="/dashboard/main"><b-icon>desktop_mac</b-icon></a>
-              </li>
-              <li>
-                <a href="/dashboard/account"><b-icon>account_circle</b-icon></a>
-              </li>
-              <li>
-                <a href="/dashboard/mail"><b-icon>mail</b-icon></a>
-              </li>
-              <li>
-                <a href="/dashboard/lock"><b-icon>lock</b-icon></a>
-              </li>
-              <li>
-                <a href="/dashboard/devices"><b-icon>device_hub</b-icon></a>
-              </li>
-              <li>
-                <a href="/dashboard/power"><b-icon>power</b-icon></a>
-              </li>
+      <atx-topnav user="${user}" wide>
+        <a class="is-size-5" href="/home">Altronix Developer Portal</a>
+      </atx-topnav>
+      <div class="dashboard-container">
+        <atx-router-guard transition="750" role="0" redirect="/home">
+          <nav class="breadcrumb">
+            <ul>
+              <li><a href="/home">Home</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li class="is-active"><a>Main</a></li>
             </ul>
-          </div>
+          </nav>
+          <slot></slot>
+        </atx-router-guard>
+      </div>
+      <div class="dashboard-sidenav">
+        <div class="logo">
+          <img src="${logo}" />
         </div>
-      </atx-login-container>
+        <div class="menu">
+          <ul class="menu-list">
+            <li>
+              <a href="/dashboard/main"><b-icon>desktop_mac</b-icon></a>
+            </li>
+            <li>
+              <a href="/dashboard/account"><b-icon>account_circle</b-icon></a>
+            </li>
+            <li>
+              <a href="/dashboard/mail"><b-icon>mail</b-icon></a>
+            </li>
+            <li>
+              <a href="/dashboard/lock"><b-icon>lock</b-icon></a>
+            </li>
+            <li>
+              <a href="/dashboard/devices"><b-icon>device_hub</b-icon></a>
+            </li>
+            <li>
+              <a href="/dashboard/power"><b-icon>power</b-icon></a>
+            </li>
+          </ul>
+        </div>
+      </div>
     `;
   }
 }
