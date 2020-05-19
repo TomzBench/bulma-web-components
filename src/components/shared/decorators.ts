@@ -1,7 +1,6 @@
 import { Container, decorate, injectable } from 'inversify';
 import { ServiceIdentifier } from './types';
 import { customElement, LitElement } from 'lit-element';
-import { Unsubscribe, Store } from 'redux';
 import { SYMBOLS } from '../../ioc/constants.root';
 
 export const METADATA_KEYS = {
@@ -24,8 +23,6 @@ export interface DomInjectEvent {
   id: ServiceIdentifier<any>;
   service?: any;
 }
-
-type Constructor<T> = new (...args: any[]) => T;
 
 export function makeDecorators(container: Container) {
   function lazyInject(serviceIdentifier: ServiceIdentifier<any>) {
@@ -65,29 +62,7 @@ export function makeDecorators(container: Container) {
     };
   }
 
-  function connect<S>() {
-    return function<T extends Constructor<LitElement>>(target: T) {
-      const store = container.get<Store<S>>(SYMBOLS.STORE_SERVICE);
-      return class extends target {
-        store = store;
-        _storeUnsubscribe!: Unsubscribe;
-        connectedCallback() {
-          super.connectedCallback();
-          this._storeUnsubscribe = this.store.subscribe(() => {
-            this.stateChanged(store.getState());
-          });
-        }
-        disconnectedCallback() {
-          this._storeUnsubscribe();
-          super.disconnectedCallback();
-        }
-
-        stateChanged(s: S) {}
-      };
-    };
-  }
-
-  return { lazyInject, bind, bindTo, connect };
+  return { lazyInject, bind, bindTo };
 }
 
 export function domProvider(el: string, container: Container) {

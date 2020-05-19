@@ -1,16 +1,15 @@
 import { LitElement, customElement, html, property, query } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
-import { UserService } from '../../services/user/user.service';
 import { RouterService } from '../../services/router/router.service';
 import { domConsumer, domInject } from '../../components/shared/decorators';
-import { SYMBOLS } from '../../ioc/constants.root';
-import { connect } from '../../ioc/container.root';
-import { RootState } from '../../store/reducers';
-import { actions } from '../../store/users/action';
 import { SubmitLogoutEvent } from '../../components/form-login/types';
 import { Subscription } from 'rxjs';
 import { AtxModalLogin } from '../modal-login/modal-login';
+import { connect } from '../../store/connect';
+import { RootState } from '../../store/reducers';
+import { actions } from '../../store/users/action';
+import { store } from '../../configure-store';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
@@ -24,7 +23,7 @@ import '../bulma/navbar/navbar-dropdown';
 import '../form-login/form-login';
 
 @domConsumer('atx-topnav')
-export class AtxTopnav extends LitElement {
+export class AtxTopnav extends connect(store)(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string = '';

@@ -11,14 +11,13 @@ interface TokenResponse {
   accessToken: string;
 }
 
-@bind(SYMBOLS.USER_SERVICE)
 export class UserService {
   user = new BehaviorSubject<User | undefined>(undefined);
   ready: Promise<void>;
   private _resolve!: () => void;
   private _reject!: (e: any) => void;
 
-  constructor(@inject(SYMBOLS.IO_SERVICE) private io: IoService) {
+  constructor(private io: IoService) {
     this.ready = new Promise((resolve, reject) => {
       this._resolve = resolve;
       this._reject = reject;

@@ -2,7 +2,6 @@ import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './table-user.styles.scss';
-import { connect } from '../../ioc/container.root';
 import { RootState } from '../../store/reducers';
 
 import { BTable, Table } from '../bulma/table/table';

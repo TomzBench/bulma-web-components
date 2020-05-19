@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 
 @domConsumer('atx-login-container')
 export class AtxTopnavContainer extends LitElement {
+  /*
   @domInject(SYMBOLS.USER_SERVICE) users!: UserService;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;
   $user?: Subscription;
@@ -45,6 +46,12 @@ export class AtxTopnavContainer extends LitElement {
   render() {
     return html`
       <slot @atx-login="${this.login}" @atx-logout="${this.logout}"></slot>
+    `;
+  }
+*/
+  render() {
+    return html`
+      <slot></slot>
     `;
   }
 }

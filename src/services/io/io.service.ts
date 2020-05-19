@@ -1,7 +1,5 @@
-import { injectable } from 'inversify';
 import { IoRequester, IoResponse, Fetch } from './types';
 import { SYMBOLS } from '../../ioc/constants.root';
-import { bindTo } from '../../ioc/container.root';
 
 const GET = 'get';
 const PUT = 'put';
@@ -13,7 +11,6 @@ type Headers = {
   [key: string]: string;
 };
 
-@bindTo(SYMBOLS.IO_SERVICE, () => new IoService(fetch.bind(window)))
 export class IoService implements IoRequester {
   headers: Headers = {};
   constructor(private fetch: Fetch) {}

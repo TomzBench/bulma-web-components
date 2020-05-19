@@ -30,6 +30,8 @@ export default function reducer(state = initial, action: Action.Actions) {
     case Action.LOGOUT_ERR:
       return logoutErr(state, action);
       break;
+    default:
+      return state;
   }
 }
 
