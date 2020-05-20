@@ -21,7 +21,9 @@ export class AtxModalLogin extends LitElement {
       <b-modal @b-close="${this.close}" ?show="${this._show === true}">
         <div class="signin is-clipped">
           <div class="box">
-            <p class="signin-title">Please sign in...</p>
+            <p class="subtitle is-size-6 has-text-weight-light">
+              Please sign in...
+            </p>
             <atx-form-login></atx-form-login>
           </div>
         </div>

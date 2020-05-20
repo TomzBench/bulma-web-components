@@ -20,6 +20,7 @@ import './components/form-login/form-login';
 import './components/form-signup/form-signup';
 import './components/form-user/form-user';
 import './components/modal-login/modal-login';
+import './components/modal-form-user/modal-form-user';
 import './components/router-guard/router-guard';
 import './components/table-alert/table-alert';
 import './components/table-user/table-user';

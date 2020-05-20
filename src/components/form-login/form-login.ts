@@ -20,7 +20,6 @@ export class AtxFormLogin extends LitElement {
   password: string = '';
 
   click() {
-    console.log('FORM EVENT');
     this.dispatchEvent(
       new CustomEvent<SubmitLoginEvent>('atx-login', {
         bubbles: true,

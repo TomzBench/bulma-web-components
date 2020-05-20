@@ -6,6 +6,7 @@ import { connect } from '../../store/connect';
 import { RootState } from '../../store/reducers';
 import { actions } from '../../store/action';
 import { User } from '../../services/user/types';
+import { SubmitUserEvent } from '../form-user/form-user';
 
 import { BTable, Table } from '../bulma/table/table';
 import '../bulma/pagination/pagination';
@@ -26,6 +27,7 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
   @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
+  @property({ type: String }) popup: string = '';
   @property({ type: Array })
   set users(users: User[]) {
     this._users = [...users];
@@ -48,6 +50,19 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
 
   fetch() {
     this.store.dispatch(actions.user.fetch());
+  }
+
+  createNewUser(e: CustomEvent<SubmitUserEvent>) {
+    console.log(e.detail);
+  }
+
+  add() {
+    this.popup = 'add';
+  }
+
+  close() {
+    console.log('close');
+    this.popup = '';
   }
 
   renderTable() {
@@ -121,7 +136,7 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
         <div class="column">
           <b-field grouped>
             <b-addon-button color="success" size="small">
-              <b-icon>add</b-icon>
+              <b-icon @click="${this.add}">add</b-icon>
             </b-addon-button>
             <b-addon-button color="warning" size="small">
               <b-icon @click="${this.fetch}">refresh</b-icon>
@@ -167,6 +182,11 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
           </b-pagination>
         </div>
       </div>
+      <atx-modal-form-user
+        @atx-add-user="${this.createNewUser}"
+        @b-close="${this.close}"
+        ?show="${this.popup === 'add'}"
+      ></atx-modal-form-user>
     `;
   }
 }

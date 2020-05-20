@@ -12,7 +12,7 @@ export class BModal extends LitElement {
   @property({ type: Boolean }) show: boolean = false;
 
   close() {
-    this.dispatchEvent(new Event('b-close'));
+    this.dispatchEvent(new Event('b-close', { bubbles: true, composed: true }));
   }
 
   render() {
