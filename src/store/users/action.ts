@@ -30,6 +30,9 @@ export const REFRESH_ERR = 'users/refresh/err';
 export const CREATE = 'users/create';
 export const CREATE_OK = 'users/create/ok';
 export const CREATE_ERR = 'users/create/err';
+export const REMOVE = 'users/remove';
+export const REMOVE_OK = 'users/remove/ok';
+export const REMOVE_ERR = 'users/remove/err';
 
 //
 // ACTION INTERFACES
@@ -63,6 +66,12 @@ export interface Create extends Action<typeof CREATE> {
 }
 export interface CreateOk extends Action<typeof CREATE_OK> {}
 export interface CreateErr extends Action<typeof CREATE_ERR> {}
+export interface Remove extends Action<typeof REMOVE> {
+  email: string;
+}
+export interface RemoveOk extends Action<typeof REMOVE_OK> {}
+export interface RemoveErr extends Action<typeof REMOVE_ERR> {}
+
 export type Actions =
   | Fetch
   | FetchErr
@@ -78,7 +87,10 @@ export type Actions =
   | RefreshErr
   | Create
   | CreateOk
-  | CreateErr;
+  | CreateErr
+  | Remove
+  | RemoveOk
+  | RemoveErr;
 
 //
 // ACTIONS CREATORS
@@ -98,5 +110,8 @@ export const actions = {
   refreshErr: actionCreator<RefreshErr>(REFRESH_ERR),
   create: actionCreator<Create>(CREATE),
   createOk: actionCreator<CreateOk>(CREATE_OK),
-  createErr: actionCreator<CreateErr>(CREATE_ERR)
+  createErr: actionCreator<CreateErr>(CREATE_ERR),
+  remove: actionCreator<Remove>(REMOVE),
+  removeOk: actionCreator<RemoveOk>(REMOVE_OK),
+  removeErr: actionCreator<RemoveErr>(REMOVE_ERR)
 };

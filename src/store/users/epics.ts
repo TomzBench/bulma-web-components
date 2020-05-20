@@ -111,6 +111,21 @@ export const create$: Epic<
     )
   );
 
+export const remove$: Epic<
+  RootActions,
+  RootActions,
+  RootState,
+  Dependencies
+> = (action$, state$, { users }): Observable<Action> =>
+  action$.pipe(
+    filter(isOfType<typeof Actions.REMOVE>(Actions.REMOVE)),
+    switchMap(action =>
+      from(users.remove(action.email)).pipe(
+        map(response => actions.user.removeOk({ response }))
+      )
+    )
+  );
+
 export default combineEpics(
   login$,
   loginRedirect$,
@@ -118,5 +133,6 @@ export default combineEpics(
   logoutRedirect$,
   refresh$,
   fetch$,
-  create$
+  create$,
+  remove$
 );

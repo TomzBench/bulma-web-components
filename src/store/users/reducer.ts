@@ -48,6 +48,15 @@ export default function reducer(state = initial, action: Action.Actions) {
     case Action.CREATE_ERR:
       return createErr(state, action);
       break;
+    case Action.REMOVE:
+      return remove(state, action);
+      break;
+    case Action.REMOVE_OK:
+      return removeOk(state, action);
+      break;
+    case Action.REMOVE_ERR:
+      return removeErr(state, action);
+      break;
     default:
       return state;
   }
@@ -110,5 +119,17 @@ function createOk(state: State, action: Action.CreateOk): State {
 }
 
 function createErr(state: State, action: Action.CreateErr): State {
+  return { ...state };
+}
+
+function remove(state: State, action: Action.Remove): State {
+  return { ...state };
+}
+
+function removeOk(state: State, action: Action.RemoveOk): State {
+  return { ...state };
+}
+
+function removeErr(state: State, action: Action.RemoveErr): State {
   return { ...state };
 }

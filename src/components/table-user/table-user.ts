@@ -52,6 +52,10 @@ export class AtxUserTable extends connect(LitElement) {
     this.popup = 'add';
   }
 
+  remove() {
+    this.popup = 'remove';
+  }
+
   close() {
     console.log('close');
     this.popup = '';
@@ -134,7 +138,7 @@ export class AtxUserTable extends connect(LitElement) {
               <b-icon @click="${this.fetch}">refresh</b-icon>
             </b-addon-button>
             <b-addon-button color="danger" size="small">
-              <b-icon>delete</b-icon>
+              <b-icon @click="${this.remove}">delete</b-icon>
             </b-addon-button>
           </b-field>
         </div>

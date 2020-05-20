@@ -31,7 +31,7 @@ export class BIcon extends LitElement {
     if (this.color) this.classList.add(`has-text-${this.color}`);
     return html`
       <i class="${this.kind}">
-        ${this.firstChild}
+        ${this.icon ? this.icon : this.firstChild}
       </i>
     `;
   }
