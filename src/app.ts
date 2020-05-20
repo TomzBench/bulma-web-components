@@ -33,7 +33,7 @@ export class App extends connect<RootState>()(LitElement) {
   connectedCallback() {
     super.connectedCallback();
     if (!this.store.getState().users.ready) {
-      this.store.dispatch(actions.refresh());
+      this.store.dispatch(actions.user.refresh());
     } else {
       this.onReady();
     }

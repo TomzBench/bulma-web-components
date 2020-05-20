@@ -48,12 +48,6 @@ export class AtxTopnav extends connect<RootState>()(LitElement) {
     this.user = state.users.user ? state.users.user.firstName : '';
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    const { users } = this.store.getState();
-    this.user = users.user ? users.user.firstName : '';
-  }
-
   renderAccountCircleUser() {
     const classes = { ['is-hidden']: this.user.length === 0 };
     let ret = html`

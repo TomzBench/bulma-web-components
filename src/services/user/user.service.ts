@@ -33,4 +33,9 @@ export class UserService {
     await this.io.get<string>(API.LOGOUT);
     this.io.removeHeader('Authorization');
   }
+
+  async get(): Promise<User[]> {
+    let resp = await this.io.get<User[]>(API.USERS);
+    return resp.json;
+  }
 }

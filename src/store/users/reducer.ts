@@ -45,15 +45,15 @@ export default function reducer(state = initial, action: Action.Actions) {
 }
 
 function fetch(state: State, action: Action.Fetch): State {
-  return { ...state };
+  return { ...state, loading: true };
 }
 
 function fetchOk(state: State, action: Action.FetchOk): State {
-  return { ...state };
+  return { ...state, loading: false, users: action.users };
 }
 
 function fetchErr(state: State, action: Action.FetchErr): State {
-  return { ...state };
+  return { ...state, loading: false };
 }
 
 function login(state: State, action: Action.Login): State {

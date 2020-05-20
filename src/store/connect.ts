@@ -16,6 +16,7 @@ export function connect<S = {}>() {
         this._storeUnsubscribe = this.store.subscribe(() => {
           this.stateChanged(this.store.getState());
         });
+        this.stateChanged(this.store.getState());
       }
       disconnectedCallback() {
         this._storeUnsubscribe();

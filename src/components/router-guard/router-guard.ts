@@ -24,7 +24,7 @@ export class AtxRouterGuard extends connect<RootState>()(LitElement) {
 
   back() {
     this.popup = false;
-    this.store.dispatch(actions.route({ route: this.redirect }));
+    this.store.dispatch(actions.router.route({ route: this.redirect }));
   }
 
   async asyncRender() {

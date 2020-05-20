@@ -26,7 +26,7 @@ export interface Fetch extends Action<typeof FETCH> {
   start: number;
   limit: number;
 }
-export interface FetchOk extends User, Action<typeof FETCH_OK> {
+export interface FetchOk extends Action<typeof FETCH_OK> {
   users: User[];
 }
 export interface FetchErr extends Action<typeof FETCH_ERR> {}
