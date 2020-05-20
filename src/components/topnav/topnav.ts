@@ -14,16 +14,7 @@ import { actions } from '../../store/users/action';
 import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
-import '../bulma/field/field';
-import '../bulma/icon/icon';
-import '../bulma/navbar/navbar';
-import '../bulma/navbar/navbar-label';
-import '../bulma/navbar/navbar-item';
-import '../bulma/modal/modal';
-import '../bulma/navbar/navbar-dropdown';
-import '../form-login/form-login';
-
-@domConsumer('atx-topnav')
+@customElement('atx-topnav')
 export class AtxTopnav extends connect<RootState>()(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
