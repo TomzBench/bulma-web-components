@@ -2,7 +2,7 @@ import { inject } from 'inversify';
 import { IoService } from '../io/io.service';
 import { bind } from '../../ioc/container.root';
 import { SYMBOLS } from '../../ioc/constants.root';
-import { User } from './types';
+import { User, UserAdd } from './types';
 import { API } from './constants';
 import { BehaviorSubject } from 'rxjs';
 
@@ -36,6 +36,17 @@ export class UserService {
 
   async get(): Promise<User[]> {
     let resp = await this.io.get<User[]>(API.USERS);
+    return resp.json;
+  }
+
+  async create(u: UserAdd): Promise<{ message: string }> {
+    let resp = await this.io.post<{ message: string }>(API.USERS, u);
+    return resp.json;
+  }
+
+  async remove(email: string): Promise<{ message: string }> {
+    const url = `${API.USERS}?email=${email}`;
+    let resp = await this.io.delete<{ message: string }>(url);
     return resp.json;
   }
 }

@@ -44,7 +44,8 @@ export class AtxUserTable extends connect(LitElement) {
   }
 
   createNewUser(e: CustomEvent<SubmitUserEvent>) {
-    console.log(e.detail);
+    const user = { ...e.detail };
+    this.store.dispatch(actions.user.create({ user }));
   }
 
   add() {

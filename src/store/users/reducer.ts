@@ -39,6 +39,15 @@ export default function reducer(state = initial, action: Action.Actions) {
     case Action.REFRESH_ERR:
       return refreshErr(state, action);
       break;
+    case Action.CREATE:
+      return create(state, action);
+      break;
+    case Action.CREATE_OK:
+      return createOk(state, action);
+      break;
+    case Action.CREATE_ERR:
+      return createErr(state, action);
+      break;
     default:
       return state;
   }
@@ -90,4 +99,16 @@ function refreshOk(state: State, action: Action.RefreshOk): State {
 
 function refreshErr(state: State, action: Action.RefreshErr): State {
   return { ...state, user: undefined, ready: true };
+}
+
+function create(state: State, action: Action.Create): State {
+  return { ...state };
+}
+
+function createOk(state: State, action: Action.CreateOk): State {
+  return { ...state };
+}
+
+function createErr(state: State, action: Action.CreateErr): State {
+  return { ...state };
 }

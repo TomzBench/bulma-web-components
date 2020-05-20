@@ -7,3 +7,7 @@ export interface User {
   role: number;
   accessToken: string;
 }
+
+export type UserAdd = Omit<User, 'devices' | 'accessToken'> & {
+  password: string;
+};

@@ -1,5 +1,16 @@
 import { Action, actionCreator } from '../types';
-import { User } from '../../services/user/types';
+import { User, UserAdd as UserAddServer } from '../../services/user/types';
+
+interface Query {
+  query?: { [key: string]: string | number };
+  sort?: string;
+  start: number;
+  limit: number;
+}
+
+// TODO move these to types...
+// export type ROLE = 'Admin' | 'Developer' | 'Sales' | 'General';
+export type UserAdd = Omit<UserAddServer, 'role'> & { role: string };
 
 //
 // ACTION TYPES
@@ -16,15 +27,15 @@ export const LOGOUT_ERR = 'users/logout/err';
 export const REFRESH = 'users/refresh';
 export const REFRESH_OK = 'users/refresh/ok';
 export const REFRESH_ERR = 'users/refresh/err';
+export const CREATE = 'users/create';
+export const CREATE_OK = 'users/create/ok';
+export const CREATE_ERR = 'users/create/err';
 
 //
 // ACTION INTERFACES
 //
 export interface Fetch extends Action<typeof FETCH> {
-  query?: { [key: string]: string | number };
-  sort?: string;
-  start: number;
-  limit: number;
+  query?: Query;
 }
 export interface FetchOk extends Action<typeof FETCH_OK> {
   users: User[];
@@ -46,6 +57,12 @@ export interface RefreshOk extends Action<typeof REFRESH_OK> {
   user: User;
 }
 export interface RefreshErr extends Action<typeof REFRESH_ERR> {}
+export interface Create extends Action<typeof CREATE> {
+  user: UserAdd;
+  query?: Query;
+}
+export interface CreateOk extends Action<typeof CREATE_OK> {}
+export interface CreateErr extends Action<typeof CREATE_ERR> {}
 export type Actions =
   | Fetch
   | FetchErr
@@ -58,7 +75,10 @@ export type Actions =
   | LogoutErr
   | Refresh
   | RefreshOk
-  | RefreshErr;
+  | RefreshErr
+  | Create
+  | CreateOk
+  | CreateErr;
 
 //
 // ACTIONS CREATORS
@@ -73,7 +93,10 @@ export const actions = {
   logout: actionCreator<Logout>(LOGOUT),
   logoutOk: actionCreator<LogoutOk>(LOGOUT_OK),
   logoutErr: actionCreator<LogoutErr>(LOGOUT_ERR),
-  refresh: actionCreator<Logout>(REFRESH),
-  refreshOk: actionCreator<LogoutOk>(REFRESH_OK),
-  refreshErr: actionCreator<LogoutErr>(REFRESH_ERR)
+  refresh: actionCreator<Refresh>(REFRESH),
+  refreshOk: actionCreator<RefreshOk>(REFRESH_OK),
+  refreshErr: actionCreator<RefreshErr>(REFRESH_ERR),
+  create: actionCreator<Create>(CREATE),
+  createOk: actionCreator<CreateOk>(CREATE_OK),
+  createErr: actionCreator<CreateErr>(CREATE_ERR)
 };
