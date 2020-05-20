@@ -76,7 +76,7 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
         <table class="${classMap(c.table)}">
           <thead>
             <tr>
-              <th class="${classMap(c.column(true))}">IDX</th>
+              <th class="${classMap(c.column(true))}">Idx</th>
               <th class="${classMap(c.column())}">Name</th>
               <th class="${classMap(c.column())}">Email</th>
               <th class="${classMap(c.column())}">Role</th>
@@ -120,11 +120,14 @@ export class AtxUserTable extends connect<RootState>()(LitElement) {
       <div class="columns is-desktop">
         <div class="column">
           <b-field grouped>
-            <b-addon-button size="small">
+            <b-addon-button color="success" size="small">
               <b-icon>add</b-icon>
             </b-addon-button>
-            <b-addon-button size="small">
+            <b-addon-button color="warning" size="small">
               <b-icon @click="${this.fetch}">refresh</b-icon>
+            </b-addon-button>
+            <b-addon-button color="danger" size="small">
+              <b-icon>delete</b-icon>
             </b-addon-button>
           </b-field>
         </div>
