@@ -23,7 +23,15 @@ export class AtxModalMessage extends LitElement {
           <div class="box">
             <div class="container has-text-centered">
               <b-icon color="${this.type}" icon="${icon}"/></b-icon>
-              <p class="popup-title">${this.message}</p>
+              ${
+                this.message
+                  ? html`
+                      <p class="popup-title">${this.message}</p>
+                    `
+                  : html`
+                      <slot></slot>
+                    `
+              }
             </div>
           </div>
         </div>

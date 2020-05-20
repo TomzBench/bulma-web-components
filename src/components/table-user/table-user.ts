@@ -46,18 +46,26 @@ export class AtxUserTable extends connect(LitElement) {
   createNewUser(e: CustomEvent<SubmitUserEvent>) {
     const user = { ...e.detail };
     this.store.dispatch(actions.user.create({ user }));
+    this.close();
+  }
+
+  removeUser() {
+    const email = this.removeEmail;
+    if (email) this.store.dispatch(actions.user.remove({ email }));
+    this.close();
   }
 
   add() {
     this.popup = 'add';
   }
 
-  remove() {
+  removeEmail: string | undefined = undefined;
+  popupRemoveEmail(email: string) {
+    this.removeEmail = email;
     this.popup = 'remove';
   }
 
   close() {
-    console.log('close');
     this.popup = '';
   }
 
@@ -113,7 +121,10 @@ export class AtxUserTable extends connect(LitElement) {
                       <span class="is-hidden">align</span>
                       <b-icon size="small" color="info">visibility</b-icon>
                     </td>
-                    <td class="${classMap(c.column(true))}">
+                    <td
+                      class="${classMap(c.column(true))}"
+                      @click="${() => this.popupRemoveEmail(d.email)}"
+                    >
                       <span class="is-hidden">align</span>
                       <b-icon size="small" color="danger">delete</b-icon>
                     </td>
@@ -136,9 +147,6 @@ export class AtxUserTable extends connect(LitElement) {
             </b-addon-button>
             <b-addon-button color="warning" size="small">
               <b-icon @click="${this.fetch}">refresh</b-icon>
-            </b-addon-button>
-            <b-addon-button color="danger" size="small">
-              <b-icon @click="${this.remove}">delete</b-icon>
             </b-addon-button>
           </b-field>
         </div>
@@ -178,6 +186,26 @@ export class AtxUserTable extends connect(LitElement) {
           </b-pagination>
         </div>
       </div>
+      <atx-modal-message
+        @b-close="${this.close}"
+        ?show="${this.popup === 'remove'}"
+        type="danger"
+      >
+        <div class="has-text-centered">
+          <p class="title">Remove User</p>
+          <p class="subtitle">
+            Are you sure you want to remove ${this.removeEmail}
+          </p>
+          <b-field centered grouped>
+            <b-addon-button @click="${this.removeUser}" color="success">
+              Confirm
+            </b-addon-button>
+            <b-addon-button @click="${this.close}" color="danger">
+              Cancel
+            </b-addon-button>
+          </b-field>
+        </div>
+      </atx-modal-message>
       <atx-modal-form-user
         @atx-add-user="${this.createNewUser}"
         @b-close="${this.close}"

@@ -41,7 +41,7 @@ export class BField extends LitElement {
   }
 
   makeClasses() {
-    const hasAddons = this.addons.length && !this.grouped;
+    const hasAddons = this.addons.length; /*&& !this.grouped;*/
     const grouped =
       this.addons.length || this.inputs.length >= 2 || this.fields.length;
     const isGrouped = this.grouped && grouped;

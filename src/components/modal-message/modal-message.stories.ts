@@ -48,3 +48,23 @@ export const danger = () => {
   div.appendChild(button);
   return div;
 };
+
+export const withChildren = () => {
+  let div = document.createElement('div');
+  let modal = document.createElement('atx-modal-message') as AtxModalMessage;
+  let button = document.createElement('button');
+  let h1 = document.createElement('h1');
+  let p = document.createElement('p');
+  h1.innerText = 'Title';
+  p.innerText = 'Paragraph';
+  button.innerText = 'Click me';
+  button.addEventListener('click', () => {
+    modal.show = true;
+  });
+  modal.type = 'danger';
+  div.appendChild(modal);
+  div.appendChild(button);
+  modal.appendChild(h1);
+  modal.appendChild(p);
+  return div;
+};
