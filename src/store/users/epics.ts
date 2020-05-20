@@ -1,4 +1,5 @@
 import { Epic, combineEpics, ActionsObservable } from 'redux-observable';
+import { RootEpic } from '../epics';
 import { RootState } from '../reducers';
 import { RootActions } from '../action';
 import { Dependencies } from '../dependencies';
@@ -13,7 +14,7 @@ import * as Actions from './action';
 import { of, from } from 'rxjs';
 import { map, switchMap, concat, startWith, filter } from 'rxjs/operators';
 
-export const login$: Epic<RootActions, RootActions, RootState, Dependencies> = (
+export const login$: RootEpic = (
   action$,
   state$,
   { users, router }
@@ -27,12 +28,11 @@ export const login$: Epic<RootActions, RootActions, RootState, Dependencies> = (
     )
   );
 
-export const loginRedirect$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users, router }): Observable<Action> =>
+export const loginRedirect$: RootEpic = (
+  action$,
+  state$,
+  { users, router }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.LOGIN_OK>(Actions.LOGIN_OK)),
     switchMap(action =>
@@ -40,12 +40,11 @@ export const loginRedirect$: Epic<
     )
   );
 
-export const logout$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users, router }): Observable<Action> =>
+export const logout$: RootEpic = (
+  action$,
+  state$,
+  { users, router }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.LOGOUT>(Actions.LOGOUT)),
     switchMap(action =>
@@ -53,12 +52,11 @@ export const logout$: Epic<
     )
   );
 
-export const logoutRedirect$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users, router }): Observable<Action> =>
+export const logoutRedirect$: RootEpic = (
+  action$,
+  state$,
+  { users, router }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.LOGOUT_OK>(Actions.LOGOUT_OK)),
     switchMap(action =>
@@ -67,12 +65,11 @@ export const logoutRedirect$: Epic<
   );
 
 // TODO can map to EPIC instead of calling service
-export const refresh$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users, router }): Observable<Action> =>
+export const refresh$: RootEpic = (
+  action$,
+  state$,
+  { users, router }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.REFRESH>(Actions.REFRESH)),
     switchMap(action =>
@@ -82,7 +79,7 @@ export const refresh$: Epic<
     )
   );
 
-export const fetch$: Epic<RootActions, RootActions, RootState, Dependencies> = (
+export const fetch$: RootEpic = (
   action$,
   state$,
   { users }
@@ -96,12 +93,11 @@ export const fetch$: Epic<RootActions, RootActions, RootState, Dependencies> = (
     })
   );
 
-export const create$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users }): Observable<Action> =>
+export const create$: RootEpic = (
+  action$,
+  state$,
+  { users }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.CREATE>(Actions.CREATE)),
     switchMap(action =>
@@ -111,12 +107,11 @@ export const create$: Epic<
     )
   );
 
-export const remove$: Epic<
-  RootActions,
-  RootActions,
-  RootState,
-  Dependencies
-> = (action$, state$, { users }): Observable<Action> =>
+export const remove$: RootEpic = (
+  action$,
+  state$,
+  { users }
+): Observable<Action> =>
   action$.pipe(
     filter(isOfType<typeof Actions.REMOVE>(Actions.REMOVE)),
     switchMap(action =>
