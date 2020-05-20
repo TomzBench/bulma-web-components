@@ -19,15 +19,7 @@ export class AtxUserTable extends connect(LitElement) {
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
   @property({ type: String }) popup: string = '';
-  @property({ type: Array })
-  set users(users: User[]) {
-    this._users = [...users];
-    this.requestUpdate();
-  }
-  get users(): User[] {
-    return this._users;
-  }
-  _users: User[] = [];
+  @property({ type: Array }) users: User[] = [];
 
   stateChanged(state: RootState) {
     this.users = state.users.users;
