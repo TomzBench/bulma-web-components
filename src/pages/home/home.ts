@@ -15,7 +15,7 @@ import * as scss from './home.styles.scss';
 import * as logo from '../../assets/altronix_logo_large.png';
 
 @domConsumer('atx-home')
-export class AtxHome extends connect()(LitElement) {
+export class AtxHome extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: String }) show: string = '';
   @property({ type: String }) user: string = '';

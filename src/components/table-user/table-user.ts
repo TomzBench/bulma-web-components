@@ -8,17 +8,8 @@ import { actions } from '../../store/action';
 import { User } from '../../services/user/types';
 import { SubmitUserEvent } from '../form-user/form-user';
 
-import { BTable, Table } from '../bulma/table/table';
-import '../bulma/pagination/pagination';
-import '../bulma/table/table';
-import '../bulma/field/field';
-import '../bulma/input/input';
-import '../bulma/icon/icon';
-import '../bulma/select/select';
-import '../bulma/addon/addon';
-
 @customElement('atx-table-user')
-export class AtxUserTable extends connect<RootState>()(LitElement) {
+export class AtxUserTable extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) bordered: boolean = false;
   @property({ type: Boolean }) striped: boolean = false;

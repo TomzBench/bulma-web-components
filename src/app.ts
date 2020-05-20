@@ -24,7 +24,7 @@ import { styles } from './components/bulma/styles';
 import * as scss from './app.styles.scss';
 
 @domConsumer('atx-app')
-export class App extends connect<RootState>()(LitElement) {
+export class App extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) ready: boolean = false;
   @domInject(SYMBOLS.ROUTER_SERVICE) router!: RouterService;

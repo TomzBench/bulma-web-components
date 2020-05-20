@@ -15,7 +15,7 @@ import * as scss from './topnav.styles.scss';
 import * as logo from '../../assets/altronix.png';
 
 @customElement('atx-topnav')
-export class AtxTopnav extends connect<RootState>()(LitElement) {
+export class AtxTopnav extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Boolean }) wide: boolean = false;
   @property({ type: String }) user: string = '';

@@ -14,7 +14,7 @@ import * as scss from './router-guard.styles.scss';
 import '../material/circular-progress/circular-progress';
 
 @domConsumer('atx-router-guard')
-export class AtxRouterGuard extends connect<RootState>()(LitElement) {
+export class AtxRouterGuard extends connect(LitElement) {
   @property({ type: Number }) role: number = 0;
   @property({ type: String }) redirect: string = '/home';
   @property({ type: Boolean }) popup: boolean = false;
