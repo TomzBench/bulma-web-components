@@ -27,6 +27,7 @@ import './components/table-user/table-user';
 import './components/table-device/table-device';
 import './components/topnav/topnav';
 import './components/ui-blocker/ui-blocker';
+import './components/shared/decorators';
 import './containers/login/login.container';
 import './pages/dashboard/dashboard';
 import './pages/dashboard/account/dashboard-account';
@@ -37,6 +38,7 @@ import './pages/dashboard/main/dashboard-main';
 import './pages/dashboard/power/dashboard-power';
 import './pages/docs/docs';
 import './pages/home/home';
+import './store/connect';
 import { customElement, LitElement, html } from 'lit-element';
 
 @customElement('atx-root')

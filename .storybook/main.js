@@ -1,9 +1,5 @@
-const PathResolver = require('../scripts/webpack/path-resolver');
-const JsBundleFactory = require('../scripts/webpack/js-bundle-factory');
 const merge = require('webpack-merge');
-
-const pathResolver = new PathResolver();
-const jsBundleFactory = new JsBundleFactory({ pathResolver });
+const ours = require('../scripts/webpack.storybook.js');
 
 const storybookConfig = require('../scripts/webpack.storybook');
 
@@ -19,9 +15,8 @@ module.exports = {
     });
 
     //
-    // Now merge storybook webpack with our webpack.
+    // Merge storybook webpack with our webpack.
     //
-    const bundle = jsBundleFactory.createJsBundle();
-    return merge([config, bundle]);
+    return merge([config, ours]);
   }
 };
