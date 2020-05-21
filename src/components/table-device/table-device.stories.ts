@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import { TableDeviceData, AtxTableDevice } from './table-device';
+import { AtxTableDevice } from './table-device';
 import { styles } from '../bulma/styles';
 import './table-device';
 import * as scss from './table-device.styles.scss';

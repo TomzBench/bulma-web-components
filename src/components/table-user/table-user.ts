@@ -11,11 +11,6 @@ import { SubmitUserEvent } from '../form-user/form-user';
 @customElement('atx-table-user')
 export class AtxUserTable extends connect(LitElement) {
   static styles = styles(scss.toString());
-  @property({ type: Boolean }) bordered: boolean = false;
-  @property({ type: Boolean }) striped: boolean = false;
-  @property({ type: Boolean }) narrow: boolean = false;
-  @property({ type: Boolean }) hoverable: boolean = false;
-  @property({ type: Boolean }) fullwidth: boolean = false;
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
   @property({ type: String }) popup: string = '';
@@ -65,11 +60,11 @@ export class AtxUserTable extends connect(LitElement) {
     const c = {
       table: {
         table: true,
-        ['is-bordered']: !!this.bordered,
-        ['is-striped']: !!this.striped,
-        ['is-narrow']: !!this.narrow,
-        ['is-hoverable']: !!this.hoverable,
-        ['is-fullwidth']: !!this.fullwidth
+        ['is-bordered']: false,
+        ['is-striped']: true,
+        ['is-narrow']: true,
+        ['is-hoverable']: true,
+        ['is-fullwidth']: true
       },
       column: (numeric?: boolean) => {
         return {

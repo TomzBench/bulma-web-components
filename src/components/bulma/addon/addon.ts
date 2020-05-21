@@ -39,6 +39,7 @@ export class BAddonButton extends LitElement {
   @property({ type: Boolean }) expanded: boolean = false;
   @property({ type: String }) color?: Colors;
   @property({ type: String }) size?: Sizes;
+  @property({ type: Boolean }) disabled?: boolean = false;
   elementChildren: Element[] = [];
   constructor() {
     super();
@@ -63,7 +64,7 @@ export class BAddonButton extends LitElement {
       [`is-expanded`]: !!this.expanded
     };
     return html`
-      <a class="button ${classMap(classes)}">
+      <a ?disabled="${this.disabled}" class="button ${classMap(classes)}">
         ${elementChildren}
       </a>
     `;

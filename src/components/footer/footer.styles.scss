@@ -1,4 +1,8 @@
 @import '../bulma/variables.scss';
+$primary-red: red($primary);
+$primary-green: green($primary);
+$primary-blue: blue($primary);
+$primary-dim: rgba($primary-red, $primary-green, $primary-blue, 0.4);
 .footer {
   overflow: hidden;
   &.align-with-container {
@@ -6,7 +10,7 @@
   }
   .columns.main {
     > .column:not(:last-child) {
-      border-right: 1px solid $primary;
+      border-right: 1px solid $primary-dim;
     }
   }
   .company {

@@ -12,7 +12,7 @@ import '../bulma/icon/icon';
 import '../bulma/select/select';
 import '../bulma/addon/addon';
 
-export interface TableDeviceData {
+export interface Device {
   serial: string;
   product: string;
   prj_version: string;
@@ -22,41 +22,71 @@ export interface TableDeviceData {
   lastSeen: Date;
 }
 
-type TableDevice = Table<TableDeviceData>;
-
 @customElement('atx-table-device')
 export class AtxTableDevice extends LitElement {
   static styles = styles(scss.toString());
+  @property({ type: Number }) selected: number = -1;
+  @property({ type: Boolean }) loading: boolean = false;
+  @property({ type: String }) popup: string = '';
+  @property({ type: Array }) devices: Device[] = [];
 
-  _devices: TableDeviceData[] = [];
-  set devices(devices: TableDeviceData[]) {
-    this._devices = [...devices];
-    if (this.table) this.updateTable();
-  }
-  get devices(): TableDeviceData[] {
-    return this._devices;
-  }
-
-  private table: TableDevice = { columns: [], data: [] };
-
-  firstUpdated() {
-    this.updateTable();
-  }
-
-  updateTable() {
-    this.table = {
-      data: [...this.devices],
-      columns: [
-        { label: 'serial' },
-        { label: 'product' },
-        { label: 'prj_version' },
-        { label: 'atx_version' },
-        { label: 'web_version' },
-        { label: 'mac' },
-        { label: 'lastSeen' }
-      ]
+  renderTable() {
+    const c = {
+      table: {
+        table: true,
+        ['is-bordered']: false,
+        ['is-striped']: true,
+        ['is-narrow']: true,
+        ['is-hoverable']: true,
+        ['is-fullwidth']: true
+      },
+      column: (numeric?: boolean) => {
+        return {
+          'is-numeric': !!numeric
+        };
+      },
+      row: (idx: number) => {
+        return {
+          'is-selected': idx === this.selected
+        };
+      }
     };
-    this.requestUpdate();
+    return html`
+      <div class="table-container">
+        <table class="${classMap(c.table)}">
+          <thead>
+            <tr>
+              <th class="${classMap(c.column(true))}">Idx</th>
+              <th class="${classMap(c.column())}">Serial</th>
+              <th class="${classMap(c.column())}">Product</th>
+              <th class="${classMap(c.column())}">Version</th>
+              <th class="${classMap(c.column())}">MAC</th>
+              <th class="${classMap(c.column())}">Last Seen</th>
+              <th class="${classMap(c.column(true))}">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${this.devices.map(
+              (d, idx) =>
+                html`
+                  <tr class="${classMap(c.row(idx))}">
+                    <td class="${classMap(c.column(true))}">${idx + 1}</td>
+                    <td class="${classMap(c.column())}">${d.serial}</td>
+                    <td class="${classMap(c.column())}">${d.product}</td>
+                    <td class="${classMap(c.column())}">${d.prj_version}</td>
+                    <td class="${classMap(c.column())}">${d.mac}</td>
+                    <td class="${classMap(c.column())}">33</td>
+                    <td class="${classMap(c.column(true))}">
+                      <span class="is-hidden">align</span>
+                      <b-icon size="small" color="info">visibility</b-icon>
+                    </td>
+                  </tr>
+                `
+            )}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   render() {
@@ -64,9 +94,11 @@ export class AtxTableDevice extends LitElement {
       <div class="columns is-desktop">
         <div class="column">
           <b-field size="small" grouped>
-            <b-addon-button color="danger">
-              <b-icon>delete</b-icon>
-              Delete Selected
+            <b-addon-button disabled color="success" size="small">
+              <b-icon>add</b-icon>
+            </b-addon-button>
+            <b-addon-button color="warning" size="small">
+              <b-icon>refresh</b-icon>
             </b-addon-button>
           </b-field>
         </div>
@@ -87,14 +119,7 @@ export class AtxTableDevice extends LitElement {
       </div>
       <div class="columns">
         <div class="column">
-          <b-table
-            .data="${this.table}"
-            numbered
-            fullwidth
-            hoverable
-            striped
-            narrow
-          ></b-table>
+          ${this.renderTable()}
         </div>
       </div>
       <div class="columns">
