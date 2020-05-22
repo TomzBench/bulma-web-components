@@ -4,7 +4,6 @@ import { styles } from '../bulma/styles';
 import * as scss from './table-user.styles.scss';
 import { connect } from '../../store/connect';
 import { RootState } from '../../store/reducers';
-import { actions } from '../../store/action';
 import { User } from '../../services/user/types';
 import { SubmitUserEvent } from '../form-user/form-user';
 
@@ -27,18 +26,18 @@ export class AtxUserTable extends connect(LitElement) {
   }
 
   fetch() {
-    this.store.dispatch(actions.user.fetch());
+    this.store.dispatch(this.actions.user.fetch());
   }
 
   createNewUser(e: CustomEvent<SubmitUserEvent>) {
     const user = { ...e.detail };
-    this.store.dispatch(actions.user.create({ user }));
+    this.store.dispatch(this.actions.user.create({ user }));
     this.close();
   }
 
   removeUser() {
     const email = this.removeEmail;
-    if (email) this.store.dispatch(actions.user.remove({ email }));
+    if (email) this.store.dispatch(this.actions.user.remove({ email }));
     this.close();
   }
 
@@ -129,11 +128,11 @@ export class AtxUserTable extends connect(LitElement) {
       <div class="columns is-desktop">
         <div class="column">
           <b-field grouped>
-            <b-addon-button color="success" size="small">
-              <b-icon @click="${this.add}">add</b-icon>
+            <b-addon-button @click="${this.add}" color="success" size="small">
+              <b-icon>add</b-icon>
             </b-addon-button>
-            <b-addon-button color="warning" size="small">
-              <b-icon @click="${this.fetch}">refresh</b-icon>
+            <b-addon-button @click="${this.fetch}" color="warning" size="small">
+              <b-icon>refresh</b-icon>
             </b-addon-button>
           </b-field>
         </div>

@@ -3,7 +3,6 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import { Device } from '../../store/devices/state';
 import { connect } from '../../store/connect';
-import { actions } from '../../store/action';
 import { RootState } from '../../store/reducers';
 import * as scss from './table-device.styles.scss';
 
@@ -26,8 +25,7 @@ export class AtxTableDevice extends connect(LitElement) {
   }
 
   fetch() {
-    // TODO inject actions.
-    this.store.dispatch(actions.user.fetch());
+    this.store.dispatch(this.actions.device.fetch());
   }
 
   renderTable() {
@@ -97,7 +95,7 @@ export class AtxTableDevice extends connect(LitElement) {
             <b-addon-button disabled color="success" size="small">
               <b-icon>add</b-icon>
             </b-addon-button>
-            <b-addon-button color="warning" size="small">
+            <b-addon-button @click="${this.fetch}" color="warning" size="small">
               <b-icon>refresh</b-icon>
             </b-addon-button>
           </b-field>
@@ -119,7 +117,9 @@ export class AtxTableDevice extends connect(LitElement) {
       </div>
       <div class="columns">
         <div class="column">
-          ${this.renderTable()}
+          <atx-ui-blocker ?active="${this.loading}">
+            ${this.renderTable()}
+          </atx-ui-blocker>
         </div>
       </div>
       <div class="columns">

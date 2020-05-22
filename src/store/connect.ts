@@ -4,13 +4,13 @@ import { SYMBOLS } from '../ioc/constants.root';
 import { domInject, domConsumer } from '../components/shared/decorators';
 import { decorate } from 'inversify';
 import { RootState } from '../store/reducers';
-import { RootActions } from '../store/action';
+import { actions } from '../store/action';
 type Constructor<T> = new (...args: any[]) => T;
 
 export function connect<
   T extends Constructor<LitElement>,
   S = RootState,
-  A = RootActions
+  A = typeof actions
 >(target: T) {
   @domConsumer()
   class C extends target {
