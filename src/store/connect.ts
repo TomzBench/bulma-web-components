@@ -4,13 +4,17 @@ import { SYMBOLS } from '../ioc/constants.root';
 import { domInject, domConsumer } from '../components/shared/decorators';
 import { decorate } from 'inversify';
 import { RootState } from '../store/reducers';
+import { RootActions } from '../store/action';
 type Constructor<T> = new (...args: any[]) => T;
 
-export function connect<T extends Constructor<LitElement>, S = RootState>(
-  target: T
-) {
+export function connect<
+  T extends Constructor<LitElement>,
+  S = RootState,
+  A = RootActions
+>(target: T) {
   @domConsumer()
   class C extends target {
+    @domInject(SYMBOLS.ACTION_SERVICE) actions!: A;
     @domInject(SYMBOLS.STORE_SERVICE) store!: Store<S>;
     _storeUnsubscribe!: Unsubscribe;
     connectedCallback() {

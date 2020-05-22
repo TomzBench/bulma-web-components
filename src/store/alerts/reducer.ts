@@ -22,7 +22,7 @@ function fetch(state: State, action: Action.Fetch): State {
 }
 
 function fetchOk(state: State, action: Action.FetchOk): State {
-  return { ...state, loading: false, alerts: action.devices };
+  return { ...state, loading: false, alerts: action.alerts };
 }
 
 function fetchErr(state: State, action: Action.FetchErr): State {

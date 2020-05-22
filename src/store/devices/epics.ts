@@ -4,7 +4,6 @@ import { RootEpic } from '../epics';
 import { Observable } from 'rxjs';
 import { Action } from '../types';
 import { actions } from '../action';
-import { API } from '../../services/constants';
 import * as Actions from './action';
 
 import { of, from } from 'rxjs';
@@ -14,7 +13,7 @@ export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
   action$.pipe(
     filter(e => e.type === Actions.FETCH),
     switchMap(action => {
-      return from(io.get<Device[]>(API.DEVICES)).pipe(
+      return from(io.get<Device[]>('api/v1/devices')).pipe(
         map(response => actions.device.fetchOk({ devices: response.json }))
       );
     })

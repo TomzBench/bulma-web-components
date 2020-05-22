@@ -1,34 +1,34 @@
 import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
+import { Device } from '../../store/devices/state';
+import { connect } from '../../store/connect';
+import { actions } from '../../store/action';
+import { RootState } from '../../store/reducers';
 import * as scss from './table-device.styles.scss';
 
-import { BTable, Table } from '../bulma/table/table';
-import '../bulma/pagination/pagination';
-import '../bulma/table/table';
-import '../bulma/field/field';
-import '../bulma/input/input';
-import '../bulma/icon/icon';
-import '../bulma/select/select';
-import '../bulma/addon/addon';
-
-export interface Device {
-  serial: string;
-  product: string;
-  prj_version: string;
-  atx_version: string;
-  web_version: string;
-  mac: string;
-  lastSeen: Date;
-}
-
 @customElement('atx-table-device')
-export class AtxTableDevice extends LitElement {
+export class AtxTableDevice extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
   @property({ type: String }) popup: string = '';
   @property({ type: Array }) devices: Device[] = [];
+
+  stateChanged(state: RootState) {
+    this.loading = state.devices.loading;
+    this.devices = state.devices.devices;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.fetch();
+  }
+
+  fetch() {
+    // TODO inject actions.
+    this.store.dispatch(actions.user.fetch());
+  }
 
   renderTable() {
     const c = {
@@ -73,7 +73,7 @@ export class AtxTableDevice extends LitElement {
                     <td class="${classMap(c.column(true))}">${idx + 1}</td>
                     <td class="${classMap(c.column())}">${d.serial}</td>
                     <td class="${classMap(c.column())}">${d.product}</td>
-                    <td class="${classMap(c.column())}">${d.prj_version}</td>
+                    <td class="${classMap(c.column())}">${d.prjVersion}</td>
                     <td class="${classMap(c.column())}">${d.mac}</td>
                     <td class="${classMap(c.column())}">33</td>
                     <td class="${classMap(c.column(true))}">
