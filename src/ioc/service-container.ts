@@ -24,7 +24,7 @@ export default new ContainerModule(bind => {
     RootState,
     Dependencies
   >({
-    dependencies: { users, router }
+    dependencies: { users, router, io }
   });
   const store = createStore(rootReducer, applyMiddleware(epicMiddleware));
   epicMiddleware.run(rootEpics);

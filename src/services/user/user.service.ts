@@ -1,10 +1,6 @@
-import { inject } from 'inversify';
 import { IoService } from '../io/io.service';
-import { bind } from '../../ioc/container.root';
-import { SYMBOLS } from '../../ioc/constants.root';
 import { User, UserAdd } from './types';
 import { API } from './constants';
-import { BehaviorSubject } from 'rxjs';
 
 interface TokenResponse {
   user: User;

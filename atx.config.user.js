@@ -1,7 +1,7 @@
 const atxConfig = require('./atx.config.js');
 
 // Create some devices
-let CONTAINER_COUNT = 0;
+let CONTAINER_COUNT = 10;
 let CONTAINER_PORT_START = 44000;
 let devices = [];
 for (let i = 0; i < CONTAINER_COUNT; i++) {
