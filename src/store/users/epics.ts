@@ -1,6 +1,5 @@
 import { Epic, combineEpics, ActionsObservable } from 'redux-observable';
 import { RootEpic } from '../epics';
-import { RootState } from '../reducers';
 import { RootActions } from '../action';
 import { Dependencies } from '../dependencies';
 import { UserService } from '../../services/user/user.service';
