@@ -1,10 +1,11 @@
 export interface Device {
   serial: string;
+  siteId: string;
+  mac: string;
   product: string;
   prjVersion: string;
   atxVersion: string;
   webVersion: string;
-  mac: string;
   lastSeen: number;
 }
 

@@ -10,6 +10,7 @@ import { SubmitUserEvent } from '../form-user/form-user';
 @customElement('atx-table-user')
 export class AtxUserTable extends connect(LitElement) {
   static styles = styles(scss.toString());
+  @property({ type: Number }) height: number = 0;
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
   @property({ type: String }) popup: string = '';
@@ -77,7 +78,10 @@ export class AtxUserTable extends connect(LitElement) {
       }
     };
     return html`
-      <div class="table-container">
+      <div
+        class="table-container"
+        style="${this.height ? `height:${this.height}px` : ``}"
+      >
         <table class="${classMap(c.table)}">
           <thead>
             <tr>

@@ -47,12 +47,7 @@ export class AtxDashboardMain extends LitElement {
                   </p>
                 </div>
               </div>
-              <atx-table-user
-                fullwidth
-                narrow
-                hoverable
-                striped
-              ></atx-table-user>
+              <atx-table-user height="${363}"></atx-table-user>
             </div>
           </div>
           <div class="column">
@@ -64,7 +59,7 @@ export class AtxDashboardMain extends LitElement {
                   </p>
                 </div>
               </div>
-              <atx-table-device></atx-table-device>
+              <atx-table-device height="${363}"></atx-table-device>
             </div>
           </div>
         </div>
@@ -78,7 +73,7 @@ export class AtxDashboardMain extends LitElement {
                   </p>
                 </div>
               </div>
-              <atx-table-alert></atx-table-alert>
+              <atx-table-alert height="${363}"></atx-table-alert>
             </div>
           </div>
         </div>

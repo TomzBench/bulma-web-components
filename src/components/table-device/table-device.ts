@@ -9,8 +9,10 @@ import * as scss from './table-device.styles.scss';
 @customElement('atx-table-device')
 export class AtxTableDevice extends connect(LitElement) {
   static styles = styles(scss.toString());
+  @property({ type: Number }) height: number = 0;
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
+  @property({ type: Number }) count: number = 10;
   @property({ type: String }) popup: string = '';
   @property({ type: Array }) devices: Device[] = [];
 
@@ -26,6 +28,13 @@ export class AtxTableDevice extends connect(LitElement) {
 
   fetch() {
     this.store.dispatch(this.actions.device.fetch());
+  }
+
+  calcLastSeen(d: Device) {
+    const secs = Math.floor(new Date().getTime() / 1000) - d.lastSeen;
+    return html`
+      <p>${secs}s</p>
+    `;
   }
 
   renderTable() {
@@ -50,12 +59,16 @@ export class AtxTableDevice extends connect(LitElement) {
       }
     };
     return html`
-      <div class="table-container">
+      <div
+        class="table-container"
+        style="${this.height ? `height:${this.height}px` : ``}"
+      >
         <table class="${classMap(c.table)}">
           <thead>
             <tr>
               <th class="${classMap(c.column(true))}">Idx</th>
               <th class="${classMap(c.column())}">Serial</th>
+              <th class="${classMap(c.column())}">Site</th>
               <th class="${classMap(c.column())}">Product</th>
               <th class="${classMap(c.column())}">Version</th>
               <th class="${classMap(c.column())}">MAC</th>
@@ -64,16 +77,25 @@ export class AtxTableDevice extends connect(LitElement) {
             </tr>
           </thead>
           <tbody>
-            ${this.devices.map(
+            ${[...this.devices].splice(0, 10).map(
               (d, idx) =>
                 html`
                   <tr class="${classMap(c.row(idx))}">
                     <td class="${classMap(c.column(true))}">${idx + 1}</td>
-                    <td class="${classMap(c.column())}">${d.serial}</td>
+                    <td class="${classMap(c.column())}">
+                      <div class="truncate">
+                        ${d.serial}
+                      </div>
+                    </td>
+                    <td class="${classMap(c.column())}">${d.siteId}</td>
                     <td class="${classMap(c.column())}">${d.product}</td>
                     <td class="${classMap(c.column())}">${d.prjVersion}</td>
                     <td class="${classMap(c.column())}">${d.mac}</td>
-                    <td class="${classMap(c.column())}">33</td>
+                    <td class="${classMap(c.column(true))}">
+                      <div>
+                        ${this.calcLastSeen(d)}
+                      </div>
+                    </td>
                     <td class="${classMap(c.column(true))}">
                       <span class="is-hidden">align</span>
                       <b-icon size="small" color="info">visibility</b-icon>
