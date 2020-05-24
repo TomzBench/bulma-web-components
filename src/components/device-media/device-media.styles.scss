@@ -1,0 +1,25 @@
+@import '~bulma/sass/utilities/all.sass';
+
+$height: 52px;
+$margin-top: 14px; // 1/2 height - 1/2 icon-height (64/2 - 24/2)
+.media {
+  height: $height;
+  overflow: hidden;
+  .media-left {
+    height: $height;
+    img {
+      height: $height;
+    }
+  }
+  .media-content {
+    height: $height;
+  }
+  .media-right {
+    height: $height;
+    .icon-container {
+      display: flex;
+      align-items: center;
+      margin-top: $margin-top;
+    }
+  }
+}

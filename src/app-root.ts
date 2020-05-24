@@ -16,6 +16,7 @@ import './components/bulma/pagination/pagination';
 import './components/bulma/select/select';
 import './components/bulma/table/table';
 import './components/bulma/textarea/textarea';
+import './components/device-media/device-media';
 import './components/material/circular-progress/circular-progress';
 import './components/footer/footer';
 import './components/form-contact/form-contact';
