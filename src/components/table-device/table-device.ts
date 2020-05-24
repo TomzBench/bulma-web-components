@@ -27,7 +27,12 @@ export class AtxTableDevice extends connect(LitElement) {
   }
 
   fetch() {
-    this.store.dispatch(this.actions.device.fetch());
+    this.store.dispatch(
+      // TODO use camel_case parser to remove as keyof Device cast
+      this.actions.device.fetch({
+        query: { sort: 'last_seen' as keyof Device, order: 'DESC' }
+      })
+    );
   }
 
   calcLastSeen(d: Device) {

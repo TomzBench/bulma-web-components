@@ -18,7 +18,9 @@ export default function reducer(state = initial, action: Action.Actions) {
 }
 
 function fetch(state: State, action: Action.Fetch): State {
-  return { ...state, loading: true };
+  let ret = { ...state, loading: true };
+  if (action.query) Object.assign(ret, action.query);
+  return ret;
 }
 
 function fetchOk(state: State, action: Action.FetchOk): State {

@@ -12,9 +12,17 @@ import { map, switchMap, concat, startWith, filter } from 'rxjs/operators';
 
 export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
   action$.pipe(
-    filter(e => e.type === Actions.FETCH),
+    filter((e): e is Actions.Fetch => e.type === Actions.FETCH),
     switchMap(action => {
-      return from(io.get<DeviceFromServer[]>('api/v1/devices')).pipe(
+      let url = 'api/v1/devices';
+      let query = state$.value.devices;
+      let keys = Object.keys(query.search) as (keyof Device)[];
+      url += `?start=${query.start}`;
+      url += `&limit=${query.limit}`;
+      if (keys.length) url += `&search=${keys[0]}:${query.search[keys[0]]}`;
+      if (query.sort) url += `&sort=${query.sort}`;
+      if (query.order) url += `&order=${query.order}`;
+      return from(io.get<DeviceFromServer[]>(url)).pipe(
         map(response =>
           actions.device.fetchOk({ devices: fromServer(response.json) })
         )

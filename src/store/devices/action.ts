@@ -1,11 +1,12 @@
 import { Action, actionCreator } from '../types';
 import { Device } from './state';
 
-interface Query {
-  query?: { [key: string]: string | number };
-  sort?: string;
-  start: number;
-  limit: number;
+interface Query<T> {
+  search?: { [P in keyof T]: string };
+  sort?: keyof T;
+  order?: 'ASC' | 'DESC';
+  start?: number;
+  limit?: number;
 }
 
 //
@@ -19,7 +20,7 @@ export const FETCH_ERR = 'devices/fetch/err';
 // ACTION INTERFACES
 //
 export interface Fetch extends Action<typeof FETCH> {
-  query?: Query;
+  query?: Query<Device>;
 }
 export interface FetchOk extends Action<typeof FETCH_OK> {
   devices: Device[];
