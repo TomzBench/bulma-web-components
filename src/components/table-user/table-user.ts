@@ -2,13 +2,11 @@ import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import * as scss from './table-user.styles.scss';
-import { connect } from '../../store/connect';
-import { RootState } from '../../store/reducers';
 import { User } from '../../services/user/types';
 import { SubmitUserEvent } from '../form-user/form-user';
 
 @customElement('atx-table-user')
-export class AtxUserTable extends connect(LitElement) {
+export class AtxUserTable extends LitElement {
   static styles = styles(scss.toString());
   @property({ type: Number }) height: number = 0;
   @property({ type: Number }) selected: number = -1;
@@ -16,42 +14,55 @@ export class AtxUserTable extends connect(LitElement) {
   @property({ type: String }) popup: string = '';
   @property({ type: Array }) users: User[] = [];
 
-  stateChanged(state: RootState) {
-    this.users = state.users.users;
-    this.loading = state.users.loading;
+  // Event submit new user (Bubbles from atx-form component)
+  // We close our popup and the event bubbles up to container
+  submitNewUser(e: CustomEvent<SubmitUserEvent>) {
+    this.close(); // Event bubbles up
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.fetch();
+  // Dispatch an event that a user has clicked button to add a new user
+  eventFetchUsers(e: Event) {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent('atx-fetch-users', {
+        bubbles: true,
+        composed: true,
+        detail: {}
+      })
+    );
   }
 
-  fetch() {
-    this.store.dispatch(this.actions.user.fetch());
-  }
-
-  createNewUser(e: CustomEvent<SubmitUserEvent>) {
-    const user = { ...e.detail };
-    this.store.dispatch(this.actions.user.create({ user }));
-    this.close();
-  }
-
-  removeUser() {
+  // Dispatch an event that a user has clicked a button to remove a user
+  eventRemoveUser(e: Event) {
+    e.stopPropagation();
     const email = this.removeEmail;
-    if (email) this.store.dispatch(this.actions.user.remove({ email }));
+    if (email) {
+      this.dispatchEvent(
+        new CustomEvent<{ email: string }>('atx-remove-user', {
+          bubbles: true,
+          composed: true,
+          detail: { email }
+        })
+      );
+    }
     this.close();
   }
 
-  add() {
+  // Local event, user clicked the Add button
+  eventAddPopup(e: Event) {
+    e.stopPropagation();
     this.popup = 'add';
   }
 
+  // Local event, user clicked the remove button. (Prompt warning)
   removeEmail: string | undefined = undefined;
-  popupRemoveEmail(email: string) {
+  eventRemovePopup(e: Event, email: string) {
+    e.stopPropagation();
     this.removeEmail = email;
     this.popup = 'remove';
   }
 
+  // Close any popup
   close() {
     this.popup = '';
   }
@@ -113,7 +124,8 @@ export class AtxUserTable extends connect(LitElement) {
                     </td>
                     <td
                       class="${classMap(c.column(true))}"
-                      @click="${() => this.popupRemoveEmail(d.email)}"
+                      @click="${(e: Event) =>
+                        this.eventRemovePopup(e, d.email)}"
                     >
                       <span class="is-hidden">align</span>
                       <b-icon size="small" color="danger">delete</b-icon>
@@ -132,10 +144,18 @@ export class AtxUserTable extends connect(LitElement) {
       <div class="columns is-desktop">
         <div class="column">
           <b-field grouped>
-            <b-addon-button @click="${this.add}" color="success" size="small">
+            <b-addon-button
+              @click="${this.eventAddPopup}"
+              color="success"
+              size="small"
+            >
               <b-icon>add</b-icon>
             </b-addon-button>
-            <b-addon-button @click="${this.fetch}" color="warning" size="small">
+            <b-addon-button
+              @click="${this.eventFetchUsers}"
+              color="warning"
+              size="small"
+            >
               <b-icon>refresh</b-icon>
             </b-addon-button>
           </b-field>
@@ -187,7 +207,7 @@ export class AtxUserTable extends connect(LitElement) {
             Are you sure you want to remove ${this.removeEmail}
           </p>
           <b-field centered grouped>
-            <b-addon-button @click="${this.removeUser}" color="success">
+            <b-addon-button @click="${this.eventRemoveUser}" color="success">
               Confirm
             </b-addon-button>
             <b-addon-button @click="${this.close}" color="danger">
@@ -197,7 +217,7 @@ export class AtxUserTable extends connect(LitElement) {
         </div>
       </atx-modal-message>
       <atx-modal-form-user
-        @atx-add-user="${this.createNewUser}"
+        @atx-add-user="${this.submitNewUser}"
         @b-close="${this.close}"
         ?show="${this.popup === 'add'}"
       ></atx-modal-form-user>
