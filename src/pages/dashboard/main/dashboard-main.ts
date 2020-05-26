@@ -15,13 +15,17 @@ export class AtxDashboardMain extends connect(LitElement) {
   @property({ type: Boolean }) loadingUsers: boolean = false;
   @property({ type: Boolean }) loadingDevices: boolean = false;
   @property({ type: Number }) deviceTotal: number = 0;
+  @property({ type: Number }) perPage: number = 10;
+  @property({ type: Number }) deviceStart: number = 0;
+  @property({ type: Number }) userTotal: number = 0;
   @property({ type: Array }) users: User[] = [];
   @property({ type: Array }) devices: Device[] = [];
+  @property({ type: Boolean }) pollDevices: boolean = false;
 
   connectedCallback() {
     super.connectedCallback();
     this.fetchUsers();
-    this.store.dispatch(this.actions.device.pollStart({ ms: 2000 }));
+    this.fetchDevices();
   }
 
   disconnectedCallback() {
@@ -32,12 +36,15 @@ export class AtxDashboardMain extends connect(LitElement) {
   stateChanged(state: RootState) {
     this.users = state.users.users;
     this.devices = state.devices.devices;
+    this.deviceTotal = state.devices.count;
+    this.deviceStart = state.devices.start;
     this.loadingUsers = state.users.loading;
     this.loadingDevices = state.devices.loading;
-    this.deviceTotal = state.devices.count;
+    this.userTotal = state.users.count;
   }
 
   fetchUsers() {
+    this.store.dispatch(this.actions.user.count());
     this.store.dispatch(this.actions.user.fetch());
   }
 
@@ -46,14 +53,23 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.store.dispatch(this.actions.device.fetch());
   }
 
+  pollDevicesToggle() {
+    this.pollDevices = !this.pollDevices;
+    this.store.dispatch(
+      this.pollDevices
+        ? this.actions.device.pollStart()
+        : this.actions.device.pollStop()
+    );
+  }
+
   eventFetchUsers(e: CustomEvent) {
     e.stopPropagation();
     this.fetchUsers();
   }
 
-  eventFetchDevices(e: CustomEvent) {
+  eventPollingDevices(e: CustomEvent) {
     e.stopPropagation();
-    this.fetchDevices();
+    this.pollDevicesToggle();
   }
 
   eventSubmitNewUser(e: CustomEvent<SubmitUserEvent>) {
@@ -68,6 +84,19 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.store.dispatch(this.actions.user.remove({ email }));
   }
 
+  eventDevicesNext(e: Event) {
+    e.stopPropagation();
+    let start = this.store.getState().devices.start;
+    start += this.perPage;
+    this.store.dispatch(this.actions.device.fetch({ query: { start } }));
+  }
+
+  eventDevicesPrev(e: Event) {
+    let start = this.store.getState().devices.start;
+    start -= this.perPage;
+    this.store.dispatch(this.actions.device.fetch({ query: { start } }));
+  }
+
   render() {
     return html`
       <div class="dashboard-main">
@@ -76,7 +105,7 @@ export class AtxDashboardMain extends connect(LitElement) {
             <div class="tile is-ancestor">
               <div class="tile is-parent">
                 <div class="tile is-child box">
-                  <p class="title">30</p>
+                  <p class="title">${this.userTotal}</p>
                   <p class="subtitle">Users</p>
                 </div>
               </div>
@@ -126,9 +155,15 @@ export class AtxDashboardMain extends connect(LitElement) {
               </div>
               <atx-table-device
                 height="${363}"
+                per-page="${this.perPage}"
                 .devices="${this.devices}"
+                .count="${this.deviceTotal}"
+                .start="${this.deviceStart}"
+                ?polling="${this.pollDevices}"
                 ?loading="${this.loadingDevices}"
-                @atx-fetch-devices="${this.eventFetchDevices}"
+                @atx-polling-devices="${this.eventPollingDevices}"
+                @b-next="${this.eventDevicesNext}"
+                @b-prev="${this.eventDevicesPrev}"
               ></atx-table-device>
             </div>
           </div>

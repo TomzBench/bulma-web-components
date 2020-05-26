@@ -25,7 +25,7 @@ export const initial: State = {
   count: 0,
   start: 0,
   limit: 10,
-  sort: undefined,
+  sort: 'last_seen' as any,
   search: {},
   order: 'DESC',
   loading: false

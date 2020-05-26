@@ -127,7 +127,7 @@ export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
       from(io.get<{ count: number }>('/api/v1/users/count')).pipe(
         map(response => {
           const { count } = response.json;
-          return actions.device.countOk({ count });
+          return actions.user.countOk({ count });
         })
       )
     )

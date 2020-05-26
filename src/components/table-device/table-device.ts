@@ -10,14 +10,17 @@ export class AtxTableDevice extends LitElement {
   @property({ type: Number }) height: number = 0;
   @property({ type: Number }) selected: number = -1;
   @property({ type: Boolean }) loading: boolean = false;
-  @property({ type: Number }) count: number = 10;
+  @property({ type: Boolean }) polling: boolean = false;
+  @property({ type: Number }) start: number = 0;
+  @property({ type: Number }) count: number = 0;
+  @property({ type: Number }) perPage: number = 10;
   @property({ type: String }) popup: string = '';
   @property({ type: Array }) devices: Device[] = [];
 
-  eventFetchDevices(e: Event) {
+  eventPolling(e: Event) {
     e.stopPropagation();
     this.dispatchEvent(
-      new CustomEvent('atx-fetch-devices', {
+      new CustomEvent('atx-polling-devices', {
         bubbles: true,
         composed: true,
         detail: {}
@@ -72,54 +75,72 @@ export class AtxTableDevice extends LitElement {
             </tr>
           </thead>
           <tbody>
-            ${[...this.devices].splice(0, 10).map(
-              (d, idx) =>
-                html`
-                  <tr class="${classMap(c.row(idx))}">
-                    <td class="${classMap(c.column(true))}">${idx + 1}</td>
-                    <td class="${classMap(c.column())}">
-                      <div class="truncate">
-                        ${d.serial}
-                      </div>
-                    </td>
-                    <td class="${classMap(c.column())}">${d.siteId}</td>
-                    <td class="${classMap(c.column())}">${d.product}</td>
-                    <td class="${classMap(c.column())}">${d.prjVersion}</td>
-                    <td class="${classMap(c.column())}">${d.mac}</td>
-                    <td class="${classMap(c.column())}">
-                      <div>
-                        ${this.calcLastSeen(d)}
-                      </div>
-                    </td>
-                    <td class="${classMap(c.column(true))}">
-                      <span class="is-hidden">align</span>
-                      <b-icon size="small" color="info">visibility</b-icon>
-                    </td>
-                  </tr>
-                `
-            )}
+            ${[...this.devices].splice(0, 10).map((d, n) => {
+              const idx = this.start + 1 + n;
+              return html`
+                <tr class="${classMap(c.row(idx))}">
+                  <td class="${classMap(c.column(true))}">${idx}</td>
+                  <td class="${classMap(c.column())}">
+                    <div class="truncate">
+                      ${d.serial}
+                    </div>
+                  </td>
+                  <td class="${classMap(c.column())}">${d.siteId}</td>
+                  <td class="${classMap(c.column())}">${d.product}</td>
+                  <td class="${classMap(c.column())}">${d.prjVersion}</td>
+                  <td class="${classMap(c.column())}">${d.mac}</td>
+                  <td class="${classMap(c.column())}">
+                    <div>
+                      ${this.calcLastSeen(d)}
+                    </div>
+                  </td>
+                  <td class="${classMap(c.column(true))}">
+                    <span class="is-hidden">align</span>
+                    <b-icon size="small" color="info">visibility</b-icon>
+                  </td>
+                </tr>
+              `;
+            })}
           </tbody>
         </table>
       </div>
     `;
   }
 
-  render() {
-    return html`
-      <div class="columns is-desktop">
-        <div class="column">
+  renderPolling() {
+    return this.polling
+      ? html`
           <b-field size="small" grouped>
             <b-addon-button disabled color="success" size="small">
               <b-icon>add</b-icon>
             </b-addon-button>
             <b-addon-button
-              @click="${this.eventFetchDevices}"
+              @click="${this.eventPolling}"
               color="warning"
               size="small"
             >
               <b-icon>refresh</b-icon>
             </b-addon-button>
+            <b-addon @click="${this.eventPolling}">Polling...</b-addon>
           </b-field>
+        `
+      : html`
+          <b-field size="small" grouped>
+            <b-addon-button disabled color="success" size="small">
+              <b-icon>add</b-icon>
+            </b-addon-button>
+            <b-addon-button @click="${this.eventPolling}" size="small">
+              <b-icon>refresh</b-icon>
+            </b-addon-button>
+          </b-field>
+        `;
+  }
+
+  render() {
+    return html`
+      <div class="columns is-desktop">
+        <div class="column">
+          ${this.renderPolling()}
         </div>
         <div class="column">
           <b-field size="small">
@@ -147,12 +168,10 @@ export class AtxTableDevice extends LitElement {
         <div class="column">
           <b-pagination
             simple
-            current="1"
             size="small"
-            total="${this.devices.length}"
-            per-page="1"
-            @b-prev=${() => console.log('Want devices PREVIOUS')}
-            @b-next=${() => console.log('Want devices NEXT')}
+            current="${this.start + 1}"
+            total="${this.count}"
+            per-page="${this.perPage}"
           >
           </b-pagination>
         </div>

@@ -16,27 +16,12 @@ export class BPagination extends LitElement {
   @property({ type: Boolean }) simple: boolean = false;
   @property({ type: String }) size?: Sizes;
   @property({ type: Number, attribute: 'per-page' }) perPage: number = 0;
+  @property({ type: Number }) current: number = 1;
   @property({ type: Number, attribute: 'buttons-after' })
   buttonsAfter: number = 3;
   @property({ type: Number, attribute: 'buttons-before' })
   buttonsBefore: number = 3;
-
-  _current: number = 1;
-  @property({ type: Number })
-  get current(): number {
-    return this._current;
-  }
-  set current(val: number) {
-    const old = this.current;
-    if (val >= 1 && val * this.perPage + 1 - this.perPage <= this.total) {
-      this._current = val;
-      this.requestUpdate('current', old);
-    }
-  }
-
-  prev() {}
-
-  next() {}
+  range: number = 0;
 
   emit(event: Events) {
     let ev = new CustomEvent(`b-${event}`, {
@@ -47,17 +32,52 @@ export class BPagination extends LitElement {
     this.dispatchEvent(ev);
   }
 
+  next(e: Event) {
+    e.stopPropagation();
+    if (!(this.range === this.total)) {
+      this.dispatchEvent(
+        new CustomEvent('b-next', {
+          bubbles: true,
+          composed: true,
+          detail: { current: this.current + 1 }
+        })
+      );
+    }
+  }
+
+  prev(e: Event) {
+    e.stopPropagation();
+    if (!(this.current === 1)) {
+      this.dispatchEvent(
+        new CustomEvent('b-prev', {
+          bubbles: true,
+          composed: true,
+          detail: { current: this.current + 1 }
+        })
+      );
+    }
+  }
+
   render() {
     const classes = { [`is-${this.size}`]: !!this.size };
     const pageCount = Math.ceil(this.total / this.perPage);
-    let firstItem = this.current * this.perPage - this.perPage + 1;
+    this.range = Math.min(this.current + this.perPage, this.total);
+    let firstItem = this.current * (this.perPage - this.perPage + 1);
     if (firstItem < 0) firstItem = 0;
     return html`
       <div class="pagination ${classMap(classes)}">
-        <a class="pagination-previous" @click=${() => this.emit('prev')}>
+        <a
+          class="pagination-previous"
+          ?disabled="${this.current === 1}"
+          @click="${this.prev}"
+        >
           Previous
         </a>
-        <a class="pagination-previous" @click=${() => this.emit('next')}>
+        <a
+          class="pagination-previous"
+          ?disabled="${this.range === this.total}"
+          @click="${this.next}"
+        >
           Next page
         </a>
         ${this.simple
@@ -67,9 +87,7 @@ export class BPagination extends LitElement {
               `
             : html`
                 <small class="is-simple">
-                  ${firstItem} -
-                  ${Math.min(this.current * this.perPage, this.total)} /
-                  ${this.total}
+                  ${firstItem} - ${this.range} / ${this.total}
                 </small>
               `
           : html`
