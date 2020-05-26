@@ -3,10 +3,6 @@ import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../../../components/bulma/styles';
 import * as scss from './dashboard-main.styles.scss';
 
-import '../../../components/table-user/table-user';
-import '../../../components/table-alert/table-alert';
-import '../../../components/table-device/table-device';
-
 @customElement('atx-dashboard-main')
 export class AtxDashboardMain extends LitElement {
   static styles = styles(scss.toString());

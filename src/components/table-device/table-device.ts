@@ -96,7 +96,7 @@ export class AtxTableDevice extends connect(LitElement) {
                     <td class="${classMap(c.column())}">${d.product}</td>
                     <td class="${classMap(c.column())}">${d.prjVersion}</td>
                     <td class="${classMap(c.column())}">${d.mac}</td>
-                    <td class="${classMap(c.column(true))}">
+                    <td class="${classMap(c.column())}">
                       <div>
                         ${this.calcLastSeen(d)}
                       </div>
