@@ -14,6 +14,7 @@ export class AtxDashboardMain extends connect(LitElement) {
   @property({ type: String }) popup: string = '';
   @property({ type: Boolean }) loadingUsers: boolean = false;
   @property({ type: Boolean }) loadingDevices: boolean = false;
+  @property({ type: Number }) deviceTotal: number = 0;
   @property({ type: Array }) users: User[] = [];
   @property({ type: Array }) devices: Device[] = [];
 
@@ -33,6 +34,7 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.devices = state.devices.devices;
     this.loadingUsers = state.users.loading;
     this.loadingDevices = state.devices.loading;
+    this.deviceTotal = state.devices.count;
   }
 
   fetchUsers() {
@@ -40,6 +42,7 @@ export class AtxDashboardMain extends connect(LitElement) {
   }
 
   fetchDevices() {
+    this.store.dispatch(this.actions.device.count());
     this.store.dispatch(this.actions.device.fetch());
   }
 
@@ -79,7 +82,7 @@ export class AtxDashboardMain extends connect(LitElement) {
               </div>
               <div class="tile is-parent">
                 <div class="tile is-child box">
-                  <p class="title">23</p>
+                  <p class="title">${this.deviceTotal}</p>
                   <p class="subtitle">Connected Devices</p>
                 </div>
               </div>

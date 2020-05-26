@@ -11,6 +11,7 @@ export interface Device {
 
 export type State = {
   devices: Device[];
+  count: number;
   start: number;
   limit: number;
   sort: keyof Device | undefined;
@@ -21,6 +22,7 @@ export type State = {
 
 export const initial: State = {
   devices: [],
+  count: 0,
   start: 0,
   limit: 10,
   sort: undefined,

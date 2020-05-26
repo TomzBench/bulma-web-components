@@ -58,4 +58,17 @@ export const poll$: RootEpic = (action$, state$): Observable<Action> =>
     )
   );
 
-export default combineEpics(fetch$, poll$);
+export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
+  action$.pipe(
+    filter((e): e is Actions.Count => e.type === Actions.COUNT),
+    switchMap(response =>
+      from(io.get<{ count: number }>('/api/v1/devices/count')).pipe(
+        map(response => {
+          const { count } = response.json;
+          return actions.device.countOk({ count });
+        })
+      )
+    )
+  );
+
+export default combineEpics(fetch$, poll$, count$);

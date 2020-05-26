@@ -33,6 +33,9 @@ export const CREATE_ERR = 'users/create/err';
 export const REMOVE = 'users/remove';
 export const REMOVE_OK = 'users/remove/ok';
 export const REMOVE_ERR = 'users/remove/err';
+export const COUNT = 'users/count';
+export const COUNT_OK = 'users/count/ok';
+export const COUNT_ERR = 'users/count/err';
 
 //
 // ACTION INTERFACES
@@ -71,6 +74,11 @@ export interface Remove extends Action<typeof REMOVE> {
 }
 export interface RemoveOk extends Action<typeof REMOVE_OK> {}
 export interface RemoveErr extends Action<typeof REMOVE_ERR> {}
+export interface Count extends Action<typeof COUNT> {}
+export interface CountOk extends Action<typeof COUNT_OK> {
+  count: number;
+}
+export interface CountErr extends Action<typeof COUNT_ERR> {}
 
 export type Actions =
   | Fetch
@@ -90,7 +98,10 @@ export type Actions =
   | CreateErr
   | Remove
   | RemoveOk
-  | RemoveErr;
+  | RemoveErr
+  | Count
+  | CountOk
+  | CountErr;
 
 //
 // ACTIONS CREATORS
@@ -113,5 +124,8 @@ export const actions = {
   createErr: actionCreator<CreateErr>(CREATE_ERR),
   remove: actionCreator<Remove>(REMOVE),
   removeOk: actionCreator<RemoveOk>(REMOVE_OK),
-  removeErr: actionCreator<RemoveErr>(REMOVE_ERR)
+  removeErr: actionCreator<RemoveErr>(REMOVE_ERR),
+  count: actionCreator<Count>(COUNT),
+  countOk: actionCreator<CountOk>(COUNT_OK),
+  countErr: actionCreator<CountErr>(COUNT_ERR)
 };

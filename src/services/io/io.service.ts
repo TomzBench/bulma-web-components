@@ -37,7 +37,8 @@ export class IoService implements IoRequester {
     }
     let response = await this.fetch(url, config);
     await new Promise(resolve => setTimeout(() => resolve(), 300));
-    return { ...response, json: await response.json() };
+    let json = await response.json().catch(e => false);
+    return Object.assign({}, response, { json });
   }
 
   async get<T>(url: string): Promise<IoResponse<T>> {

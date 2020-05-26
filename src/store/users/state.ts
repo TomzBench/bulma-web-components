@@ -13,11 +13,13 @@ export type State = {
   loading: boolean;
   ready: boolean;
   users: User[];
+  count: number;
 };
 
 export const initial: State = {
   user: undefined,
   loading: false,
   ready: false,
-  users: []
+  users: [],
+  count: 0
 };

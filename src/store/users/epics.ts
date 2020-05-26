@@ -120,6 +120,19 @@ export const remove$: RootEpic = (
     )
   );
 
+export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
+  action$.pipe(
+    filter((e): e is Actions.Count => e.type === Actions.COUNT),
+    switchMap(response =>
+      from(io.get<{ count: number }>('/api/v1/users/count')).pipe(
+        map(response => {
+          const { count } = response.json;
+          return actions.device.countOk({ count });
+        })
+      )
+    )
+  );
+
 export default combineEpics(
   login$,
   loginRedirect$,
@@ -128,5 +141,6 @@ export default combineEpics(
   refresh$,
   fetch$,
   create$,
-  remove$
+  remove$,
+  count$
 );
