@@ -17,13 +17,19 @@ export class AtxTableDevice extends connect(LitElement) {
   @property({ type: Array }) devices: Device[] = [];
 
   stateChanged(state: RootState) {
-    this.loading = state.devices.loading;
+    this.loading = false; //state.devices.loading;
     this.devices = state.devices.devices;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.fetch();
+    // this.fetch();
+    this.store.dispatch(this.actions.device.pollStart({ ms: 1000 }));
+  }
+
+  disconnectedCallback() {
+    this.store.dispatch(this.actions.device.pollStop());
+    super.disconnectedCallback();
   }
 
   fetch() {

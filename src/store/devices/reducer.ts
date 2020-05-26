@@ -12,6 +12,12 @@ export default function reducer(state = initial, action: Action.Actions) {
     case Action.FETCH_ERR:
       return fetchErr(state, action);
       break;
+    case Action.POLL_START:
+      return pollStart(state, action);
+      break;
+    case Action.POLL_STOP:
+      return pollStop(state, action);
+      break;
     default:
       return state;
   }
@@ -29,4 +35,12 @@ function fetchOk(state: State, action: Action.FetchOk): State {
 
 function fetchErr(state: State, action: Action.FetchErr): State {
   return { ...state, loading: false };
+}
+
+function pollStart(state: State, action: Action.PollStart): State {
+  return { ...state };
+}
+
+function pollStop(state: State, action: Action.PollStop): State {
+  return { ...state };
 }

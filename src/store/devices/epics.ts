@@ -5,10 +5,19 @@ import { Observable } from 'rxjs';
 import { Action } from '../types';
 import { actions } from '../action';
 import { DeviceFromServer, fromServer } from './filters';
+import { Query } from './action';
 import * as Actions from './action';
 
 import { of, from } from 'rxjs';
-import { map, switchMap, concat, startWith, filter } from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  repeat,
+  delay,
+  startWith,
+  takeUntil,
+  filter
+} from 'rxjs/operators';
 
 export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
   action$.pipe(
@@ -30,4 +39,23 @@ export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
     })
   );
 
-export default combineEpics(fetch$);
+const query: Query<Device> = {
+  sort: 'last_seen' as keyof Device,
+  order: 'DESC'
+};
+export const poll$: RootEpic = (action$, state$): Observable<Action> =>
+  action$.pipe(
+    filter((e): e is Actions.PollStart => e.type === Actions.POLL_START),
+    switchMap(poll =>
+      action$.pipe(
+        filter((e): e is Actions.FetchOk => e.type === Actions.FETCH_OK),
+        delay(poll.ms || 5000),
+        map(() => actions.device.fetch({ query })),
+        repeat(),
+        takeUntil(action$.pipe(filter(e => e.type === Actions.POLL_STOP))),
+        startWith(actions.device.fetch({ query }))
+      )
+    )
+  );
+
+export default combineEpics(fetch$, poll$);
