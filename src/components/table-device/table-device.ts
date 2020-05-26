@@ -2,12 +2,10 @@ import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
 import { Device } from '../../store/devices/state';
-import { connect } from '../../store/connect';
-import { RootState } from '../../store/reducers';
 import * as scss from './table-device.styles.scss';
 
 @customElement('atx-table-device')
-export class AtxTableDevice extends connect(LitElement) {
+export class AtxTableDevice extends LitElement {
   static styles = styles(scss.toString());
   @property({ type: Number }) height: number = 0;
   @property({ type: Number }) selected: number = -1;
@@ -16,27 +14,13 @@ export class AtxTableDevice extends connect(LitElement) {
   @property({ type: String }) popup: string = '';
   @property({ type: Array }) devices: Device[] = [];
 
-  stateChanged(state: RootState) {
-    this.loading = false; //state.devices.loading;
-    this.devices = state.devices.devices;
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    // this.fetch();
-    this.store.dispatch(this.actions.device.pollStart({ ms: 1000 }));
-  }
-
-  disconnectedCallback() {
-    this.store.dispatch(this.actions.device.pollStop());
-    super.disconnectedCallback();
-  }
-
-  fetch() {
-    this.store.dispatch(
-      // TODO use camel_case parser to remove as keyof Device cast
-      this.actions.device.fetch({
-        query: { sort: 'last_seen' as keyof Device, order: 'DESC' }
+  eventFetchDevices(e: Event) {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent('atx-fetch-devices', {
+        bubbles: true,
+        composed: true,
+        detail: {}
       })
     );
   }
@@ -128,7 +112,11 @@ export class AtxTableDevice extends connect(LitElement) {
             <b-addon-button disabled color="success" size="small">
               <b-icon>add</b-icon>
             </b-addon-button>
-            <b-addon-button @click="${this.fetch}" color="warning" size="small">
+            <b-addon-button
+              @click="${this.eventFetchDevices}"
+              color="warning"
+              size="small"
+            >
               <b-icon>refresh</b-icon>
             </b-addon-button>
           </b-field>

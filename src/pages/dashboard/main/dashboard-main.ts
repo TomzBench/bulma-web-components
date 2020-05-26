@@ -39,9 +39,18 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.store.dispatch(this.actions.user.fetch());
   }
 
+  fetchDevices() {
+    this.store.dispatch(this.actions.device.fetch());
+  }
+
   eventFetchUsers(e: CustomEvent) {
     e.stopPropagation();
     this.fetchUsers();
+  }
+
+  eventFetchDevices(e: CustomEvent) {
+    e.stopPropagation();
+    this.fetchDevices();
   }
 
   eventSubmitNewUser(e: CustomEvent<SubmitUserEvent>) {
@@ -112,7 +121,12 @@ export class AtxDashboardMain extends connect(LitElement) {
                   </p>
                 </div>
               </div>
-              <atx-table-device height="${363}"></atx-table-device>
+              <atx-table-device
+                height="${363}"
+                .devices="${this.devices}"
+                ?loading="${this.loadingDevices}"
+                @atx-fetch-devices="${this.eventFetchDevices}"
+              ></atx-table-device>
             </div>
           </div>
         </div>
