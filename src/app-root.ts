@@ -30,6 +30,8 @@ import './components/router-guard/router-guard';
 import './components/table-alert/table-alert';
 import './components/table-user/table-user';
 import './components/table-device/table-device';
+import './components/toast/toast';
+import './components/toast/toast.container';
 import './components/topnav/topnav';
 import './components/ui-blocker/ui-blocker';
 import './components/shared/decorators';
