@@ -3,3 +3,9 @@
     background: whitesmoke;
   }
 }
+*,
+::before,
+::after {
+  // Not sure what this hack broke. But fixes 'delete' class on a button
+  box-sizing: border-box !important;
+}

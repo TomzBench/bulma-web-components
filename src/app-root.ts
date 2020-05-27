@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import './app';
 import './app-provider';
 import './components/bulma/addon/addon';
+import './components/bulma/badge/badge';
 import './components/bulma/bulma-base';
 import './components/bulma/bulma';
 import './components/bulma/field/field';

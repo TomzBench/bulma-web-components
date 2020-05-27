@@ -24,3 +24,12 @@ export interface TableDataVarientOptions {
   idx?: number;
   actions?: TemplateResult;
 }
+export type Positions =
+  | 'left'
+  | 'right'
+  | 'top'
+  | 'bottom'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right';

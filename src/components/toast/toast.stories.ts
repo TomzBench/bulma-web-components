@@ -3,7 +3,7 @@ import './toast';
 
 export default { title: 'atx-toast' };
 
-export const bottomLeft = () => {
+export const bottomLeftLight = () => {
   return html`
     <div>
       <atx-toast-container position="bottom-left">
@@ -15,11 +15,35 @@ export const bottomLeft = () => {
   `.getHTML();
 };
 
-export const bottomRight = () => {
+export const bottomRightLight = () => {
   return html`
     <div>
       <atx-toast-container position="bottom-right">
         <atx-toast light color="info">
+          This is a test message
+        </atx-toast>
+      </atx-toast-container>
+    </div>
+  `.getHTML();
+};
+
+export const bottomLeft = () => {
+  return html`
+    <div>
+      <atx-toast-container position="bottom-left">
+        <atx-toast color="info">
+          This is a test message
+        </atx-toast>
+      </atx-toast-container>
+    </div>
+  `.getHTML();
+};
+
+export const bottomRight = () => {
+  return html`
+    <div>
+      <atx-toast-container position="bottom-right">
+        <atx-toast color="info">
           This is a test message
         </atx-toast>
       </atx-toast-container>

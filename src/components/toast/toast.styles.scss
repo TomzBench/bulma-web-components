@@ -1,4 +1,6 @@
 .toast-container {
+  display: flex;
+  align-items: center;
   width: 100%;
   z-index: 99999;
   position: fixed;
@@ -47,5 +49,23 @@
 }
 
 .toast {
-  width: 300px;
+  position: relative;
+  b-icon,
+  i,
+  button,
+  span {
+    vertical-align: middle;
+  }
+  .cancel {
+    top: 4px;
+    right: 4px;
+    position: absolute;
+  }
+}
+
+*,
+::before,
+::after {
+  // Not sure what this hack broke. But fixes 'delete' class on a button
+  box-sizing: border-box !important;
 }

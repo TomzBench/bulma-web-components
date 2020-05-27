@@ -17,8 +17,9 @@ class AtxToast extends LitElement {
     };
     return html`
       <div class="toast notification ${classMap(classes)}">
+        <b-icon>info</b-icon>
         <button class="delete"></button>
-        ${this.firstChild}
+        <span>${this.firstChild}</span>
       </div>
     `;
   }
