@@ -7,15 +7,15 @@ import * as scss from './chart.styles.scss';
 @customElement('atx-chart')
 export class AtxChart<D> extends LitElement {
   static styles = styles(scss.toString());
-  @property({ type: Number }) height: number = 250;
-  @property({ type: Number }) width: number = 300;
+  @property({ type: Number }) height: number = 400;
+  @property({ type: Number }) width: number = 400;
   @property({ type: Array }) data: D[] = [];
   @property({ type: Function }) xAccessor!: (d: D) => number;
   @property({ type: Function }) yAccessor!: (d: D) => number;
   @query('#chart') chart!: HTMLElement;
 
   firstUpdated() {
-    const margins = { top: 15, right: 15, bottom: 40, left: 60 };
+    const margins = { top: 60, right: 60, bottom: 60, left: 60 };
 
     // prettier-ignore
     const svg = d3
