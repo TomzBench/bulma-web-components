@@ -20,7 +20,7 @@ export class AtxAlertTable extends LitElement {
   eventPolling(e: Event) {
     e.stopPropagation();
     this.dispatchEvent(
-      new CustomEvent('atx-polling-devices', {
+      new CustomEvent('atx-polling-alerts', {
         bubbles: true,
         composed: true,
         detail: {}

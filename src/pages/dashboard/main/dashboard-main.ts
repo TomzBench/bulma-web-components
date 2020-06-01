@@ -32,10 +32,12 @@ export class AtxDashboardMain extends connect(LitElement) {
     super.connectedCallback();
     this.fetchUsers();
     this.fetchDevices();
+    this.fetchAlerts();
   }
 
   disconnectedCallback() {
     this.store.dispatch(this.actions.device.pollStop());
+    this.store.dispatch(this.actions.alert.pollStop());
     super.disconnectedCallback();
   }
 

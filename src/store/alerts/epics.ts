@@ -65,4 +65,4 @@ export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
     catchError(error => of(actions.alert.countErr()))
   );
 
-export default combineEpics(fetch$);
+export default combineEpics(fetch$, poll$, count$);
