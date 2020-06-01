@@ -5,6 +5,7 @@ import { connect } from '../../../store/connect';
 import { RootState } from '../../../store/reducers';
 import { User } from '../../../services/user/types';
 import { Device } from '../../../store/devices/state';
+import { Alert } from '../../../store/alerts/state';
 import { SubmitUserEvent } from '../../../components/form-user/form-user';
 import * as scss from './dashboard-main.styles.scss';
 
@@ -12,15 +13,20 @@ import * as scss from './dashboard-main.styles.scss';
 export class AtxDashboardMain extends connect(LitElement) {
   static styles = styles(scss.toString());
   @property({ type: String }) popup: string = '';
-  @property({ type: Boolean }) loadingUsers: boolean = false;
-  @property({ type: Boolean }) loadingDevices: boolean = false;
   @property({ type: Number }) deviceTotal: number = 0;
-  @property({ type: Number }) perPage: number = 10;
   @property({ type: Number }) deviceStart: number = 0;
+  @property({ type: Array }) devices: Device[] = [];
+  @property({ type: Boolean }) devicesPoll: boolean = false;
+  @property({ type: Boolean }) devicesLoading: boolean = false;
+  @property({ type: Number }) alertTotal: number = 0;
+  @property({ type: Number }) alertStart: number = 0;
+  @property({ type: Array }) alerts: Alert[] = [];
+  @property({ type: Boolean }) alertsPoll: boolean = false;
+  @property({ type: Boolean }) alertsLoading: boolean = false;
+  @property({ type: Number }) perPage: number = 10;
+  @property({ type: Boolean }) usersLoading: boolean = false;
   @property({ type: Number }) userTotal: number = 0;
   @property({ type: Array }) users: User[] = [];
-  @property({ type: Array }) devices: Device[] = [];
-  @property({ type: Boolean }) pollDevices: boolean = false;
 
   connectedCallback() {
     super.connectedCallback();
@@ -38,8 +44,12 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.devices = state.devices.devices;
     this.deviceTotal = state.devices.count;
     this.deviceStart = state.devices.start;
-    this.loadingUsers = state.users.loading;
-    this.loadingDevices = state.devices.loading;
+    this.devicesLoading = state.devices.loading;
+    this.alerts = state.alerts.alerts;
+    this.alertTotal = state.alerts.count;
+    this.alertStart = state.alerts.start;
+    this.alertsLoading = state.alerts.loading;
+    this.usersLoading = state.users.loading;
     this.userTotal = state.users.count;
   }
 
@@ -53,23 +63,32 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.store.dispatch(this.actions.device.fetch());
   }
 
+  fetchAlerts() {
+    this.store.dispatch(this.actions.alert.count());
+    this.store.dispatch(this.actions.alert.fetch());
+  }
+
   pollDevicesToggle() {
-    this.pollDevices = !this.pollDevices;
+    this.devicesPoll = !this.devicesPoll;
     this.store.dispatch(
-      this.pollDevices
+      this.devicesPoll
         ? this.actions.device.pollStart()
         : this.actions.device.pollStop()
+    );
+  }
+
+  pollAlertsToggle() {
+    this.alertsPoll = !this.alertsPoll;
+    this.store.dispatch(
+      this.alertsPoll
+        ? this.actions.alert.pollStart()
+        : this.actions.alert.pollStop()
     );
   }
 
   eventFetchUsers(e: CustomEvent) {
     e.stopPropagation();
     this.fetchUsers();
-  }
-
-  eventPollingDevices(e: CustomEvent) {
-    e.stopPropagation();
-    this.pollDevicesToggle();
   }
 
   eventSubmitNewUser(e: CustomEvent<SubmitUserEvent>) {
@@ -84,6 +103,11 @@ export class AtxDashboardMain extends connect(LitElement) {
     this.store.dispatch(this.actions.user.remove({ email }));
   }
 
+  eventDevicesPolling(e: CustomEvent) {
+    e.stopPropagation();
+    this.pollDevicesToggle();
+  }
+
   eventDevicesNext(e: Event) {
     e.stopPropagation();
     let start = this.store.getState().devices.start;
@@ -95,6 +119,24 @@ export class AtxDashboardMain extends connect(LitElement) {
     let start = this.store.getState().devices.start;
     start -= this.perPage;
     this.store.dispatch(this.actions.device.fetch({ query: { start } }));
+  }
+
+  eventAlertsPolling(e: CustomEvent) {
+    e.stopPropagation();
+    this.pollAlertsToggle();
+  }
+
+  eventAlertsNext(e: Event) {
+    e.stopPropagation();
+    let start = this.store.getState().alerts.start;
+    start += this.perPage;
+    this.store.dispatch(this.actions.alert.fetch({ query: { start } }));
+  }
+
+  eventAlertsPrev(e: Event) {
+    let start = this.store.getState().alerts.start;
+    start -= this.perPage;
+    this.store.dispatch(this.actions.alert.fetch({ query: { start } }));
   }
 
   render() {
@@ -137,7 +179,7 @@ export class AtxDashboardMain extends connect(LitElement) {
               <atx-table-user
                 height="${363}"
                 .users="${this.users}"
-                ?loading="${this.loadingUsers}"
+                ?loading="${this.usersLoading}"
                 @atx-add-user="${this.eventSubmitNewUser}"
                 @atx-remove-user="${this.eventRemoveUser}"
                 @atx-fetch-users="${this.eventFetchUsers}"
@@ -159,9 +201,9 @@ export class AtxDashboardMain extends connect(LitElement) {
                 .devices="${this.devices}"
                 .count="${this.deviceTotal}"
                 .start="${this.deviceStart}"
-                ?polling="${this.pollDevices}"
-                ?loading="${this.loadingDevices}"
-                @atx-polling-devices="${this.eventPollingDevices}"
+                ?polling="${this.devicesPoll}"
+                ?loading="${this.devicesLoading}"
+                @atx-polling-devices="${this.eventDevicesPolling}"
                 @b-next="${this.eventDevicesNext}"
                 @b-prev="${this.eventDevicesPrev}"
               ></atx-table-device>
@@ -178,7 +220,18 @@ export class AtxDashboardMain extends connect(LitElement) {
                   </p>
                 </div>
               </div>
-              <atx-table-alert height="${363}"></atx-table-alert>
+              <atx-table-alert
+                height="${363}"
+                per-page="${this.perPage}"
+                .alerts="${this.alerts}"
+                .count="${this.alertTotal}"
+                .start="${this.alertStart}"
+                ?polling="${this.alertsPoll}"
+                ?loading="${this.alertsLoading}"
+                @atx-polling-alerts="${this.eventAlertsPolling}"
+                @b-next="${this.eventAlertsNext}"
+                @b-prev="${this.eventAlertsPrev}"
+              ></atx-table-alert>
             </div>
           </div>
         </div>
