@@ -2,7 +2,7 @@ export interface Alert {
   who: string;
   what: string;
   where: string;
-  when: number;
+  when: string;
   mesg: string;
   serial: string;
 }

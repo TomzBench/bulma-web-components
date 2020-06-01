@@ -174,6 +174,32 @@ export class AtxDashboardMain extends connect(LitElement) {
               <div class="columns">
                 <div class="column">
                   <p class="is-size-5 has-text-weight-light title underline">
+                    Alerts
+                  </p>
+                </div>
+              </div>
+              <atx-table-alert
+                height="${363}"
+                per-page="${this.perPage}"
+                .alerts="${this.alerts}"
+                .count="${this.alertTotal}"
+                .start="${this.alertStart}"
+                ?polling="${this.alertsPoll}"
+                ?loading="${this.alertsLoading}"
+                @atx-polling-alerts="${this.eventAlertsPolling}"
+                @b-next="${this.eventAlertsNext}"
+                @b-prev="${this.eventAlertsPrev}"
+              ></atx-table-alert>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column">
+            <div class="box">
+              <div class="columns">
+                <div class="column">
+                  <p class="is-size-5 has-text-weight-light title underline">
                     User Management
                   </p>
                 </div>
@@ -209,31 +235,6 @@ export class AtxDashboardMain extends connect(LitElement) {
                 @b-next="${this.eventDevicesNext}"
                 @b-prev="${this.eventDevicesPrev}"
               ></atx-table-device>
-            </div>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column">
-            <div class="box">
-              <div class="columns">
-                <div class="column">
-                  <p class="is-size-5 has-text-weight-light title underline">
-                    Alerts
-                  </p>
-                </div>
-              </div>
-              <atx-table-alert
-                height="${363}"
-                per-page="${this.perPage}"
-                .alerts="${this.alerts}"
-                .count="${this.alertTotal}"
-                .start="${this.alertStart}"
-                ?polling="${this.alertsPoll}"
-                ?loading="${this.alertsLoading}"
-                @atx-polling-alerts="${this.eventAlertsPolling}"
-                @b-next="${this.eventAlertsNext}"
-                @b-prev="${this.eventAlertsPrev}"
-              ></atx-table-alert>
             </div>
           </div>
         </div>

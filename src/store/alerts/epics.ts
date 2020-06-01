@@ -6,6 +6,7 @@ import { Action } from '../types';
 import { Query } from './action';
 import { actions } from '../action';
 import * as Actions from './action';
+import { AlertFromServer, fromServer } from './filters';
 
 import { of, from } from 'rxjs';
 import {
@@ -24,15 +25,25 @@ export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
   action$.pipe(
     filter((e): e is Actions.Fetch => e.type === Actions.FETCH),
     switchMap(action => {
-      return from(io.get<Alert[]>('api/v1/alerts')).pipe(
-        map(response => actions.alert.fetchOk({ alerts: response.json }))
+      let url = 'api/v1/alerts';
+      let query = state$.value.alerts;
+      let keys = Object.keys(query.search) as (keyof Alert)[];
+      url += `?start=${query.start}`;
+      url += `&limit=${query.limit}`;
+      if (keys.length) url += `&search=${keys[0]}:${query.search[keys[0]]}`;
+      if (query.sort) url += `&sort=${query.sort}`;
+      if (query.order) url += `&order=${query.order}`;
+      return from(io.get<AlertFromServer[]>(url)).pipe(
+        map(response =>
+          actions.alert.fetchOk({ alerts: fromServer(response.json) })
+        )
       );
     }),
     catchError(error => of(actions.alert.fetchErr()))
   );
 
 const query: Query<Alert> = {
-  sort: 'last_seen' as keyof Alert,
+  sort: 'when' as keyof Alert,
   order: 'DESC'
 };
 export const poll$: RootEpic = (action$, state$): Observable<Action> =>
