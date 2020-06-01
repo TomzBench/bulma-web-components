@@ -11,7 +11,14 @@ import { toServer } from './filters';
 import * as Actions from './action';
 
 import { of, from } from 'rxjs';
-import { map, switchMap, concat, startWith, filter } from 'rxjs/operators';
+import {
+  map,
+  catchError,
+  switchMap,
+  concat,
+  startWith,
+  filter
+} from 'rxjs/operators';
 
 export const login$: RootEpic = (
   action$,
@@ -24,7 +31,8 @@ export const login$: RootEpic = (
       from(users.login(action.email, action.password)).pipe(
         map(response => actions.user.loginOk({ user: response }))
       )
-    )
+    ),
+    catchError(error => of(actions.user.loginErr()))
   );
 
 export const loginRedirect$: RootEpic = (
@@ -36,7 +44,8 @@ export const loginRedirect$: RootEpic = (
     filter(isOfType<typeof Actions.LOGIN_OK>(Actions.LOGIN_OK)),
     switchMap(action =>
       of(router.route('/dashboard')).pipe(map(() => actions.router.routeOk()))
-    )
+    ),
+    catchError(error => of(actions.user.loginErr()))
   );
 
 export const logout$: RootEpic = (
@@ -75,7 +84,8 @@ export const refresh$: RootEpic = (
       from(users.refresh()).pipe(
         map(response => actions.user.refreshOk({ user: response }))
       )
-    )
+    ),
+    catchError(error => of(actions.user.refreshErr()))
   );
 
 export const fetch$: RootEpic = (
@@ -89,7 +99,8 @@ export const fetch$: RootEpic = (
       return from(users.get()).pipe(
         map(response => actions.user.fetchOk({ users: response }))
       );
-    })
+    }),
+    catchError(error => of(actions.user.fetchErr()))
   );
 
 export const create$: RootEpic = (
@@ -103,7 +114,8 @@ export const create$: RootEpic = (
       from(users.create(toServer(action.user))).pipe(
         map(response => actions.user.createOk({ response }))
       )
-    )
+    ),
+    catchError(error => of(actions.user.createErr()))
   );
 
 export const remove$: RootEpic = (
@@ -117,7 +129,8 @@ export const remove$: RootEpic = (
       from(users.remove(action.email)).pipe(
         map(response => actions.user.removeOk({ response }))
       )
-    )
+    ),
+    catchError(error => of(actions.user.removeErr()))
   );
 
 export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
@@ -130,7 +143,8 @@ export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
           return actions.user.countOk({ count });
         })
       )
-    )
+    ),
+    catchError(error => of(actions.user.countErr()))
   );
 
 export default combineEpics(

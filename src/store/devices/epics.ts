@@ -16,6 +16,7 @@ import {
   delay,
   startWith,
   takeUntil,
+  catchError,
   filter
 } from 'rxjs/operators';
 
@@ -36,7 +37,8 @@ export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
           actions.device.fetchOk({ devices: fromServer(response.json) })
         )
       );
-    })
+    }),
+    catchError(error => of(actions.device.fetchErr()))
   );
 
 const query: Query<Device> = {
@@ -55,7 +57,8 @@ export const poll$: RootEpic = (action$, state$): Observable<Action> =>
         takeUntil(action$.pipe(filter(e => e.type === Actions.POLL_STOP))),
         startWith(actions.device.fetch({ query }))
       )
-    )
+    ),
+    catchError(error => of(actions.device.fetchErr()))
   );
 
 export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
@@ -68,7 +71,8 @@ export const count$: RootEpic = (action$, state$, { io }): Observable<Action> =>
           return actions.device.countOk({ count });
         })
       )
-    )
+    ),
+    catchError(error => of(actions.device.countErr()))
   );
 
 export default combineEpics(fetch$, poll$, count$);

@@ -7,7 +7,14 @@ import { actions } from '../action';
 import * as Actions from './action';
 
 import { of, from } from 'rxjs';
-import { map, switchMap, concat, startWith, filter } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  switchMap,
+  concat,
+  startWith,
+  filter
+} from 'rxjs/operators';
 
 export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
   action$.pipe(
@@ -16,7 +23,8 @@ export const fetch$: RootEpic = (action$, state$, { io }): Observable<Action> =>
       return from(io.get<Alert[]>('api/v1/alerts')).pipe(
         map(response => actions.alert.fetchOk({ alerts: response.json }))
       );
-    })
+    }),
+    catchError(error => of(actions.alert.fetchErr()))
   );
 
 export default combineEpics(fetch$);
