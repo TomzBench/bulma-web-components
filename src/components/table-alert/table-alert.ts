@@ -1,76 +1,143 @@
 import { LitElement, customElement, html, property } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map';
 import { styles } from '../bulma/styles';
+import { Alert } from '../../store/alerts/state';
 import * as scss from './table-alert.styles.scss';
-
-import { BTable, Table } from '../bulma/table/table';
-import '../bulma/pagination/pagination';
-import '../bulma/table/table';
-import '../bulma/field/field';
-import '../bulma/input/input';
-import '../bulma/icon/icon';
-import '../bulma/select/select';
-import '../bulma/addon/addon';
-
-export interface AlertTableData {
-  device: string;
-  product: string;
-  who: string;
-  what: string;
-  siteId: string;
-  when: Date;
-  mesg: string;
-}
-
-export type AlertTable = Table<AlertTableData>;
 
 @customElement('atx-table-alert')
 export class AtxAlertTable extends LitElement {
   static styles = styles(scss.toString());
-  _alerts: AlertTableData[] = [];
-  set alerts(users: AlertTableData[]) {
-    this._alerts = [...users];
-    if (this.table) this.updateTable();
-  }
-  get users(): AlertTableData[] {
-    return this._alerts;
-  }
-  private table: AlertTable = { data: [], columns: [] };
+  @property({ type: Number }) height: number = 0;
+  @property({ type: Number }) selected: number = -1;
+  @property({ type: Boolean }) loading: boolean = false;
+  @property({ type: Boolean }) polling: boolean = false;
+  @property({ type: Number }) start: number = 0;
+  @property({ type: Number }) count: number = 0;
+  @property({ type: Number }) perPage: number = 10;
+  @property({ type: String }) popup: string = '';
+  @property({ type: Array }) alerts: Alert[] = [];
 
-  updateTable() {
-    this.table = {
-      data: [...this.users],
-      columns: [
-        { label: 'device' },
-        { label: 'product' },
-        { label: 'who' },
-        { label: 'what' },
-        { label: 'siteId' },
-        { label: 'when' },
-        { label: 'mesg' }
-      ]
+  eventPolling(e: Event) {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent('atx-polling-devices', {
+        bubbles: true,
+        composed: true,
+        detail: {}
+      })
+    );
+  }
+
+  renderTable() {
+    const c = {
+      table: {
+        table: true,
+        ['is-bordered']: false,
+        ['is-striped']: true,
+        ['is-narrow']: true,
+        ['is-hoverable']: true,
+        ['is-fullwidth']: true
+      },
+      column: (numeric?: boolean) => {
+        return {
+          'is-numeric': !!numeric
+        };
+      },
+      row: (idx: number) => {
+        return {
+          'is-selected': idx === this.selected
+        };
+      }
     };
-    this.requestUpdate();
+    return html`
+      <div
+        class="table-container"
+        style="${this.height ? `height:${this.height}px` : ``}"
+      >
+        <table class="${classMap(c.table)}">
+          <thead>
+            <tr>
+              <th class="${classMap(c.column(true))}">Idx</th>
+              <th class="${classMap(c.column())}">Device</th>
+              <th class="${classMap(c.column())}">Who</th>
+              <th class="${classMap(c.column())}">What</th>
+              <th class="${classMap(c.column())}">Site</th>
+              <th class="${classMap(c.column())}">When</th>
+              <th class="${classMap(c.column())}">Message</th>
+              <th class="${classMap(c.column(true))}">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${[...this.alerts].splice(0, 10).map((a, n) => {
+              const idx = this.start + 1 + n;
+              return html`
+                <tr class="${classMap(c.row(idx))}">
+                  <td class="${classMap(c.column(true))}">${idx}</td>
+                  <td class="${classMap(c.column())}">
+                    <div class="truncate">
+                      ${a.serial}
+                    </div>
+                  </td>
+                  <td class="${classMap(c.column())}">${a.who}</td>
+                  <td class="${classMap(c.column())}">${a.what}</td>
+                  <td class="${classMap(c.column())}">${a.where}</td>
+                  <td class="${classMap(c.column())}">${a.when}</td>
+                  <td class="${classMap(c.column())}">${a.mesg}</td>
+                  <td class="${classMap(c.column(true))}">
+                    <span class="is-hidden">align</span>
+                    <b-icon size="small" color="info">visibility</b-icon>
+                  </td>
+                </tr>
+              `;
+            })}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
-  firstUpdated() {
-    this.updateTable();
+  renderPolling() {
+    return this.polling
+      ? html`
+          <b-field size="small" grouped>
+            <b-addon-button disabled color="success" size="small">
+              <b-icon>add</b-icon>
+            </b-addon-button>
+            <b-addon-button
+              @click="${this.eventPolling}"
+              color="warning"
+              size="small"
+            >
+              <b-icon>refresh</b-icon>
+            </b-addon-button>
+            <b-addon @click="${this.eventPolling}">Polling...</b-addon>
+          </b-field>
+        `
+      : html`
+          <b-field size="small" grouped>
+            <b-addon-button disabled color="success" size="small">
+              <b-icon>add</b-icon>
+            </b-addon-button>
+            <b-addon-button @click="${this.eventPolling}" size="small">
+              <b-icon>refresh</b-icon>
+            </b-addon-button>
+          </b-field>
+        `;
   }
 
   render() {
     return html`
       <div class="columns is-desktop">
-        <div class="column is-offset-6">
+        <div class="column">
+          ${this.renderPolling()}
+        </div>
+        <div class="column">
           <b-field size="small">
             <b-select>
               <b-icon>search</b-icon>
-              <option>Device</option>
-              <option>Product</option>
-              <option>Who</option>
-              <option>What</option>
-              <option>SiteId</option>
-              <option>When</option>
-              <option>Mesg</option>
+              <option>Name</option>
+              <option>Email</option>
+              <option>Role</option>
             </b-select>
             <b-input expanded placeholder="search"></b-input>
             <b-addon-button color="warning">
@@ -81,26 +148,19 @@ export class AtxAlertTable extends LitElement {
       </div>
       <div class="columns">
         <div class="column">
-          <b-table
-            .data="${this.table}"
-            numbered
-            fullwidth
-            hoverable
-            striped
-            narrow
-          ></b-table>
+          <atx-ui-blocker ?active="${this.loading}">
+            ${this.renderTable()}
+          </atx-ui-blocker>
         </div>
       </div>
       <div class="columns">
         <div class="column">
           <b-pagination
             simple
-            current="1"
             size="small"
-            total="${this.users.length}"
-            per-page="1"
-            @b-prev=${() => console.log('Want alerts PREVIOUS')}
-            @b-next=${() => console.log('Want alerts NEXT')}
+            current="${this.start + 1}"
+            total="${this.count}"
+            per-page="${this.perPage}"
           >
           </b-pagination>
         </div>
